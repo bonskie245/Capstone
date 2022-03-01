@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+
 class ProfileController extends Controller
 {
     public function index()
@@ -16,6 +17,7 @@ class ProfileController extends Controller
             'fName'=>'required',
             'lName'=>'required',
             'address'=>'required',
+            'phoneNum'=>'required',
             'gender'=>'required'
 
         ]);
@@ -29,7 +31,7 @@ class ProfileController extends Controller
         if($request->hasFile('file')){
             $image = $request->file('file');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destination = public_path('/profile');
+            $destination = public_path('/profiles');
             $image->move($destination,$name);
 
             $user= User::where('id',auth()->user()->id)->update(['image'=>$name]);

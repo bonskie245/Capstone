@@ -70,4 +70,9 @@ Route::group(['middleware'=>['auth','doctor']],function(){
     Route::resource('appointment',AppointmentController::class);
     Route::post('/appointment/check',[App\Http\Controllers\AppointmentController::class, 'check'])->name('appointment.check');
     Route::post('/appointment/update',[App\Http\Controllers\AppointmentController::class, 'updateTime'])->name('update');
+    Route::get('patient-today',[App\Http\Controllers\PrescriptionController::class, 'index']);
+    Route::get('/patients', [App\Http\Controllers\PatientlistController::class, 'index'])->name('patient');
+    Route::get('/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
+    Route::get('/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
+    Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
 });
