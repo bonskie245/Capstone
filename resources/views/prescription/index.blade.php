@@ -5,6 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
+              @if(Session::has('message'))
+              <div class="alert alert-success"> 
+                {{Session::get('message')}}
+              </div>
+              @endif
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
                 
                 </div>
@@ -39,12 +44,18 @@
                           
                           <td>@if($booking->status===1)
                                 Visited
-                            @endif
+                              @endif
                           </td>   
                           <td>
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                              @if(!App\Models\Prescription::where('date',date('Y-m-d'))->where('doctor_id',auth()->user()->id)->where('user_id',$booking->user->id)->exists())
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
                                   Write Prescription
                                 </button>
+                                @include('prescription.form')
+
+                                @else
+                                View
+                                @endif
                           </td>
                         </tr>
                         @empty
@@ -57,46 +68,4 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog  modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Prescription</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <input type="hidden" name="user_id" value="{{$booking->user_id}}">
-        <input type="hidden" name="doctor_id" value="{{$booking->doctor_id}}">
-        <input type="hidden" name="date" value="{{$booking->date}}">
-
-        <div class="form-group">
-            <label>Findings</label>
-            <input type="text" name="findings" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Medicine</label>
-            <input type="text" name="medicine_name" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Grams</label>
-            <input type="text" name="medicine_gram" class="form-control">
-        </div>
-        <div class="form-group">
-            <label>Medicine Intake</label>
-            <textarea name="medicine_intake" class="form-control" placeholder="Intake" required=""></textarea>
-        </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 @endsection

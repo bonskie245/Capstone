@@ -26,7 +26,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
- <link rel="stylesheet" href="{{asset('template/dist/css/theme.min.css')}}">
+    <link rel="stylesheet" href="{{asset('template/dist/css/theme.min.css')}}">
   
 
 
@@ -34,7 +34,7 @@
      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <!--for datepicker-->
 
-        
+     <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
 </head>
 <body>
     <div id="app">
@@ -77,12 +77,12 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a style="color: #fff; font-size:16px; font-weight: bold;" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a style="color: #fff; font-size:16px; font-weight: bold;" id="navbarDropdown" class="nav-link dropdown-toggle" href="#"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->lName }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                     @if(auth()->check()&& auth()->user()->role->name === 'patient')
+                                     @if(auth()->check() && auth()->user()->role->name === 'patient')
                                     <a href="{{url('user-profile')}}"  class="dropdown-item"style="color: #000; font-size:14px; font-weight: normal">Profile</a>
                                     @else 
                                      <a href="{{url('dashboard')}}"  class="dropdown-item">Dashboard</a>

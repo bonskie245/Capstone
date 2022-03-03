@@ -75,4 +75,5 @@ Route::group(['middleware'=>['auth','doctor']],function(){
     Route::get('/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
     Route::get('/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
     Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
+    Route::post('/prescription', [App\Http\Controllers\PrescriptionController::class, 'store'])->name('prescription.store');
 });

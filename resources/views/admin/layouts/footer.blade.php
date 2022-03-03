@@ -117,8 +117,21 @@
         <script src="{{asset('template/js/widgets.js')}}"></script>
         <script src="{{asset('template/js/charts.js')}}"></script>
         <script src="{{asset('template/dist/js/theme.min.js')}}"></script>
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
+        <script>
+        var i = 0;
+            $("#dynamic-ar").click(function () {
+            ++i;
+            $("#dynamicAddRemove").append('<tr><td><input type="text" name="medicine_name['+i+']" placeholder="Input Medicine" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+                );
+             });
+            $(document).on('click', '.remove-input-field', function () {
+              $(this).parents('tr').remove();
+             });
+       </script>
+       
         <script type="text/javascript">
             $(document).ready(function(){
                 $("#datepicker").datetimepicker({
