@@ -10,7 +10,7 @@
                 {{Session::get('message')}}
               </div>
               @endif
-                <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
+                <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$patients->count()}})</div></strong>
                 
                 </div>
                 <div class="card-body">
@@ -30,32 +30,27 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($bookings as $key=>$booking)
+                        @forelse($patients as $key=>$patient)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('profile')}}/{{$booking->user->image}}"
+                          <td><img src="{{asset('profile')}}/{{$patient->user->image}}"
                               width="80" style="border-radius: 50%;"></td>
-                          <td>{{$booking->date}}</td>
-                          <td>{{$booking->user->lName}} ,  {{$booking->user->fName}}</td>
-                          <td>{{$booking->user->email}}</td>
-                          <td>{{$booking->user->phoneNum}}</td>
-                          <td>{{$booking->time}}</td>
-                          <td>Dr.{{$booking->doctor->lName}}, {{$booking->doctor->fName}}</td>
+                          <td>{{$patient->date}}</td>
+                          <td>{{$patient->user->lName}} ,  {{$patient->user->fName}}</td>
+                          <td>{{$patient->user->email}}</td>
+                          <td>{{$patient->user->phoneNum}}</td>
+                          <td>{{$patient->time}}</td>
+                          <td>Dr.{{$patient->doctor->lName}}, {{$patient->doctor->fName}}</td>
                           
-                          <td>@if($booking->status===1)
+                          <td>@if($patient->status===1)
                                 Visited
                               @endif
                           </td>   
                           <td>
-                              @if(!App\Models\Prescription::where('date',date('Y-m-d'))->where('doctor_id',auth()->user()->id)->where('user_id',$booking->user->id)->exists())
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
-                                  Write Prescription
-                                </button>
-                                @include('prescription.form')
-
-                                @else
-                               <a href="{{route('prescription.show',[$booking->user_id,$booking->date])}}" class="btn btn-secondary">View Prescription</a>
-                                @endif
+                       
+                             
+                               <a href="{{route('prescription.show',[$patient->user_id,$patient->date])}}" class="btn btn-secondary">View Prescription</a>
+                     
                           </td>
                         </tr>
                         @empty

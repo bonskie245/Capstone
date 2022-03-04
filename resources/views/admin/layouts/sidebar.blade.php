@@ -15,9 +15,6 @@
                                 <div class="nav-item">
                                     <a href="{{url('dashboard')}}"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
                                 </div>
-                              <!--   <div class="nav-item">
-                                    <a href="pages/navbar.html"><i class="ik ik-menu"></i><span>Navigation</span> <span class="badge badge-success">New</span></a>
-                                </div> -->
 
 
                                  @if(auth()->check()&&auth()->user()->role->name ==='admin')
@@ -30,8 +27,8 @@
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
                                 </div>
-
-                                @elseif(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                @endif
+                                @if(auth()->check()&&auth()->user()->role->name ==='doctor')
                                 <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Appointment Management</span></a>
                                     <div class="submenu-content">
@@ -41,7 +38,9 @@
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
                                 </div>
-                            
+                                @endif
+
+                                @if(auth()->check()&&auth()->user()->role->name ==='doctor')
                                 <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patient Appointment</span></a>
                                     <div class="submenu-content">
@@ -50,18 +49,32 @@
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
+                                </div>
                                 
                                     @endif
-                                <div class="nav-item">
-                                    <a onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" 
-                                                     href="{{ route('logout') }}"><i class="ik ik-power dropdown-icon">
-                                                     </i><span>Logout</span></a>
+                                
+                                    @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                    <div class="nav-item has-sub">
+                                        <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Management</span></a>
+                                        <div class="submenu-content">
+                                            <a href="{{route('patients.today')}}" class="menu-item">My Patient Today</a>
+                                            <a href="{{route('prescribed.patients')}}" class="menu-item">All Prescribed Patient</a>
+                                            <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
+                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
+                                        </div>
+                                    </div>
+
+                                    @endif
+                               
+                                
+
+                                    <div class="nav-item">
+                                    <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+                                                     href="{{ route('logout') }}"><i class="ik ik-power"></i><span>Log Out</span></a>
                                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                </div>  
-
+                                    </div> 
 
 
                             </nav>

@@ -8,6 +8,7 @@ use App\Models\Appointment;
 use App\Models\Time;
 use App\Models\Booking;
 use App\Mail\AppointmentMail;
+use App\Models\Prescription;
 class FrontendController extends Controller
 {
     public function index()
@@ -98,6 +99,12 @@ class FrontendController extends Controller
     {
         $doctor = Appointment::with('doctor')->whereDate('date',date('Y-m-d'))->get();
         return $doctor;
+    }
+
+    public function myPrescription()
+    {
+        $prescriptions = Prescription::where('user_id',auth()->user()->id)->get();
+        return view('my-prescription',compact('prescriptions'));
     }
 }
 
