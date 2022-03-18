@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label>Medicine</label>
-            <table class="table table-clean" id="dynamicAddRemove">
+            <table class="table table-clean" id="dynamicAddRemove" >
                         <td><input type="text" name="medicine_name[0]" placeholder="Input Medicine" class="form-control"/>
                         </td>
                         <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add</button></td>

@@ -5,27 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use File;
-use Illuminate\Support\Facades\Auth;
-class DoctorController extends Controller
+
+class PatientController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-
-     $users  = User::where('role_id','!=',4)
-                    ->where('role_id','!=',3)
-                    ->where('role_id','!=',1)
-                    ->get();
-         return view('admin.doctor.index', compact('users'));
+        //role 1 = admin
+        //role 2 = doctor
+        //rople 3 = receptionist
+        //role 4 = patient
+        $users  = User::where('role_id','!=',2)
+        ->where('role_id','!=',3)
+        ->where('role_id','!=',1)
+        ->get();
+        return view('patient.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function create()
     {
-        return view('admin.doctor.create');
+        return view('patient.create');
+
     }
 
     /**
@@ -38,14 +47,13 @@ class DoctorController extends Controller
     {
         $this->validateStore($request);
         $data = $request->all();
-        $name = (new User)->userAvatar($request);
+        $name = (new User)->patientAvatar($request);
 
         $data['image'] = $name;
         $data['password'] = bcrypt($request->password);
         User::create($data);
         
-        return redirect()->back()->with('message','Doctor Added successfully');
-
+        return redirect()->back()->with('message','Patient Added successfully');
     }
 
     /**
@@ -57,7 +65,7 @@ class DoctorController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('admin.doctor.delete',compact('user'));
+        return view('patient.delete',compact('user'));
     }
 
     /**
@@ -67,10 +75,9 @@ class DoctorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $users = User::find($id);
-        return view('admin.doctor.edit',compact('users'));
-
+        return view('patient.edit',compact('users'));
     }
 
     /**
@@ -88,9 +95,9 @@ class DoctorController extends Controller
         $imageName = $user->image;
         $userPassword = $user->password;
         
-        if($request->hasFile('image')) {
-            $imageName = (new User)->userAvatar($request);
-            File::delete(public_path('images/'.$user->image));
+        if ($request->hasFile('image')) {
+            $imageName = (new User)->patientAvatar($request);
+            File::delete(public_path('profiles/'.$user->image));
         }
         $data['image']= $imageName;
         if($request->password){
@@ -100,8 +107,7 @@ class DoctorController extends Controller
             $data['password'] = $userPassword;
         }
             $user->update($data);
-            return redirect()->route('doctor.index')->with('message','Doctor updated Succesfully');
-
+            return redirect()->route('patient.index')->with('message','Patient updated Succesfully');
     }
 
     /**
@@ -115,9 +121,9 @@ class DoctorController extends Controller
         $user = User::find($id);
         $userDelete = $user->delete();
         if($userDelete){
-             File::delete(public_path('images/'.$user->image));
+             File::delete(public_path('profiles/'.$user->image));
         }
-        return redirect()->route('doctor.index')->with('message','Doctor Deleted Succesfully');
+        return redirect()->route('patient.index')->with('message','Patient Deleted Succesfully');
     }
     public function validateStore($request)
     {
@@ -126,15 +132,13 @@ class DoctorController extends Controller
         'lName'=>'required',
         'email'=>'required|unique:users',
         'password'=>'required|min:6|max:12',
-        'role_id'=>'required',
         'phoneNum'=>'required|numeric',
         'address'=>'required',
-        'department'=>'required',
         'image'=>'required|mimes:jpeg,jpg,png',
         'gender'=>'required',  
         ]);     
     }
-     public function validateUpdate($request,$id)
+    public function validateUpdate($request,$id)
     {
         return $request->validate([
         'fName'=>'required',
@@ -143,7 +147,6 @@ class DoctorController extends Controller
         'role_id'=>'required',
         'phoneNum'=>'required|numeric',
         'address'=>'required',
-        'department'=>'required',
         'image'=>'mimes:jpeg,jpg,png',
         'gender'=>'required',  
         ]);     

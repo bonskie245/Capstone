@@ -42,10 +42,7 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 Route::group(['middleware'=>['auth','patient']],function(){
     Route::post('/book/appointment',[App\Http\Controllers\FrontendController::class, 'store'])->name('booking.appointment');
     Route::get('/my-booking', [App\Http\Controllers\FrontendController::class, 'myBookings'])->name('my.booking');
-  
     Route::get('/new-appointment/{doctorID}/{date}', [App\Http\Controllers\FrontendController::class, 'show'])->name('create.appointment');
-
-
     Route::get('/user-profile', [App\Http\Controllers\ProfileController::class, 'index']);
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store');
     Route::post('/profile-pic', [App\Http\Controllers\ProfileController::class, 'profilePic'])->name('profile.pic');
@@ -62,6 +59,8 @@ Route::group(['middleware'=>['auth','admin']],function(){
     Route::get('/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
     Route::get('/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
     Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
+    Route::resource('department', 'App\Http\Controllers\DepartmentController');
+    Route::resource('patient', 'App\Http\Controllers\PatientController');
 
 
 });
@@ -79,4 +78,5 @@ Route::group(['middleware'=>['auth','doctor']],function(){
     Route::post('/prescription', [App\Http\Controllers\PrescriptionController::class, 'store'])->name('prescription.store');
     Route::get('/prescription/{userID}/{date}', [App\Http\Controllers\PrescriptionController::class, 'show'])->name('prescription.show');
     Route::get('/prescribed-patients', [App\Http\Controllers\PrescriptionController::class, 'prescribedPatient'])->name('prescribed.patients');
+    Route::resource('patient', 'App\Http\Controllers\PatientController');
 });

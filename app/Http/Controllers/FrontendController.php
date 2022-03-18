@@ -9,6 +9,7 @@ use App\Models\Time;
 use App\Models\Booking;
 use App\Mail\AppointmentMail;
 use App\Models\Prescription;
+
 class FrontendController extends Controller
 {
     public function index()

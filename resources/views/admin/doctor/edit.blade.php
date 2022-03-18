@@ -16,7 +16,7 @@
                <nav class="breadcrumb-container" aria-label="breadcrumb">            
                		<ol class="breadcrumb">        
                			<li class="breadcrumb-item">           
-               				<a href="../index.html">
+               				<a href="{{route('doctor.index')}}">
                				<i class="ik ik-home"></i></a>
                         </li>
                        <li class="breadcrumb-item"><a href="#">Doctor</a>
@@ -109,10 +109,9 @@
   						<div class="col-md-6">
   							<label for="department">Specialization</label>
   							<select name="department" class="form-control @error('department') is-invalid @enderror" value="{{$users->department}}" placeholder="" required> 
-                                @foreach(['Family-medicine','Dermatologist','Pediatrician','Psychiatrist','Neurologist'] as $department)
-                               <option value="{{$department}}" @if($users->department==$department)selected @endif>{{$department}}</option>
-                               @endforeach
-
+							   @foreach(App\Models\Department::all() as $department)
+                               <option value="{{$department->dept_name}}" @if($users->department==$department->dept_name)selected @endif>{{$department->dept_name}}</option>
+								@endforeach
                             </select>
                             
   								@error('department')

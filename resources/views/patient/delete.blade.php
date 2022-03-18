@@ -7,8 +7,8 @@
 	               <div class="page-header-title">
                    <i class="fas fa-trash bg-blue"></i>
                    <div class="d-inline">
-                       <h5>Doctor</h5>
-                       <span>Delete Doctor</span>
+                       <h5>Patient</h5>
+                       <span>Delete Patient</span>
                    </div>
                </div>
            </div>
@@ -16,10 +16,10 @@
                <nav class="breadcrumb-container" aria-label="breadcrumb">            
                		<ol class="breadcrumb">        
                			<li class="breadcrumb-item">           
-               				<a href="{{route('doctor.index')}}">
+               				<a href="../index.html">
                				<i class="ik ik-home"></i></a>
                         </li>
-                       <li class="breadcrumb-item"><a href="#">Doctor</a>
+                       <li class="breadcrumb-item"><a href="#">Patient</a>
                        </li>
                        <li class="breadcrumb-item active" aria-current="page">Delete
             		   </li>
@@ -44,12 +44,12 @@
                 <p></p>
                 <h4>Are you sure to delete</h4>
                 <h5><strong>{{$user->fName." ". $user->lName."?"}}</strong></h5>
-  				<form class="forms-sample" action="{{route('doctor.destroy',[$user->id])}}" method="POST">@csrf
+  				<form class="forms-sample" action="{{route('patient.destroy',[$user->id])}}" method="POST">@csrf
                     @method('DELETE')
 
                         <div class="card-footer">
   					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
-	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
+	                        <a href="{{route('patient.index')}}" class="btn btn-secondary">Cancel</a>
                         </div>
 				</div>
   			</form>

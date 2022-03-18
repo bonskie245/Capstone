@@ -11,7 +11,7 @@
                     <div class="sidebar-content">
                         <div class="nav-container">
                             <nav id="main-menu-navigation" class="navigation-main">
-                                <div class="nav-lavel">Navigation</div>
+                                <div class="nav-lavel">Role: {{auth()->user()->role->name}}</div>
                                 <div class="nav-item">
                                     <a href="{{url('dashboard')}}"><i class="ik ik-bar-chart-2"></i><span>Dashboard</span></a>
                                 </div>
@@ -23,6 +23,17 @@
                                     <div class="submenu-content">
                                         <a href="{{route('doctor.index')}}" class="menu-item">View Doctor</a>
                                         <a href="{{route('doctor.create')}}" class="menu-item">Create Doctor</a>
+                                        <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
+                                        <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
+                                    </div>
+                                </div>
+                                @endif
+                                @if(auth()->check()&&auth()->user()->role->name ==='admin')
+                                <div class="nav-item has-sub">
+                                    <a href="javascript:void(0)"><i class="fas fa-hospital"></i><span>Department</span></a>
+                                    <div class="submenu-content">
+                                        <a href="{{route('department.index')}}" class="menu-item">View Department</a>
+                                        <a href="{{route('department.create')}}" class="menu-item">Create Department</a>
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
@@ -42,7 +53,7 @@
 
                                 @if(auth()->check()&&auth()->user()->role->name ==='doctor')
                                 <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patient Appointment</span></a>
+                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>All Patient Appointment</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('patient')}}" class="menu-item">View Appointment Today</a>
                                         <a href="{{route('all.appointments')}}" class="menu-item">All Appointment</a>
@@ -55,10 +66,22 @@
                                 
                                     @if(auth()->check()&&auth()->user()->role->name ==='doctor')
                                     <div class="nav-item has-sub">
-                                        <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Management</span></a>
+                                        <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Appointments</span></a>
                                         <div class="submenu-content">
                                             <a href="{{route('patients.today')}}" class="menu-item">My Patient Today</a>
                                             <a href="{{route('prescribed.patients')}}" class="menu-item">All Prescribed Patient</a>
+                                            <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
+                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
+                                        </div>
+                                    </div>
+
+                                    @endif
+                                    @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                    <div class="nav-item has-sub">
+                                        <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Management</span></a>
+                                        <div class="submenu-content">
+                                            <a href="{{route('patient.index')}}" class="menu-item">View Patient</a>
+                                            <a href="{{route('patient.create')}}" class="menu-item">Create Patient</a>
                                             <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                             <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                         </div>

@@ -7,8 +7,8 @@
 	               <div class="page-header-title">
                    <i class="fas fa-plus bg-blue"></i>
                    <div class="d-inline">
-                       <h5>Doctor</h5>
-                       <span>Add Doctor</span>
+                       <h5>Patient</h5>
+                       <span>Add Patient</span>
                    </div>
                </div>
            </div>
@@ -16,10 +16,10 @@
                <nav class="breadcrumb-container" aria-label="breadcrumb">            
                		<ol class="breadcrumb">        
                			<li class="breadcrumb-item">           
-               				<a href="{{route('doctor.index')}}">
+               				<a href="{{route('patient.index')}}">
                				<i class="ik ik-home"></i></a>
                         </li>
-                       <li class="breadcrumb-item"><a href="#">Doctor</a>
+                       <li class="breadcrumb-item"><a href="#">Patient</a>
                        </li>
                        <li class="breadcrumb-item active" aria-current="page">Create
             		   </li>
@@ -37,10 +37,10 @@
                 </div>
             @endif
   			<div class="card-header">
-  				<h3>Add Doctor</h3>
+  				<h3>Add Patient</h3>
   			</div>
   			<div class="card-body">
-  				<form class="forms-sample" action="{{route('doctor.store')}}" method="POST" enctype="multipart/form-data">@csrf
+  				<form class="forms-sample" action="{{route('patient.store')}}" method="POST" enctype="multipart/form-data">@csrf
   					<div class="row">
   						<div class="col-lg-6">
   							<label for="fName">First Name</label>
@@ -109,20 +109,6 @@
                                     </span>
                                 @enderror 
   						</div>
-  						<div class="col-md-6">
-  							<label for="department">Specialization</label>
-  							<select name="department" class="form-control @error('department') is-invalid @enderror" value="{{old('department')}}" placeholder="" required> 
-                                <option value="">Please select</option>
-								@foreach(App\Models\Department::all() as $dept)
-                                <option value="{{$dept->dept_name}}">{{$dept->dept_name}}</option>
-								@endforeach
-                            </select>
-  								@error('department')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror 
-  						</div>
 		  			</div>
 		  			<div class="row">
 	                            <div class="col-md-6">
@@ -141,7 +127,7 @@
 	                        		<label>Role</label>
 	                        		<select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
 	                        			<option>
-	                        				@foreach(App\Models\Role::where('name','!=','patient')->get() as $role)
+	                        				@foreach(App\Models\Role::where('name','!=','doctor')->where('name','!=','admin')->where('name','!=','receptionist')->get() as $role)
 	                        				<option value="{{$role->id}}">{{$role->name}} </option>
 	                        				@endforeach
 	                        			</option>
@@ -154,7 +140,7 @@
 	                        	</div>
   					</div>
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
-	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
+	                        <a href="{{route('patient.index')}}" class="btn btn-secondary">Cancel</a>
 				</div>
   			</form>
 

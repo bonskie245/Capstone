@@ -39,7 +39,7 @@
                         @forelse($bookings as $key=>$booking)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('profile')}}/{{$booking->user->image}}"
+                          <td><img src="{{asset('profiles')}}/{{$booking->user->image}}"
                               width="80" style="border-radius: 50%;"></td>
                           <td>{{$booking->date}}</td>
                           <td>{{$booking->user->lName}} ,  {{$booking->user->fName}}</td>

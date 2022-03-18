@@ -91,7 +91,7 @@
                     <img src="{{asset("/images/user.png")}}" width="140">
                     @else
                     <br>
-                    <img src="{{asset('profile')}}/{{auth()->user()->image}}" width="140">
+                    <img src="{{asset('profiles')}}/{{auth()->user()->image}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto; width: 75%;">
                     @endif
                     <input type="file" name="file" class="form-control" required="">
                     @error('file')
