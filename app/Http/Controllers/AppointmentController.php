@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Time;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Doctor;
 
 class AppointmentController extends Controller
 {
@@ -17,7 +19,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $myappointment = Appointment::where('user_id',auth()->user()->id)->get();
+        $myappointment = Appointment::where('user_id',auth()->user()->id)->groupBy('app_date')->get();
         return view('admin.appointment.index', compact('myappointment'));
     }
 
@@ -41,20 +43,25 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'date'=>'required|unique:appointments,date,NULL,id,user_id,'.\Auth::id(),
-            'time'=>'required' 
+            'app_date'=>'required',
+            'time_start'=>'required' ,
+            'time_end'=>'required' 
         ]);
+       $doctor = Doctor::where('user_id',auth()->user()->id)->get();
         $appointment = Appointment::create([
             'user_id'=> auth()->user()->id,
-            'date'=> $request->date,
+            'app_date'=> $request->app_date,
+            'time_start' => $request->time_start,
+            'time_end' => $request->time_end,
         ]);
-        foreach($request->time as $time){
-            Time::create([
-                'appointment_id'=>$appointment->id,
-                'time'=> $time,
-            ]);
-        }
-        return redirect()->back()->with('message','Appointment Created for '. $request->date);
+
+        //foreach($request->time as $time){
+        //    Time::create([
+        //        'appointment_id'=>$appointment->id,
+        //        'time'=> $time,
+        //    ]);
+        //}
+        return redirect()->back()->with('message','Appointment Created for '. $request->app_date);
     }
 
     /**
@@ -65,7 +72,8 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        return view('admin.appointment.delete',compact('appointment'));
     }
 
     /**
@@ -76,7 +84,16 @@ class AppointmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $appointments = Appointment::where('id',$id)->get();
+        //$times = Time::where('appointment_id',$appointment->id)->where('status',0)->get();
+        return view('admin.appointment.edit',compact('appointments'));
+    }
+
+    public function showTime($id, $date)
+    {
+        $appointments = Appointment::where('user_id',$id)->where('app_date', $date)->get();
+        //$times = Time::where('appointment_id',$appointment->id)->where('status',0)->get();
+        return view('admin.appointment.showTime',compact('appointments'));
     }
 
     /**
@@ -88,7 +105,11 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $data = $request->all();
+
+        $appointment->update($data);
+        return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');
     }
 
     /**
@@ -99,30 +120,33 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        $appointment->delete();
     }
     public function check(Request $request){
-        $date = $request->date;
-        $appointment = Appointment::where('date', $date)->where('user_id',auth()->user()->id)->first();
-        if (!$appointment) {
+        $date = $request->app_date;
+
+        $hasAppointment = Appointment::where('app_date', $date)->where('user_id',auth()->user()->id)->first();
+        if (!$hasAppointment) {
             return redirect()->to('/appointment')->with('errmessage','Appointment time not available for this particular date');       
         }
-        $appointmentID= $appointment->id;
-        $times = Time::where('appointment_id',$appointmentID)->get();
-        
-        return view('admin.appointment.index', compact('times','appointmentID','date'));
+        //$appointmentID= $appointment->id;
+        //$times = Time::where('appointment_id',$appointmentID)->get();
+        $appointment = Appointment::where('app_date', $date)->where('user_id',auth()->user()->id)->get();
+
+        return view('admin.appointment.index', compact('appointment','date'));
     }
     
     public function updateTime(Request $request){
         $appointmentID = $request->appointmentID;
         $appointment = Time::where('appointment_id',$appointmentID)->delete();
-        foreach($request->time as $time){
-            Time::create([
-                'appointment_id'=>$appointmentID,
-                'time'=>$time,
-                'status'=>0,
-            ]);
-        }
+       // foreach($request->time as $time){
+        //    Time::create([
+       //         'appointment_id'=>$appointmentID,
+                //'time'=>$time,
+                //'status'=>0,
+        //    ]);
+       // }
         return redirect()->route('appointment.index')->with('message','Appointment Time Updated');
     }
 }

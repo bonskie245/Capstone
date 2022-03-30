@@ -12,12 +12,12 @@
                 <div class="card-header">User Profile</div>
 
                 <div class="card-body">
-                    <p>First Name: {{auth()->user()->fName}}</p>
-                    <p>Last Name: {{auth()->user()->lName}}</p>
-                    <p>Email: {{auth()->user()->email}}</p>
-                    <p>Address: {{auth()->user()->address}}</p>
-                    <p>Phone Number: {{auth()->user()->phoneNum}}</p>
-                    <p>Gender: {{auth()->user()->gender}}</p>
+                    <p>First Name: {{auth()->user()->user_fName}}</p>
+                    <p>Last Name: {{auth()->user()->user_lName}}</p>
+                    <p>Email: {{auth()->user()->user_email}}</p>
+                    <p>Address: {{auth()->user()->user_address}}</p>
+                    <p>Phone Number: {{auth()->user()->user_phoneNum}}</p>
+                    <p>Gender: {{auth()->user()->user_gender}}</p>
 
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <form action="{{route('profile.store')}}" method="post"> @csrf
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" name="fName" class="form-control @error('fName') is-invalid @enderror"  value="{{auth()->user()->fName}}">
+                            <input type="text" name="user_fName" class="form-control @error('fName') is-invalid @enderror"  value="{{auth()->user()->fName}}">
                             @error('fName')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
@@ -41,7 +41,7 @@
                         <br>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" name="lName" class="form-control @error('lName') is-invalid @enderror" value="{{auth()->user()->lName}}">
+                            <input type="text" name="user_lName" class="form-control @error('lName') is-invalid @enderror" value="{{auth()->user()->lName}}">
                             @error('lName')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
@@ -51,22 +51,22 @@
                         <br>
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" name="address" class="form-control" value="{{auth()->user()->address}}">
+                            <input type="text" name="user_address" class="form-control" value="{{auth()->user()->address}}">
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="text" name="phoneNum" class="form-control" value="{{auth()->user()->phoneNum}}">
+                            <input type="text" name="user_phoneNum" class="form-control" value="{{auth()->user()->phoneNum}}">
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Gender</label>
-                            <select name="gender" class="form-control @error('gender') is-invalid @enderror">
+                            <select name="user_gender" class="form-control @error('gender') is-invalid @enderror">
                                 <option value="">Select Gender</option>
-                                <option value="male" @if(auth()->user()->gender==='male')selected @endif>Male</option>
-                                <option value="female" @if(auth()->user()->gender==='female')selected @endif>Female</option>
+                                <option value="male" @if(auth()->user()->user_gender==='male')selected @endif>Male</option>
+                                <option value="female" @if(auth()->user()->user_gender==='female')selected @endif>Female</option>
                             </select>
-                                 @error('gender')
+                                 @error('user_gender')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
                                 </span>
@@ -87,11 +87,11 @@
                 <form action="{{route('profile.pic')}}" method="post" enctype="multipart/form-data">@csrf
                 <div class="card-body">
                     <br>
-                    @if(!auth()->user()->image)
+                    @if(!auth()->user()->user_image)
                     <img src="{{asset("/images/user.png")}}" width="140">
                     @else
                     <br>
-                    <img src="{{asset('profiles')}}/{{auth()->user()->image}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto; width: 75%;">
+                    <img src="{{asset('profiles')}}/{{auth()->user()->user_image}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto; width: 75%;">
                     @endif
                     <input type="file" name="file" class="form-control" required="">
                     @error('file')

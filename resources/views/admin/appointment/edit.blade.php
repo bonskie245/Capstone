@@ -43,36 +43,34 @@
             </div>           
         @endforeach
     
-        
-    <form action="{{route('appointment.store')}}" method="post">@csrf
- 
+   
+        @foreach($appointments as $appointment)
+             
+    <form action="{{route('appointment.update',[$appointment->id])}}" method="post">@csrf
+    @method('PUT')
     <div class="card">
         <div class="card-header">
-            Choose date
+            Edit Time For {{$appointment->app_date}}
 
         </div>
-        <div class="card-body">
-         <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker" name="app_date">
-        </div>
-    </div>
-
     <div class="card">
         <div class="card-header">
             <i class="bi-sunrise" style="font-size: 20px;"></i><span style="margin-left: 5px">Pick time</span>
-
+       
         <div class="card-body">
             <label for="time_start">Select start time:</label>
-            <input type="time" id="appt" name="time_start">
+            <input type="time" id="appt" name="time_start" value="{{$appointment->time_start}}" >
         </div>
 
         <div class="card-body">
             <label for="time_end">Select end time:</label>
-            <input type="time" id="appt" name="time_end">
+            <input type="time" id="appt" name="time_end" value="{{$appointment->time_end}}">
         </div>
         
         <div class="card-body">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+        @endforeach
     </div>
     </form>
 

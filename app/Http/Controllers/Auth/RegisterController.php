@@ -51,11 +51,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'fName' => ['required', 'string', 'max:255'],
-            'lName' => ['required', 'string', 'max:255'],
+            'user_fName' => ['required', 'string', 'max:255'],
+            'user_lName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'gender'=>['required'],
+            'user_gender'=>['required'],
         ]);
     }
 
@@ -69,14 +69,14 @@ class RegisterController extends Controller
     {
         $role = Role::where('name', 'patient')->first();
         return User::create([
-            'fName' => $data['fName'],
-            'lName' => $data['lName'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'user_fName' => $data['user_fName'],
+            'user_lName' => $data['user_lName'],
+            'email' => $data['user_email'],
+            'password' => Hash::make($data['user_password']),
             'role_id'=> $role->id,
-            'phoneNum'=> $data['phoneNum'],
-            'address'=> $data['address'],
-            'gender'=>$data['gender'],
+            'user_phoneNum'=> $data['user_phoneNum'],
+            'user_address'=> $data['user_address'],
+            'user_gender'=>$data['user_gender'],
         ]);
     }
 }

@@ -35,12 +35,12 @@
                           <th scope="row">{{$key+1}}</th>
                           <td><img src="{{asset('profile')}}/{{$patient->user->image}}"
                               width="80" style="border-radius: 50%;"></td>
-                          <td>{{$patient->date}}</td>
-                          <td>{{$patient->user->lName}} ,  {{$patient->user->fName}}</td>
-                          <td>{{$patient->user->email}}</td>
-                          <td>{{$patient->user->phoneNum}}</td>
+                          <td>{{$patient->app_date}}</td>
+                          <td>{{$patient->user->user_lName}} ,  {{$patient->user->user_fName}}</td>
+                          <td>{{$patient->user->user_email}}</td>
+                          <td>{{$patient->user->user_phoneNum}}</td>
                           <td>{{$patient->time}}</td>
-                          <td>Dr.{{$patient->doctor->lName}}, {{$patient->doctor->fName}}</td>
+                          <td>Dr.{{$patient->doctor->user_lName}}, {{$patient->doctor->user_fName}}</td>
                           
                           <td>@if($patient->status===1)
                                 Visited
@@ -49,7 +49,7 @@
                           <td>
                        
                              
-                               <a href="{{route('prescription.show',[$patient->user_id,$patient->date])}}" class="btn btn-secondary">View Prescription</a>
+                               <a href="{{route('prescription.show',[$patient->user_id,$patient->app_date])}}" class="btn btn-secondary">View Prescription</a>
                      
                           </td>
                         </tr>

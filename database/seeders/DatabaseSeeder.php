@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Doctor;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,54 +23,66 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
       
         User::create([
-          'fName' => 'User1',
-          'lName' => 'User1',
-          'role_id' => '4',
-          'address' => 'Valencia City',
-          'gender' => 'male',
-          'phoneNum' => '0999999',
-          'email' => 'user1@email.com',
-          'password' => bcrypt('password'),
-      ]);
+          'id' => '1',
+          'user_fName' => 'admin',
+          'user_lName' => 'admin',
+          'role_id' => '1',
+          'user_address' => '0',
+          'user_gender' => 'male',
+          'user_phoneNum' => '0',
+          'email' => 'admin@email.com',
+          'password' => bcrypt('admin'),
+        ]);
+
       User::create([
-        'fName' => 'Ervin',
-        'lName' => 'Butlay',
+        'id' => '2',
+        'user_fName' => 'Ervin',
+        'user_lName' => 'Butlay',
         'role_id' => '4',
-        'address' => 'Valencia City',
-        'gender' => 'male',
-        'phoneNum' => '090909',
-        'email' => 'user2@email.com',
+        'user_address' => 'Valencia City',
+        'user_gender' => 'male',
+        'user_phoneNum' => '090909',
+        'email' => 'user1@email.com',
         'password' => bcrypt('password'),
       ]);
       User::create([
-        'fName' => 'Johnes',
-        'lName' => 'Butlay',
+        'id' => '3',
+        'user_fName' => 'Johnes',
+        'user_lName' => 'Butlay',
         'role_id' => '2',
-        'address' => 'Valencia City',
-        'gender' => 'male',
-        'phoneNum' => '090909',
+        'user_address' => 'Valencia City',
+        'user_gender' => 'male',
+        'user_phoneNum' => '090909',
         'email' => 'doctor1@email.com',
         'password' => bcrypt('password'),
       ]);
       User::create([
-        'fName' => 'Krisha',
-        'lName' => 'Balaba',
+        'id' => '4',
+        'user_fName' => 'Krisha',
+        'user_lName' => 'Balaba',
         'role_id' => '2',
-        'address' => 'Valencia City',
-        'gender' => 'female',
-        'phoneNum' => '09464646',
+        'user_address' => 'Valencia City',
+        'user_gender' => 'female',
+        'user_phoneNum' => '09464646',
         'email' => 'doctor2@email.com',
         'password' => bcrypt('password'),
       ]);
       User::create([
-        'fName' => 'admin',
-        'lName' => 'admin',
-        'role_id' => '1',
-        'address' => '0',
-        'gender' => 'male',
-        'phoneNum' => '0',
-        'email' => 'admin@email.com',
-        'password' => bcrypt('admin'),
+        'id' => '5',
+        'user_fName' => 'User1',
+        'user_lName' => 'Users',
+        'role_id' => '4',
+        'user_address' => 'Valencia City',
+        'user_gender' => 'male',
+        'user_phoneNum' => '0999999',
+        'email' => 'user2@email.com',
+        'password' => bcrypt('password'),
+    ]);
+      Doctor::create([
+        'user_id' => '3'
+      ]);
+      Doctor::create([
+        'user_id' => '4'
       ]);
     }
 }

@@ -21,8 +21,8 @@
                             <tbody>
                                 @forelse($prescriptions as $prescription)
                                 <tr>
-                                <td>{{$prescription->date}}</td>
-                                <td>Dr. {{$prescription->doctor->fName}} {{$prescription->doctor->lName}}</td>
+                                <td>{{$prescription->app_date}}</td>
+                                <td>Dr. {{$prescription->doctor->user_fName}} {{$prescription->doctor->user_lName}}</td>
                                 <td>{{$prescription->medicine_name}}</td>
                                 <td>{{$prescription->medicine_gram}}</td>
                                 <td>{{$prescription->medicine_intake}}</td>

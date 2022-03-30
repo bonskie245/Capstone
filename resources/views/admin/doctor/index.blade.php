@@ -60,12 +60,12 @@
                                 @if(count($users)>0)
                                 @foreach($users as $user)
                             <tr>
-                                <td>{{$user->lName}}</td>
-                                <td>{{$user->fName}}</td>
-                                <td><img src="{{asset('images')}}/{{$user->image}}" class="table-user-thumb" alt=""></td>
+                                <td>{{$user->user_lName}}</td>
+                                <td>{{$user->user_fName}}</td>
+                                <td><img src="{{asset('images')}}/{{$user->user_image}}" class="table-user-thumb" alt=""></td>
                                 <td>{{$user->email}}</td>
-                                <td>{{$user->phoneNum}}</td>
-                                <td>{{$user->department}}</td>
+                                <td>{{$user->user_phoneNum}}</td>
+                                <td>{{$user->user_department}}</td>
                                 <td>
                                     <div class="table-actions">
                                         <a href="#" data-toggle="modal" data-target="#exampleModal{{$user->id}}" style="color:blue"> 

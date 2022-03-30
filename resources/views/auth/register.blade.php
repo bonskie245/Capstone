@@ -12,12 +12,12 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="fName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+                            <label for="user_fName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="fName" type="text" class="form-control @error('fName') is-invalid @enderror" name="fName" required >
+                                <input id="user_fName" type="text" class="form-control @error('user_fName') is-invalid @enderror" name="user_fName" required >
 
-                                @error('fName')
+                                @error('user_fName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -26,12 +26,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="lName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+                            <label for="user_lName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="lName" type="text" class="form-control @error('lName') is-invalid @enderror" name="lName" required >
+                                <input id="user_lName" type="text" class="form-control @error('user_lName') is-invalid @enderror" name="user_lName" required >
 
-                                @error('lName')
+                                @error('user_lName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -40,12 +40,12 @@
                         </div>
                         
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="user_email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="user_email" type="email" class="form-control @error('user_email') is-invalid @enderror" name="user_email" value="{{ old('email') }}" required autocomplete="email">
 
-                                @error('email')
+                                @error('user_email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -54,12 +54,12 @@
                         </div>
 
                          <div class="form-group row">
-                            <label for="phoneNum" class="col-md-4 col-form-label text-md-right">{{ __('Phone number') }}</label>
+                            <label for="user_phoneNum" class="col-md-4 col-form-label text-md-right">{{ __('Phone number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phoneNum" type="text" class="form-control @error('phoneNum') is-invalid @enderror" name="phoneNum" required >
+                                <input id="user_phoneNum" type="text" class="form-control @error('user_phoneNum') is-invalid @enderror" name="user_phoneNum" required >
 
-                                @error('phoneNum')
+                                @error('user_phoneNum')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -70,12 +70,12 @@
                           
 
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            <label for="user_address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" required >
+                                <input id="user_address" type="text" class="form-control @error('user_address') is-invalid @enderror" name="user_address" required >
 
-                                @error('address')
+                                @error('user_address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -85,12 +85,12 @@
 
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                            <label for="user_password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="user_password" type="password" class="form-control @error('user_password') is-invalid @enderror" name="user_password" required autocomplete="new-password">
 
-                                @error('password')
+                                @error('user_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -102,21 +102,21 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="user_password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
+                            <label for="user_gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
                             <div class="col-md-6">
-                               <select name=gender class="form-control @error('gender') is-invalid @enderror">
+                               <select name="user_gender" class="form-control @error('user_gender') is-invalid @enderror">
                                    <option value="">Please select gender</option>
                                    <option value="male">Male</option>
                                    <option value="female">Female</option>
                                </select>
                             </div>
-                              @error('gender')
+                              @error('user_gender')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

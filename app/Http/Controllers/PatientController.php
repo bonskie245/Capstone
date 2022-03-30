@@ -49,7 +49,7 @@ class PatientController extends Controller
         $data = $request->all();
         $name = (new User)->patientAvatar($request);
 
-        $data['image'] = $name;
+        $data['user_image'] = $name;
         $data['password'] = bcrypt($request->password);
         User::create($data);
         
@@ -92,14 +92,14 @@ class PatientController extends Controller
         $this->validateUpdate($request,$id);
         $data = $request->all();
         $user = User::find($id);
-        $imageName = $user->image;
+        $imageName = $user->user_image;
         $userPassword = $user->password;
         
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('user_image')) {
             $imageName = (new User)->patientAvatar($request);
-            File::delete(public_path('profiles/'.$user->image));
+            File::delete(public_path('profiles/'.$user->user_image));
         }
-        $data['image']= $imageName;
+        $data['user_image']= $imageName;
         if($request->password){
             $data['password'] = bcrypt($request->password);
         }
@@ -121,34 +121,34 @@ class PatientController extends Controller
         $user = User::find($id);
         $userDelete = $user->delete();
         if($userDelete){
-             File::delete(public_path('profiles/'.$user->image));
+             File::delete(public_path('profiles/'.$user->user_image));
         }
         return redirect()->route('patient.index')->with('message','Patient Deleted Succesfully');
     }
     public function validateStore($request)
     {
         return $request->validate([
-        'fName'=>'required',
-        'lName'=>'required',
+        'user_fName'=>'required',
+        'user_lName'=>'required',
         'email'=>'required|unique:users',
         'password'=>'required|min:6|max:12',
-        'phoneNum'=>'required|numeric',
-        'address'=>'required',
-        'image'=>'required|mimes:jpeg,jpg,png',
-        'gender'=>'required',  
+        'user_phoneNum'=>'required|numeric',
+        'user_address'=>'required',
+        'user_image'=>'required|mimes:jpeg,jpg,png',
+        'user_gender'=>'required',  
         ]);     
     }
     public function validateUpdate($request,$id)
     {
         return $request->validate([
-        'fName'=>'required',
-        'lName'=>'required',
+        'user_fName'=>'required',
+        'user_lName'=>'required',
         'email'=>'required|unique:users,email,'.$id,
         'role_id'=>'required',
-        'phoneNum'=>'required|numeric',
-        'address'=>'required',
-        'image'=>'mimes:jpeg,jpg,png',
-        'gender'=>'required',  
+        'user_phoneNum'=>'required|numeric',
+        'user_address'=>'required',
+        'user_image'=>'mimes:jpeg,jpg,png',
+        'user_gender'=>'required',  
         ]);     
     }
 }

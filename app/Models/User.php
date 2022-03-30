@@ -18,18 +18,17 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'fName',
-        'lName',
+        'user_fName',
+        'user_lName',
         'email',
         'password',
         'role_id',
-        'phoneNum',
-        'address',
-        'department',
-        'description',
-        'image',
-        'gender',
-
+        'user_phoneNum',
+        'user_address',
+        'user_department',
+        'user_description',
+        'user_image',
+        'user_gender',
     ];
 
     /**
@@ -56,7 +55,7 @@ class User extends Authenticatable
     }
 
     public function userAvatar($request){
-        $image = $request->file('image');
+        $image = $request->file('user_image');
         $name = $image->hashName();
         $destination = public_path('/images');
         $image->move($destination,$name);
@@ -64,7 +63,7 @@ class User extends Authenticatable
     }
 
     public function patientAvatar($request){
-        $image = $request->file('image');
+        $image = $request->file('user_image');
         $name = $image->hashName();
         $destination = public_path('/profiles');
         $image->move($destination,$name);

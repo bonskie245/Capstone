@@ -43,8 +43,8 @@
   				<form class="forms-sample" action="{{route('patient.store')}}" method="POST" enctype="multipart/form-data">@csrf
   					<div class="row">
   						<div class="col-lg-6">
-  							<label for="fName">First Name</label>
-  							<input type="text" name="fName" class="form-control @error('fName') is-invalid @enderror" placeholder="First Name" value="{{old('fName')}}" required>
+  							<label for="user_fName">First Name</label>
+  							<input type="text" name="user_fName" class="form-control @error('user_fName') is-invalid @enderror" placeholder="First Name" value="{{old('user_fName')}}" required>
   								@error('fName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -52,58 +52,58 @@
                                 @enderror
   						</div>
   						<div class="col-lg-6">
-  							<label for="lName">Last Name</label>
-  							<input type="text" name="lName" class="form-control @error('lName') is-invalid @enderror" placeholder= "Last Name" value="{{old('lName')}}"required>
-  								@error('lName')
+  							<label for="user_lName">Last Name</label>
+  							<input type="text" name="user_lName" class="form-control @error('user_lName') is-invalid @enderror" placeholder= "Last Name" value="{{old('user_lName')}}"required>
+  								@error('user_lName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                               	@enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="email">Email</label>
-  							<input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
-  								@error('email')
+  							<label for="user_email">Email</label>
+  							<input type="email" name="user_email" class="form-control @error('user_email') is-invalid @enderror" placeholder="Email" required>
+  								@error('user_email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="password">Password</label>
-  							<input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder= "Password" required>
-  								@error('password')
+  							<label for="user_password">Password</label>
+  							<input type="password" name="user_password" class="form-control @error('user_password') is-invalid @enderror" placeholder= "Password" required>
+  								@error('user_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="gender">Gender</label>
-  							<select class="form-control @error('gender') is-invalid @enderror" name="gender" required>
+  							<label for="user_gender">Gender</label>
+  							<select class="form-control @error('user_gender') is-invalid @enderror" name="user_gender" required>
                                 <option value="">Select Gender</option>
   								<option value="male">Male</option>
   								<option value="female">Female</option>
   							</select>
-  								@error('gender')
+  								@error('user_gender')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="address ">Address</label>
-  							<input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="Address"  required>
-  								@error('address')
+  							<label for="user_address ">Address</label>
+  							<input type="text" name="user_address" class="form-control @error('user_address') is-invalid @enderror" value="{{old('user_address')}}" placeholder="Address"  required>
+  								@error('user_address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-md-6">
-  							<label for="phoneNum">Phonenumber</label>
-  							<input type="text" name="phoneNum" class="form-control @error('phoneNum') is-invalid @enderror" value="{{old('phoneNum')}}" placeholder="Phonenumber"> 
-  								@error('phoneNum')
+  							<label for="user_phoneNum">Phonenumber</label>
+  							<input type="text" name="user_phoneNum" class="form-control @error('user_phoneNum') is-invalid @enderror" value="{{old('user_phoneNum')}}" placeholder="Phonenumber"> 
+  								@error('user_phoneNum')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -114,9 +114,9 @@
 	                            <div class="col-md-6">
 	                            	<div class="form-group">
 		                            		<label>Photo</label>
-				                                <input type="file" class="form-control file-upload-info @error('image') is-invalid @enderror" placeholder="Upload Image" name="image" required>
+				                                <input type="file" class="form-control file-upload-info @error('user_image') is-invalid @enderror" placeholder="Upload Image" name="user_image" required>
 				                                <span class="input-group-append">
-				                            @error('image')
+				                            @error('user_image')
                                     			<span class="invalid-feedback" role="alert">
                                       			  <strong>{{ $message }}</strong>
                                     			</span>

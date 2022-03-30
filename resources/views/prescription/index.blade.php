@@ -33,14 +33,14 @@
                         @forelse($bookings as $key=>$booking)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('profiles')}}/{{$booking->user->image}}"
+                          <td><img src="{{asset('profiles')}}/{{$booking->user->user_image}}"
                               width="80" style="border-radius: 50%;"></td>
-                          <td>{{$booking->date}}</td>
-                          <td>{{$booking->user->lName}} ,  {{$booking->user->fName}}</td>
-                          <td>{{$booking->user->email}}</td>
-                          <td>{{$booking->user->phoneNum}}</td>
-                          <td>{{$booking->time}}</td>
-                          <td>Dr.{{$booking->doctor->lName}}, {{$booking->doctor->fName}}</td>
+                          <td>{{$booking->app_date}}</td>
+                          <td>{{$booking->user->user_lName}} ,  {{$booking->user->user_fName}}</td>
+                          <td>{{$booking->user->user_email}}</td>
+                          <td>{{$booking->user->user_phoneNum}}</td>
+                          <td>{{$booking->time_start}}</td>
+                          <td>Dr.{{$booking->doctor->user_lName}}, {{$booking->doctor->user_fName}}</td>
                           
                           <td>@if($booking->status===1)
                                 Visited

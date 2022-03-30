@@ -14,11 +14,11 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'fName'=>'required',
-            'lName'=>'required',
-            'address'=>'required',
-            'phoneNum'=>'required',
-            'gender'=>'required'
+            'user_fName'=>'required',
+            'user_lName'=>'required',
+            'user_address'=>'required',
+            'user_phoneNum'=>'required',
+            'user_gender'=>'required'
 
         ]);
             User::where('id',auth()->user()->id)
@@ -34,7 +34,7 @@ class ProfileController extends Controller
             $destination = public_path('/profiles');
             $image->move($destination,$name);
 
-            $user= User::where('id',auth()->user()->id)->update(['image'=>$name]);
+            $user= User::where('id',auth()->user()->id)->update(['user_image'=>$name]);
 
             return redirect()->back()->with('message','Profile Updated');
         }

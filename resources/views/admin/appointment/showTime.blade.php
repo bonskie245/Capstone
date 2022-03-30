@@ -48,34 +48,34 @@
             </div>  
         @endforeach
     </form>
-    <h3> Your Appointment time list: {{$myappointment->count()}}</h3>
+    <h3>My Time list</h3>
     <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">View/Update</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($myappointment as $appointment)
-                <tr>
-                  <th scope="row">{{$appointment->id}}</th>
-                  <td>{{$appointment->doctor->user_fName}}</td>
-                  <td>{{$appointment->doctor->user_lName}}</td>
-                 <!-- <td>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</td> --->
-                  <td>{{$appointment->app_date}}</td>
-                  <td>
-                      <form action="{{route('appointment.showTime',[$appointment->doctor->id,$appointment->app_date])}}" method="get">
-                      <button type="submit" class="btn btn-primary">View/Update</button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Doctor</th>
+                          <th scope="col">Time</th>
+                          <th scope="col">Created date</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @forelse($appointments as  $appointment)
+                        <tr>
+                          <th scope="row">{{$appointment->id}}</th>
+                          <td>{{$appointment->doctor->user_lName}}</td>
+                          <td>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</td>
+                          <td>{{$appointment->app_date}}</td>
+                          <td>       
+                          <a href="{{route('appointment.edit',[$appointment->id])}}" class="btn btn-primary">Edit</a>
+                          <a href="{{route('appointment.show',[$appointment->id])}}" class="btn btn-danger">Delete</a>
+                          </td>
+                        </tr>
+                        @empty
+                        <td>You have no any appointments</td>
+                        @endforelse
+                      </tbody>
+    </table>
 </div>
 
 

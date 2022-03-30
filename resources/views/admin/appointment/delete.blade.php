@@ -48,34 +48,34 @@
             </div>  
         @endforeach
     </form>
-    <h3> Your Appointment time list: {{$myappointment->count()}}</h3>
-    <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">View/Update</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($myappointment as $appointment)
-                <tr>
-                  <th scope="row">{{$appointment->id}}</th>
-                  <td>{{$appointment->doctor->user_fName}}</td>
-                  <td>{{$appointment->doctor->user_lName}}</td>
-                 <!-- <td>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</td> --->
-                  <td>{{$appointment->app_date}}</td>
-                  <td>
-                      <form action="{{route('appointment.showTime',[$appointment->doctor->id,$appointment->app_date])}}" method="get">
-                      <button type="submit" class="btn btn-primary">View/Update</button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
+    <h3>Delete Time</h3>
+    <div class="row justify-content-center">
+  		<div class="col-lg-3">
+            @if(Session::has('message'))
+                <div class="alert alert-success">
+                    {{Session::get('message')}}
+                </div>
+            @endif
+  			<div class="card-header" align="center">
+  				<h3>Delete</h3>
+  			</div>
+  			<div class="card-body" align="center">
+                <p></p>
+                <h4>Are you sure to delete Time</h4>
+                <h5><strong>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</strong></h5>
+  				<form class="forms-sample" action="{{route('appointment.destroy',[$appointment->id])}}" method="POST">@csrf
+                    @method('DELETE')
+
+                        <div class="card-footer">
+  					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
+	                        <a href="{{route('appointment.index')}}" class="btn btn-secondary">Cancel</a>
+                        </div>
+				</div>
+  			</form>
+
+  			</div>
+  		</div>
+  </div>
 </div>
 
 

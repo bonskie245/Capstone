@@ -30,7 +30,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
-                            <input type="text" autocomplete="off" name="date" class="form-control" id="datepicker">
+                            <input type="text" autocomplete="off" name="app_date" class="form-control" id="datepicker">
                     </div>
                     <div class="col-md-4">
                         <button class="btn btn-primary" type="submit">Search</button>
@@ -63,14 +63,14 @@
                         <tr>
                           <th scope="row">1</th>
                           <td>
-                              <img src="{{asset('images')}}/{{$doctor->doctor->image}}"
+                              <img src="{{asset('images')}}/{{$doctor->doctor->user_image}}"
                               width="90px" style="border-radius: 100px;">
                           </td>
-                          <td>{{$doctor->doctor->fName}}</td>
-                          <td>{{$doctor->doctor->lName}}</td>
-                          <td>{{$doctor->doctor->department}}</td>
+                          <td>{{$doctor->doctor->user_fName}}</td>
+                          <td>{{$doctor->doctor->user_lName}}</td>
+                          <td>{{$doctor->doctor->user_department}}</td>
                           <td>
-                              <a href="{{route('create.appointment',[$doctor->user_id,$doctor->date])}}"><button class="btn btn-primary">Book an appointment</button></a>
+                              <a href="{{route('create.appointment',[$doctor->user_id,$doctor->app_date])}}"><button class="btn btn-primary">Book an appointment</button></a>
                           </td>
                         @empty
                             <td>No Doctors Available for today</td>

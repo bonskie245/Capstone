@@ -44,18 +44,18 @@
                     @method('PUT')
   					<div class="row">
   						<div class="col-lg-6">
-  							<label for="fName">First Name</label>
-  							<input type="text" name="fName" class="form-control @error('fName') is-invalid @enderror" placeholder="First Name" value="{{$users->fName}}" required>
-  								@error('fName')
+  							<label for="user_fName">First Name</label>
+  							<input type="text" name="user_fName" class="form-control @error('user_fName') is-invalid @enderror" placeholder="First Name" value="{{$users->user_fName}}" required>
+  								@error('user_fName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
   						</div>
   						<div class="col-lg-6">
-  							<label for="lName">Last Name</label>
-  							<input type="text" name="lName" class="form-control @error('lName') is-invalid @enderror" placeholder= "Last Name" value="{{$users->lName}}"required>
-  								@error('lName')
+  							<label for="user_lName">Last Name</label>
+  							<input type="text" name="user_lName" class="form-control @error('user_lName') is-invalid @enderror" placeholder= "Last Name" value="{{$users->user_lName}}"required>
+  								@error('user_lName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -75,10 +75,10 @@
   							<input type="password" name="password" class="form-control " placeholder= "Password">
   						</div>
   						<div class="col-lg-6">
-  							<label for="gender">Gender</label>
-  							<select class="form-control @error('gender') is-invalid @enderror" name="gender" required>
+  							<label for="user_gender">Gender</label>
+  							<select class="form-control @error('user_gender') is-invalid @enderror" name="user_gender" required>
                                @foreach(['male','female'] as $gender)
-                               <option value="{{$gender}}" @if($users->gender==$gender)selected @endif>{{$gender}}</option>
+                               <option value="{{$gender}}" @if($users->user_gender==$gender)selected @endif>{{$gender}}</option>
                                @endforeach
   							</select>
   								@error('gender')
@@ -88,27 +88,27 @@
                                 @enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="address ">Address</label>
-  							<input type="text" name="address" class="form-control @error('address') is-invalid @enderror" value="{{$users->address}}" placeholder="Address"  required>
-  								@error('address')
+  							<label for="user_address ">Address</label>
+  							<input type="text" name="user_address" class="form-control @error('user_address') is-invalid @enderror" value="{{$users->user_address}}" placeholder="Address"  required>
+  								@error('user_address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-md-6">
-  							<label for="phoneNum">Phonenumber</label>
-  							<input type="text" name="phoneNum" class="form-control @error('phoneNum') is-invalid @enderror" value="{{$users->phoneNum}}"
+  							<label for="user_phoneNum">Phonenumber</label>
+  							<input type="text" name="user_phoneNum" class="form-control @error('user_phoneNum') is-invalid @enderror" value="{{$users->user_phoneNum}}"
                              placeholder="Phonenumber"> 
-  								@error('phoneNum')
+  								@error('user_phoneNum')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-md-6">
-  							<label for="department">Specialization</label>
-  							<select name="department" class="form-control @error('department') is-invalid @enderror" value="{{$users->department}}" placeholder="" required> 
+  							<label for="user_department">Specialization</label>
+  							<select name="user_department" class="form-control @error('user_department') is-invalid @enderror" value="{{$users->user_department}}" placeholder="" required> 
 							   @foreach(App\Models\Department::all() as $department)
                                <option value="{{$department->dept_name}}" @if($users->department==$department->dept_name)selected @endif>{{$department->dept_name}}</option>
 								@endforeach
@@ -125,7 +125,7 @@
 	                            <div class="col-md-6">
 	                            	<div class="form-group">
 		                            		<label>Photo</label>
-				                                <input type="file" class="form-control file-upload-info" name="image">
+				                                <input type="file" class="form-control file-upload-info" name="user_image">
 				                                <span class="input-group-append">   
 	                            	</div>
 	                        	</div>

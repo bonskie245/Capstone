@@ -7,11 +7,11 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center">Doctor Information</h4>
-                    <img src="{{asset('images')}}/{{$user->image}}" width="120px" style="border-radius: 100%; display: block; margin: 0 auto;">
+                    <img src="{{asset('images')}}/{{$user->user_image}}" width="120px" style="border-radius: 100%; display: block; margin: 0 auto;">
                     <br>
-                    <p class="lead">Name: {{ucfirst($user->fName)}} {{ucfirst($user->lName)}}</p>
-                    <p class="lead">Gender: {{ucfirst($user->gender)}}</p>
-                    <p class="lead">Specialize: {{$user->department}}</p>
+                    <p class="lead">Name: {{ucfirst($user->user_fName)}} {{ucfirst($user->user_lName)}}</p>
+                    <p class="lead">Gender: {{ucfirst($user->user_gender)}}</p>
+                    <p class="lead">Specialize: {{$user->user_department}}</p>
                     
                 </div>
             </div>
@@ -38,16 +38,16 @@
                 <div class="card-header"><strong><h2>Time available on {{$date}}</h2></strong></div>
                 <div class="card-body">
                     <div class="row">
-                        @foreach($times as $time)
+                        @foreach($appointments as $appointment)
                         <div class="col-md-3">
                             <label class="btn btn-outline-primary">
-                                <input type="radio" name="time" value="{{$time->time}}"> 
-                                <span>{{$time->time}}</span>
+                                <input type="radio" name="time" value="{{$appointment->time_start}}"> 
+                                <span>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</span>
                             </label>
                         </div>
+                        <input type="hidden" name="time_end" value="{{$appointment->time_end}}">
                         <input type="hidden" name="doctorId" value="{{$doctor_id}}">
-                        <input type="hidden" name="appointmentId" value="{{$time->appointment_id}}">
-                        <input type="hidden" name="date" value="{{$date}}">
+                        <input type="hidden" name="app_date" value="{{$date}}">
                         @endforeach
                     </div>
                 </div>

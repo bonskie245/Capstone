@@ -10,12 +10,12 @@
                 {{Session::get('message')}}
               </div>
               @endif
-                <div class="card-header" style="font-size: 20px;">Prescription For {{$prescription->user->lName}}</div>
+                <div class="card-header" style="font-size: 20px;">Prescription For {{$prescription->user->user_lName}}</div>
 
                 <div class="card-body">
-                    <p>Date: {{$prescription->date}}</p>
-                    <strong><p></strong> Patient: {{$prescription->user->fName}} {{$prescription->user->lName}}</p>
-                    <p>Doctor: Dr. {{$prescription->doctor->fName}} {{$prescription->doctor->lName}}</p>
+                    <p>Date: {{$prescription->app_date}}</p>
+                    <strong><p></strong> Patient: {{$prescription->user->user_fName}} {{$prescription->user->user_lName}}</p>
+                    <p>Doctor: Dr. {{$prescription->doctor->user_fName}} {{$prescription->doctor->user_lName}}</p>
                     <p>Medicine Name: {{$prescription->medicine_name}}</p>
                     <p>Gram: {{$prescription->medicine_gram}}</p>
                     <p>Intake: {{$prescription->medicine_intake}}</p>

@@ -8,15 +8,15 @@
                     </button>
                   </div>
                   <div class="modal-body" style="text-align: justify;">
-                    <p style="text-align: center;"><img src="{{asset('images')}}/{{$user->image}}" class="table-user-thumb" alt="" width="200`"></p>
+                    <p style="text-align: center;"><img src="{{asset('images')}}/{{$user->user_image}}" class="table-user-thumb" alt="" width="200`"></p>
                     <p class="badge badge-pill badge-dark">Role:{{$user->role->name}}</p>
-                    <p><strong>Firstname:</strong> {{$user->fName}}</p>
-                    <p><strong>Lastname:</strong> {{$user->lName}}</p>
-                    <p><strong>Gender:</strong> {{$user->gender}}</p>
+                    <p><strong>Firstname:</strong> {{$user->user_fName}}</p>
+                    <p><strong>Lastname:</strong> {{$user->user_lName}}</p>
+                    <p><strong>Gender:</strong> {{$user->user_gender}}</p>
                     <p><strong>Email:</strong> {{$user->email}}</p>
-                    <p><strong>Address:</strong> {{$user->address}}</p>
-                    <p><strong>Phone Number:</strong> {{$user->phoneNum}}</p>
-                    <p><strong>Department:</strong> {{$user->department}}</p>
+                    <p><strong>Address:</strong> {{$user->user_address}}</p>
+                    <p><strong>Phone Number:</strong> {{$user->user_phoneNum}}</p>
+                    <p><strong>Department:</strong> {{$user->user_department}}</p>
                   </div>
                   <div class="modal-footer">
                       <div class="col text-center">

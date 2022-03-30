@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
                     <div class="card-body">
-                       {{Auth()->user()->fName}} {{Auth()->user()->lName}} 
+                       {{Auth()->user()->user_fName}} {{Auth()->user()->user_lName}} 
                     </div>
 
 

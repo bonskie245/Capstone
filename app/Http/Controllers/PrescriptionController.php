@@ -11,7 +11,7 @@ class PrescriptionController extends Controller
     public function index()
     {
         date_default_timezone_set('Asia/Manila');
-        $bookings = Booking::where('date',date('Y-m-d'))->where('status', 1)->where('doctor_id', auth()->user()->id)->get();
+        $bookings = Booking::where('app_date',date('Y-m-d'))->where('status', 1)->where('doctor_id', auth()->user()->id)->get();
 
         return view('prescription.index', compact('bookings'));
     }
@@ -24,7 +24,7 @@ class PrescriptionController extends Controller
     }
     public function show($userID, $date)
     {
-        $prescription = Prescription::where('user_id', $userID)->where('date', $date)->first();
+        $prescription = Prescription::where('user_id', $userID)->where('app_date', $date)->first();
        return view('prescription.show',compact('prescription'));
     }
 

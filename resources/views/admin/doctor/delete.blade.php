@@ -40,10 +40,10 @@
   				<h3>Delete</h3>
   			</div>
   			<div class="card-body" align="center">
-                <img src="{{asset('images')}}/{{$user->image}}" width="120px">
+                <img src="{{asset('images')}}/{{$user->user_image}}" width="120px">
                 <p></p>
                 <h4>Are you sure to delete</h4>
-                <h5><strong>{{$user->fName." ". $user->lName."?"}}</strong></h5>
+                <h5><strong>{{$user->user_fName." ". $user->user_lName."?"}}</strong></h5>
   				<form class="forms-sample" action="{{route('doctor.destroy',[$user->id])}}" method="POST">@csrf
                     @method('DELETE')
 

@@ -23,9 +23,9 @@
                         @forelse($appointments as $key=>$appointment)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td>{{$appointment->doctor->lName}}</td>
-                          <td>{{$appointment->time}}</td>
-                          <td>{{$appointment->date}}</td>
+                          <td>{{$appointment->doctor->user_lName}}</td>
+                          <td>{{$appointment->time_start}} - {$appointment->time_end}}</td>
+                          <td>{{$appointment->app_date}}</td>
                           <td>{{$appointment->created_at}}</td>
                           <td>
                               

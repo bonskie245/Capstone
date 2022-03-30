@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameTable extends Migration
+class CreateDoctorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class RenameTable extends Migration
      */
     public function up()
     {
-        Schema::rename('prescription', 'prescriptions');
+        Schema::create('doctors', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class RenameTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('doctors');
     }
 }

@@ -14,7 +14,7 @@ class AddDateToBookingsTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->string('date');
+            $table->string('app_date');
         });
     }
 
@@ -26,7 +26,7 @@ class AddDateToBookingsTable extends Migration
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('date');
+            $table->dropColumn('app_date');
         });
     }
 }

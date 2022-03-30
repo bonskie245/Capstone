@@ -11,11 +11,11 @@ class PatientlistController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
 
-        if($request->date){
-             $bookings =Booking::latest()->where('date',$request->date)->get();
+        if($request->user_date){
+             $bookings =Booking::latest()->where('app_date',$request->user_date)->get();
             return view('patientlist.index',compact('bookings'));
         }
-            $bookings =Booking::latest()->where('date',date('Y-m-d'))->get();
+            $bookings =Booking::latest()->where('app_date',date('Y-m-d'))->get();
             return view('patientlist.index',compact('bookings'));
 
     }
