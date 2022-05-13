@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Doctor;
+use App\Models\Appointment;
+
 class Booking extends Model
 {
     use HasFactory;
@@ -12,11 +15,16 @@ class Booking extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne('App\Models\Doctor','id','doctor_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class,'id', 'user_id');
+    }
+
+    public function appointment()
+    {
+        return $this->hasMany(Appointment::class,'id','app_id');
     }
 }

@@ -27,6 +27,9 @@ class HomeController extends Controller
         if(Auth::user()->role->name=="admin"||Auth::user()->role->name=="doctor"||Auth::user()->role->name=="receptionist"){
             return redirect()->to('/dashboard');
         }
+        elseif(Auth::user()->role->name=="patient"){
+            return redirect()->to('/')->with('message','Welcome to Urgent Care Clinic ' . Auth::user()->user_lName);;
+        }
         return view('home');
     }
 }

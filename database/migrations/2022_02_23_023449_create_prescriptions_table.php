@@ -21,7 +21,7 @@ class CreatePrescriptionsTable extends Migration
             $table->String('app_date');
             $table->String('medicine_name');   
             $table->String('medicine_gram');   
-            $table->Text('medicine_intake');   
+            $table->String('medicine_intake');   
             $table->timestamps();
         });
     }

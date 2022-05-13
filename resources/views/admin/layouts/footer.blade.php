@@ -111,24 +111,33 @@
         <script src="{{asset('template/dist/js/theme.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script>
+        <script type="text/javascript">
         var i = 0;
-            $("#dynamic-ar").click(function () {
+            $("#add").click(function () {
             ++i;
-            $("#dynamicAddRemove").append('<tr><td><input type="text" name="medicine_name['+i+']" placeholder="Input Medicine" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            $("#dynamicAddRemove").append('<tr><td><input type="text" name="addmore['+i+'][medicine_name]" placeholder="Input Medicine" class="form-control" /></td><td><input type="text" name="addmore['+i+'][medicine_gram]" placeholder="Input Grams of Medicine" class="form-control"/></td> <td><select name="addmore['+i+'][medicine_intake]" placeholder="Indicate Intake" class="form-control"><option value="OnceAfterMeal">Once a day / After Meal</option> <option value="TwiceAfterMeal">Twice a day / After Meal</option> <option value="ThriceAfterMeal">Thrice a day / After Meal</option><option value="OnceBeforeMeal">Once a day / 30 mins Before Meal</option><option value="TwiceBeforeMeal">Twice a day / 30 mins Before Meal</option><option value="ThriceBeforeMeal">Thrice a day / 30 mins Before Meal</option></select></td> <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
                 );
              });
             $(document).on('click', '.remove-input-field', function () {
               $(this).parents('tr').remove();
              });
 
-             $(document).ready(function(){
-                $("#datepicker").datetimepicker({
-                    format: 'YYYY-MM-DD'
-                })
-            })
+            //  $(document).on('click', '.remove-input-field', function () {
+            //   $(this).parents('tr').remove();
+            //  });
+
+             
+           
        </script>
-       
+        
+        <script>
+                $(document).ready(function(){
+                                $("#datepicker").datetimepicker({
+                                    format: 'YYYY-MM-DD'
+                                })
+                            })
+        </script>
+        
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;

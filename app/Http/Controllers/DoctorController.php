@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Appointment;
 use File;
 use Illuminate\Support\Facades\Auth;
 class DoctorController extends Controller
@@ -27,6 +28,18 @@ class DoctorController extends Controller
     public function create()
     {
         return view('admin.doctor.create');
+
+        // date_default_timezone_set('Asia/Manila');
+        
+        // if(request('app_date')){
+        //     $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
+        //     $date = request('app_date');
+        //     return view('admin.walkInAppointment.create',compact('doctors','date'));
+        // }
+        // $date = date('Y-m-d');
+        //   $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
+        //   return view('admin.walkInAppointment.create',compact('doctors','date'));
+
     }
 
     /**
@@ -50,6 +63,8 @@ class DoctorController extends Controller
             ]);
         }
         return redirect()->back()->with('message','Doctor Added successfully');
+
+       
 
     }
 

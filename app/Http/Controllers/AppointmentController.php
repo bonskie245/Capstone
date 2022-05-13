@@ -17,9 +17,11 @@ class AppointmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //need to change
     public function index()
     {
-        $myappointment = Appointment::where('user_id',auth()->user()->id)->groupBy('app_date')->get();
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
         return view('admin.appointment.index', compact('myappointment'));
     }
 
@@ -40,21 +42,23 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    //need to change
     public function store(Request $request)
     {
         $this->validate($request,[
             'app_date'=>'required',
-            'time_start'=>'required' ,
+            'time_start'=>'required',
             'time_end'=>'required' 
         ]);
-       $doctor = Doctor::where('user_id',auth()->user()->id)->get();
+        
+       $doctor = Doctor::where('user_id',auth()->user()->id)->first();
         $appointment = Appointment::create([
-            'user_id'=> auth()->user()->id,
+            'doctor_id'=> $doctor->id,
             'app_date'=> $request->app_date,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end,
         ]);
-
+        
         //foreach($request->time as $time){
         //    Time::create([
         //        'appointment_id'=>$appointment->id,
@@ -89,9 +93,11 @@ class AppointmentController extends Controller
         return view('admin.appointment.edit',compact('appointments'));
     }
 
+    //need to change
     public function showTime($id, $date)
     {
-        $appointments = Appointment::where('user_id',$id)->where('app_date', $date)->get();
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $appointments = Appointment::where('doctor_id',$doctor->id)->where('app_date', $date)->orderBy('time_start')->get();
         //$times = Time::where('appointment_id',$appointment->id)->where('status',0)->get();
         return view('admin.appointment.showTime',compact('appointments'));
     }

@@ -59,17 +59,27 @@
     <div class="card">
         <div class="card-header">
             <i class="bi-sunrise" style="font-size: 20px;"></i><span style="margin-left: 5px">Pick time</span>
-
+    </div>
         <div class="card-body">
             <label for="time_start">Select start time:</label>
             <input type="time" id="appt" name="time_start">
-        </div>
-
-        <div class="card-body">
             <label for="time_end">Select end time:</label>
             <input type="time" id="appt" name="time_end">
         </div>
-        
+        <!-- <div class ="card-body">
+        <table class="table table-clean" id="dynamicAddRemoves">
+                            <tr>
+                                <th>Select start time:</th>
+                                <th>Select end time:</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><input type="time" id="appt" name="time_start"></td>
+                                <td><input type="time" id="appt" name="time_end"></td>
+                                <td><button type="button" name="add" id="add" class="btn btn-outline-primary">Add</button></td>
+                            </tr>
+        </table>
+        </div> -->
         <div class="card-body">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

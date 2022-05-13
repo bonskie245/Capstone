@@ -9,15 +9,15 @@
 
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">User Profile</div>
+                <div class="card-header"><h2>User Profile</h2></div>
 
                 <div class="card-body">
-                    <p>First Name: {{auth()->user()->user_fName}}</p>
-                    <p>Last Name: {{auth()->user()->user_lName}}</p>
-                    <p>Email: {{auth()->user()->user_email}}</p>
-                    <p>Address: {{auth()->user()->user_address}}</p>
-                    <p>Phone Number: {{auth()->user()->user_phoneNum}}</p>
-                    <p>Gender: {{auth()->user()->user_gender}}</p>
+                    <p><b>First Name:</b> {{auth()->user()->user_fName}}</p>
+                    <p><b>Last Name:</b> {{auth()->user()->user_lName}}</p>
+                    <p><b>Email:</b> {{auth()->user()->email}}</p>
+                    <p><b>Address:</b> {{auth()->user()->user_address}}</p>
+                    <p><b>Phone Number:</b> {{auth()->user()->user_phoneNum}}</p>
+                    <p><b>Gender:</b> {{auth()->user()->user_gender}}</p>
 
                 </div>
             </div>
@@ -25,14 +25,14 @@
 
         <div class="col-md-5">
             <div class="card">
-                <div class="card-header">Update Profile</div>
+                <div class="card-header"><h2>Update Profile</h2></div>
 
                 <div class="card-body">
                     <form action="{{route('profile.store')}}" method="post"> @csrf
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" name="user_fName" class="form-control @error('fName') is-invalid @enderror"  value="{{auth()->user()->fName}}">
-                            @error('fName')
+                            <input type="text" name="user_fName" class="form-control @error('user_fName') is-invalid @enderror"  value="{{auth()->user()->user_fName}}">
+                            @error('user_fName')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
                                 </span>
@@ -41,8 +41,8 @@
                         <br>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" name="user_lName" class="form-control @error('lName') is-invalid @enderror" value="{{auth()->user()->lName}}">
-                            @error('lName')
+                            <input type="text" name="user_lName" class="form-control @error('user_lName') is-invalid @enderror" value="{{auth()->user()->user_lName}}">
+                            @error('user_lName')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{$message}}</strong>
                                 </span>
@@ -51,12 +51,12 @@
                         <br>
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" name="user_address" class="form-control" value="{{auth()->user()->address}}">
+                            <input type="text" name="user_address" class="form-control" value="{{auth()->user()->user_address}}">
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="text" name="user_phoneNum" class="form-control" value="{{auth()->user()->phoneNum}}">
+                            <input type="text" name="user_phoneNum" class="form-control" value="{{auth()->user()->user_phoneNum}}">
                         </div>
                         <br>
                         <div class="form-group">
@@ -83,7 +83,7 @@
 
         <div class="col-md-3">
             <div class="card">
-                <div class="card-header">Update Image</div>
+                <div class="card-header"><h2>Update Profile Picture</h2></div>
                 <form action="{{route('profile.pic')}}" method="post" enctype="multipart/form-data">@csrf
                 <div class="card-body">
                     <br>

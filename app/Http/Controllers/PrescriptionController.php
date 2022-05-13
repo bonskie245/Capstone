@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Prescription;
+use App\Models\Doctor;
 
 class PrescriptionController extends Controller
 {
     public function index()
     {
         date_default_timezone_set('Asia/Manila');
-        $bookings = Booking::where('app_date',date('Y-m-d'))->where('status', 1)->where('doctor_id', auth()->user()->id)->get();
+        $doctorID = Doctor::where('user_id', auth()->user()->id)->first();
+        $bookings = Booking::where('app_date',date('Y-m-d'))->where('book_status', 1)->where('doctor_id', $doctorID->id)->get();
 
-        return view('prescription.index', compact('bookings'));
+        return view('prescription.index', compact('bookings', 'doctorID'));
     }
+
+    public function create(){
+        return view('prescription.create');
+    }
+
     public function store(Request $request)
     {
         $data = $request-> all();
-        $data['medicine_name'] = implode(',', $request->medicine_name);
+        
+        foreach ($request->addmore as $key => $value) {
+            //Code Here
+        }
+
         Prescription::create($data);
         return redirect()->back()->with('message','Prescription Created');
     }
+    
     public function show($userID, $date)
     {
         $prescription = Prescription::where('user_id', $userID)->where('app_date', $date)->first();

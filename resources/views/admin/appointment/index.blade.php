@@ -30,53 +30,54 @@
     </div>
 </div>
 
-<div class="container">
-         @if(Session::has('message'))
-            <div class="alert bg-success alert-success text-white" role="alert">
-                {{Session::get('message')}}
-            </div>
-        @endif
-        @if(Session::has('errmessage'))
-            <div class="alert bg-danger alert-success text-white" role="alert">
-                {{Session::get('errmessage')}}
-            </div>
-        @endif
-        @foreach($errors->all() as $error)
-            <div class="alert alert-danger">
-                {{$error}}
-                
-            </div>  
-        @endforeach
-    </form>
-    <h3> Your Appointment time list: {{$myappointment->count()}}</h3>
-    <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">View/Update</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($myappointment as $appointment)
-                <tr>
-                  <th scope="row">{{$appointment->id}}</th>
-                  <td>{{$appointment->doctor->user_fName}}</td>
-                  <td>{{$appointment->doctor->user_lName}}</td>
-                 <!-- <td>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</td> --->
-                  <td>{{$appointment->app_date}}</td>
-                  <td>
-                      <form action="{{route('appointment.showTime',[$appointment->doctor->id,$appointment->app_date])}}" method="get">
-                      <button type="submit" class="btn btn-primary">View/Update</button>
-                    </form>
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-</div>
+            <div class="container">
+                    @if(Session::has('message'))
+                        <div class="alert bg-success alert-success text-white" role="alert">
+                            {{Session::get('message')}}
+                        </div>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <div class="alert bg-danger alert-success text-white" role="alert">
+                            {{Session::get('errmessage')}}
+                        </div>
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{$error}}
+                            
+                        </div>  
+                    @endforeach
+                </form>
+                <div class="card">
+                    <div class="card-header"><h2> Your Appointment time list: {{$myappointment->count()}}</h2></div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">View/Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($myappointment as $appointment)
+                                <tr>
+                                <th scope="row">{{$appointment->id}}</th>
+                                <td>Dr. {{$appointment->doctor->user->user_fName}} {{$appointment->doctor->user->user_lName}}</td>
+                                <td>{{date('F j - Y,', strtotime($appointment->app_date))}}</td>
+                                <td>
+                                    <form action="{{route('appointment.showTime',[$appointment->doctor->id,$appointment->app_date])}}" method="get">
+                                    <button type="submit" class="btn btn-primary">View/Update</button>
+                                    </form>
+                                </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
 
 
 <style type="text/css">

@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Doctor;
 
 class Appointment extends Model
 {
     use HasFactory;
     protected $guarded =[];
+    protected $primaryKey = 'app_id';
     
     public function doctor(){ 
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(Doctor::class,'doctor_id','id');
 
     }
 }

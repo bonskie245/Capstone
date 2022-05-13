@@ -2,52 +2,80 @@
 
 @section('content')
 <div class="container">
+<div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <i class="fa fa-book bg-blue"></i>
+                        <div class="d-inline">
+                            <h5>Prescription</h5>
+                            <span>Prescription Tab</span>
+                        </div>
+
+                    </div>
+                </div>
+                    <div class="col-lg-4">
+                        <nav class="breadcrumb-container" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{route('doctor.index')}}"><i class="ik ik-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Prescription</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Index</li>
+                            </ol>
+                        </nav>
+                    </div>
+            </div>
+        </div>
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
-              @if(Session::has('message'))
-              <div class="alert alert-success"> 
-                {{Session::get('message')}}
-              </div>
-              @endif
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
                 
-                </div>
                 <div class="card-body">
-                   <table class="table table-striped">
-                      <thead>
+                   <table id="data_table" class="table">
+                   <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Photo</th>
-                          <th scope="col">Date</th>
                           <th scope="col">Name</th>
                           <th scope="col">Email</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Date</th>
                           <th scope="col">Time</th>
                           <th scope="col">Doctor</th>
                           <th scope="col">Status</th>
                           <th scope="col">Action</th>
+                          <th class="nosort">&nbsp;</th>
+                          <th class="nosort">&nbsp;</th>
+
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($bookings as $key=>$booking)
+                        @forelse($bookings as $booking)
                         <tr>
-                          <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('profiles')}}/{{$booking->user->user_image}}"
-                              width="80" style="border-radius: 50%;"></td>
-                          <td>{{$booking->app_date}}</td>
-                          <td>{{$booking->user->user_lName}} ,  {{$booking->user->user_fName}}</td>
-                          <td>{{$booking->user->user_email}}</td>
-                          <td>{{$booking->user->user_phoneNum}}</td>
-                          <td>{{$booking->time_start}}</td>
-                          <td>Dr.{{$booking->doctor->user_lName}}, {{$booking->doctor->user_fName}}</td>
+                          <th scope="row">{{$booking->id}}</th>
+                            @foreach($booking->user as $user)
+                            <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
+                                width="80" style="border-radius: 50%;"></td>
+                            <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
+                            <td>{{$user->user_email}}</td>
+                            <td>{{$user->user_phoneNum}}</td>
+                            @endforeach
+                            <td>{{$booking->app_date}}</td>
+                            @foreach($booking->appointment as $appointment)
+                            <td>{{$appointment->time_start}} - {{$appointment->time_end}}</td>
+                            @endforeach
+                          <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                           
-                          <td>@if($booking->status===1)
+                          <td>@if($booking->book_status===1)
                                 Visited
-                              @endif
+                              @endif 
                           </td>   
                           <td>
-                              @if(!App\Models\Prescription::where('date',date('Y-m-d'))->where('doctor_id',auth()->user()->id)->where('user_id',$booking->user->id)->exists())
+                              @if(!App\Models\Prescription::where('app_date',date('Y-m-d'))->where('doctor_id',$doctorID->id)->where('user_id',$booking->user_id)->exists())
                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
                                   Write Prescription
                                 </button>

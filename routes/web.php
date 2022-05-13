@@ -35,19 +35,24 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 
 
 //FrontEndController 
-  Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('welcome');
+//*Route::get('/about-us', function () {
+//    return view('about');
+//});
 
+  Route::get('/about-us', [App\Http\Controllers\FrontendController::class, 'aboutUs'])->name('about');
+  Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('welcome');
 
 /* Patient Route */
 Route::group(['middleware'=>['auth','patient']],function(){
     Route::post('/book/appointment',[App\Http\Controllers\FrontendController::class, 'store'])->name('booking.appointment');
     Route::get('/my-booking', [App\Http\Controllers\FrontendController::class, 'myBookings'])->name('my.booking');
-    Route::get('/new-appointment/{doctorID}/{date}', [App\Http\Controllers\FrontendController::class, 'show'])->name('create.appointment');
     Route::get('/user-profile', [App\Http\Controllers\ProfileController::class, 'index']);
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store');
     Route::post('/profile-pic', [App\Http\Controllers\ProfileController::class, 'profilePic'])->name('profile.pic');
     Route::get('/my-prescription', [App\Http\Controllers\FrontendController::class, 'myPrescription'])->name('myPrescription');
 });
+Route::get('/new-appointment/{doctorID}/{date}', [App\Http\Controllers\FrontendController::class, 'show'])->name('create.appointment');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -61,10 +66,15 @@ Route::group(['middleware'=>['auth','admin']],function(){
     Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
     Route::resource('department', 'App\Http\Controllers\DepartmentController');
     Route::resource('patient', 'App\Http\Controllers\PatientController');
-
-
+    Route::resource('receptionist', 'App\Http\Controllers\ReceptionistController');
+   
 });
-
+Route::resource('walkIn', 'App\Http\Controllers\WalkInPatientController');
+Route::get('/walkIn/Appointment/{id}', [App\Http\Controllers\WalkInPatientController::class, 'appointment'])->name('walkIn.appointment');
+Route::get('/walkIn/Appointment/{doctorId}/{date}/{id}', [App\Http\Controllers\WalkInPatientController::class, 'showTime'])->name('WalkIn.createApp');
+    // Route::get('/walkIn/createRecord', [App\Http\Controllers\WalkInPatientController::class, 'createRecord'])->name('walkIn.createRec');
+   
+Route::get('/prescription/create', [App\Http\Controllers\PrescriptionController::class, 'create'])->name('prescription.create');
 /* Doctor Route */
 Route::group(['middleware'=>['auth','doctor']],function(){
     Route::resource('appointment',AppointmentController::class);

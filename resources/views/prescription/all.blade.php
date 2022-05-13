@@ -10,9 +10,8 @@
                 {{Session::get('message')}}
               </div>
               @endif
-                <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$patients->count()}})</div></strong>
-                
-                </div>
+               
+              <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$patients->count()}})</div></strong>
                 <div class="card-body">
                    <table class="table table-striped">
                       <thead>
@@ -59,6 +58,7 @@
                       </tbody>
                     </table>
                 </div>
+              </div>
             </div>
         </div>
     </div>

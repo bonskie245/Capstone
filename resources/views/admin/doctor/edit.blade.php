@@ -110,7 +110,7 @@
   							<label for="user_department">Specialization</label>
   							<select name="user_department" class="form-control @error('user_department') is-invalid @enderror" value="{{$users->user_department}}" placeholder="" required> 
 							   @foreach(App\Models\Department::all() as $department)
-                               <option value="{{$department->dept_name}}" @if($users->department==$department->dept_name)selected @endif>{{$department->dept_name}}</option>
+                               <option value="{{$department->dept_name}}" @if($users->user_department==$department->dept_name)selected @endif>{{$department->dept_name}}</option>
 								@endforeach
                             </select>
                             

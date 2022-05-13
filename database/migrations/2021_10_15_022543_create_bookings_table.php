@@ -15,11 +15,10 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->integer('app_id');
             $table->integer('user_id');
             $table->integer('doctor_id');
-            $table->time('time_start');
-            $table->time('time_end');
-            $table->integer('status')->default(0); 
+            $table->integer('book_status')->default(0); 
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ use App\Models\Time;
 use App\Models\Booking;
 use App\Mail\AppointmentMail;
 use App\Models\Prescription;
+use App\Models\Doctor;
 
 class FrontendController extends Controller
 {
@@ -18,25 +19,27 @@ class FrontendController extends Controller
         
         if(request('app_date')){
             $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
-            return view('welcome',compact('doctors'));
+            $date = request('app_date');
+            return view('welcome',compact('doctors','date'));
         }
-        
-          $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('user_id')->get();
-          return view('welcome',compact('doctors'));
+        $date = date('Y-m-d');
+          $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
+          return view('welcome',compact('doctors','date'));
 
     }
+
     public function show($doctorId,$date)
     {
-            $appointments = Appointment::where('user_id',$doctorId)->where('app_date',$date)->where('app_status',0)->get();
+            $appointments = Appointment::where('doctor_id',$doctorId)->where('app_date',$date)->where('app_status',0)->orderBy('time_start')->get();
             //$times = Time::where('appointment_id',$appointment->id)->where('status',0)->get();
-            $user = User::where('id',$doctorId)->first();
+            $doctor = Doctor::where('id',$doctorId)->first();
             $doctor_id = $doctorId;
-            return view('appointment',compact('date','user','doctor_id','appointments'));
+            return view('appointment',compact('date','doctor','doctor_id','appointments'));
     }
 
     public function findDoctorsBasedOnDate($date)
     {
-        $doctors = Appointment::where('app_date', $date)->groupBy('user_id')->get();
+        $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
         return $doctors;
     }
 
@@ -45,20 +48,25 @@ class FrontendController extends Controller
         date_default_timezone_set('Asia/Manila');
        // $request->validate(['time'=>'required']);
         
-        $check = $this->checkBookingTimeInterval();
+        $check = $this->checkBookingTimeInterval($request->doctorId);
         
         if($check){
-            return redirect()->back()->with('errmessage','You already made an Appointment. Please wait to make next appointment');
+            return redirect()->back()->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
         }
+
         /*Create Booking*/
-        Booking::create([
+        $booking = Booking::create([
+                'app_id'=> $request->app_id,
                 'user_id'=>auth()->user()->id,
                 'doctor_id' => $request->doctorId,
-                'time_start' => $request->time_start, 
-                'time_end' => $request->time_end,
-                'app_date'=> $request->app_date,
-                'app_status'=> 0
+                'app_date' => $request->app_date,
+                'book_status'=> 0
         ]);
+
+        if($booking){
+            Appointment::where('id',$request->app_id)
+                        ->update(['app_status' => 1]);
+        }
 
         //Time::where('appointment_id',$request->appointmentId)
          //   ->where('time', $request->time)
@@ -66,42 +74,45 @@ class FrontendController extends Controller
         
 
         //send email notification
-            $doctorName = User::where('id',$request->doctorId)->first();
+            $doctorName = Doctor::where('id',$request->doctorId)->first();
             
-              $mailData = [
-               'name'=>auth()->user()->user_fName,
-               'time'=>$request->time,
-               'date'=>$request->date,
-               'doctorName' =>$doctorName->user_lName, 
-           ];
+            $mailData = [
+                'fName'=> $userID->user_fName, 
+                'lName'=> $userID->user_lName,
+                'time_start'=>$appointment->time_start,
+                'time_end'=>$appointment->time_end,
+                'app_date'=>$booking->app_date,
+                'doctor_fName' =>$doctorID->user->user_fName, 
+                'doctor_LName' =>$doctorID->user->user_lName, 
+                    ];
             
            try{
                 \Mail::to(auth()->user()->email)->send(new AppointmentMail($mailData));
 
            }catch(\Exception $e){
 
-            }
-
-
+            } 
         return redirect()->back()->with('message','Your appointment is Booked Succesfully');
     }
 
-    public function checkBookingTimeInterval()
+    public function checkBookingTimeInterval($doctorId)
     {
         return Booking::orderby('id','desc')
         ->where('user_id',auth()->user()->id)
-        ->whereDate('created_at',date('Y-m-d'))
+        ->where('doctor_id',$doctorId)
+        ->whereDate('app_date',date('Y-m-d'))
         ->exists();
     }
+    
     public function myBookings()
     {
-        $appointments = Booking::where('user_id',auth()->user()->id)->get();
-        return view('booking.index',compact('appointments'));
+        $bookings = Booking::where('user_id',auth()->user()->id)->orderBy('created_at','desc')->get();
+        return view('booking.index',compact('bookings'));
     }
 
     public function doctorToday(Request $request)
     {
-        $doctor = Appointment::with('doctor')->groupBy('user_id')->whereDate('app_date',date('Y-m-d'))->get();
+        $doctor = Appointment::with('doctor')->groupBy('doctor_id')->whereDate('app_date',date('Y-m-d'))->get();
         return $doctor;
     }
 
@@ -109,6 +120,15 @@ class FrontendController extends Controller
     {
         $prescriptions = Prescription::where('user_id',auth()->user()->id)->get();
         return view('my-prescription',compact('prescriptions'));
+    }
+
+    public function aboutUs()
+    {
+        $doctors  = User::where('role_id','!=',4)
+        ->where('role_id','!=',3)
+        ->where('role_id','!=',1)
+        ->get();
+        return view('about', compact('doctors'));
     }
 }
 

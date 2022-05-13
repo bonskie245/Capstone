@@ -54,7 +54,7 @@
   						</div>
   						<div class="col-lg-6">
   							<label for="user_lName">Last Name</label>
-  							<input type="text" name="lName" class="form-control @error('user_lName') is-invalid @enderror" placeholder= "Last Name" value="{{$users->user_lName}}"required>
+  							<input type="text" name="user_lName" class="form-control @error('user_lName') is-invalid @enderror" placeholder= "Last Name" value="{{$users->user_lName}}"required>
   								@error('user_lName')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -111,7 +111,7 @@
 	                            <div class="col-md-6">
 	                            	<div class="form-group">
 		                            		<label>Photo</label>
-				                                <input type="file" class="form-control file-upload-info" name="user_user_image">
+				                                <input type="file" class="form-control file-upload-info" name="user_image">
 				                                <span class="input-group-append">   
 	                            	</div>
 	                        	</div>

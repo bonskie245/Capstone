@@ -64,8 +64,8 @@
                         <tr>
                           <th scope="row">{{$appointment->id}}</th>
                           <td>{{$appointment->doctor->user_lName}}</td>
-                          <td>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</td>
-                          <td>{{$appointment->app_date}}</td>
+                          <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
+                          <td>{{date('F j - Y,', strtotime($appointment->app_date))}}</td>
                           <td>       
                           <a href="{{route('appointment.edit',[$appointment->id])}}" class="btn btn-primary">Edit</a>
                           <a href="{{route('appointment.show',[$appointment->id])}}" class="btn btn-danger">Delete</a>

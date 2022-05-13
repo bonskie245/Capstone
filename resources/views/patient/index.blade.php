@@ -64,7 +64,7 @@
                                 <td>{{$user->user_lName}}</td>
                                 <td>{{$user->user_fName}}</td>
                                 <td><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" alt=""></td>
-                                <td>{{$user->user_email}}</td>
+                                <td>{{$user->email}}</td>
                                 <td>{{$user->user_phoneNum}}</td>
                                 <td>{{$user->user_address}}</td>
                                 <td>{{ucfirst($user->user_gender)}}</td>
