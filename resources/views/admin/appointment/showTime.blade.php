@@ -60,9 +60,9 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($appointments as  $appointment)
+                        @forelse($appointments as $key => $appointment)
                         <tr>
-                          <th scope="row">{{$appointment->id}}</th>
+                          <th scope="row">{{$key+1}}</th>
                           <td>{{$appointment->doctor->user_lName}}</td>
                           <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
                           <td>{{date('F j - Y,', strtotime($appointment->app_date))}}</td>

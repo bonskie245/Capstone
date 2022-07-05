@@ -60,6 +60,15 @@
                                     </span>
                               	@enderror 
   						</div>
+						  <div class="col-lg-6">
+  							<label for="doctor_title">Title</label>
+  							<input type="text" name="doctor_title" class="form-control @error('doctor_title') is-invalid @enderror" placeholder= "Medical Job Title (Eg. MD, DO, DPM)" value="{{old('doctor_title')}}"required>
+  								@error('user_lName')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                              	@enderror 
+  						</div>
   						<div class="col-lg-6">
   							<label for="email">Email</label>
   							<input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>

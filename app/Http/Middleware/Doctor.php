@@ -19,8 +19,10 @@ class Doctor
         if(Auth::user()->role->name=="doctor"){
             return $next($request);
         }
-        else{
-            return redirect()->back();
+        elseif(Auth::user()->role->name=="receptionist"){
+            return $next($request);
         }
+        else
+            return redirect()->back();
     }
 }

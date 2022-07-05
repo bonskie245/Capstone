@@ -31,6 +31,10 @@
   </div>
     
   <div class="row justify-content-center" style="margin:auto;">
+        <div class ="card">
+            <div class ="card-header"> <h3> <strong>Make Appointment for {{$users->user_fName}} {{$users->user_lName}} </strong> </h3></div>
+        
+        </div>
             <!-- Search Doctor -->
                 <div class="card">
                     <div class="card-body">
@@ -52,22 +56,24 @@
                     </div>
                 </div>
            
-
+  
         <!-- Card -->
         <!-- Display Doctors -->
             <div class="card">
                 
                 <div class="card-body">
-                <h1> Make Appointment for {{$users->patient_fName}} {{$users->patient_lName}} </h1>
+                
                     <div class="card-header"> <h2>List of Doctors on <strong>{{date('F j, Y', strtotime($date))}}</strong></h2></div>
                     <div class="card-body">
-                        <table class="table table-bordered table-light">
+                        <table id = "data_table" class="table table-bordered table-light">
                             <thead class ="thead-light">
                                 <tr>
                                 <th scope="col">Doctor Picture</th>
                                 <th scope="col">Doctor Name</th>
                                 <th scope="col">Specialize</th>
                                 <th scope="col">Action</th>
+                                <th class="nosort">&nbsp;</th>
+
                                 </tr>
                             </thead>
                             <tbody>

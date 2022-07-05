@@ -16,7 +16,6 @@
                     <p><strong>Email:</strong> {{$user->email}}</p>
                     <p><strong>Address:</strong> {{$user->user_address}}</p>
                     <p><strong>Phone Number:</strong> {{$user->user_phoneNum}}</p>
-                    <p><strong>Department:</strong> {{$user->user_department}}</p>
                   </div>
                   <div class="modal-footer">
                       <div class="col text-center">

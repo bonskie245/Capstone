@@ -59,7 +59,9 @@ class DoctorController extends Controller
         $user = User::create($data);
         if($user){
             Doctor::create([
-                'user_id'=>$user->id
+                'user_id'=>$user->id,
+                'doctor_department'=>$user->user_department,
+                'doctor_title' => $request->doctor_title,
             ]);
         }
         return redirect()->back()->with('message','Doctor Added successfully');
@@ -107,6 +109,8 @@ class DoctorController extends Controller
         $user = User::find($id);
         $imageName = $user->user_image;
         $userPassword = $user->user_password;
+        
+        $doctor = Doctor::where('user_id', $user->id)->update(['doctor_department' => $data->user_department]);
         
         if($request->hasFile('user_image')) {
             $imageName = (new User)->userAvatar($request);

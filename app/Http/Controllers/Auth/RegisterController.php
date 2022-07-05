@@ -77,6 +77,7 @@ class RegisterController extends Controller
             'user_phoneNum'=> $data['user_phoneNum'],
             'user_address'=> $data['user_address'],
             'user_gender'=>$data['user_gender'],
+            'user_birthdate'=>$data['user_birthdate'],
         ]);
     }
 }

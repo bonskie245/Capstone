@@ -12,11 +12,11 @@ class Prescription extends Model
     protected $guarded =[];
     public function doctor()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

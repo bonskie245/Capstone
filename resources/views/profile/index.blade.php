@@ -18,6 +18,8 @@
                     <p><b>Address:</b> {{auth()->user()->user_address}}</p>
                     <p><b>Phone Number:</b> {{auth()->user()->user_phoneNum}}</p>
                     <p><b>Gender:</b> {{auth()->user()->user_gender}}</p>
+                    <p><b>Birtdate:</b> {{auth()->user()->user_birthdate}}</p>
+                    <p><b>Age:</b> {{\Carbon\Carbon::parse(auth()->user()->user_birthdate)->age}}</p>
 
                 </div>
             </div>
@@ -59,8 +61,9 @@
                             <input type="text" name="user_phoneNum" class="form-control" value="{{auth()->user()->user_phoneNum}}">
                         </div>
                         <br>
+                        <label>Gender</label>
                         <div class="form-group">
-                            <label>Gender</label>
+                            
                             <select name="user_gender" class="form-control @error('gender') is-invalid @enderror">
                                 <option value="">Select Gender</option>
                                 <option value="male" @if(auth()->user()->user_gender==='male')selected @endif>Male</option>
@@ -72,6 +75,7 @@
                                 </span>
                                  @enderror
                         </div>
+                        <br><br><br>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">Update</button>
                         </div>

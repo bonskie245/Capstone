@@ -9,6 +9,7 @@ use App\Models\Time;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Doctor;
+use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -21,8 +22,34 @@ class AppointmentController extends Controller
     public function index()
     {
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
-        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
-        return view('admin.appointment.index', compact('myappointment'));
+        $doctors= array();
+        $doctors = $doctor->user->user_fName . ' ' . $doctor->user->user_lName;
+        
+        // $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+        $appointment = array();
+        $color = null;
+        $myappointments = Appointment::where('doctor_id', $doctor->id)->get();
+
+        foreach($myappointments as $myappointment){
+            $start =  $myappointment->app_date . ' ' . $myappointment->time_start;
+            $end = $myappointment->app_date . ' ' . $myappointment->time_end;
+            
+            if($myappointment->app_status == 0){
+                $color =  '#47ceff';
+            }
+            else{
+                $color =  '#b51307';
+            }
+            $appointment [] =[
+                'id' => $myappointment->id,
+                'title' => 'Dr.'. $myappointment->doctor->user->user_fName. ' ' .  $myappointment->doctor->user->user_lName ,
+                'start' =>  Carbon::parse($start)->toDateTimeString(),
+                'end' =>  Carbon::parse($end)->toDateTimeString(),
+                'color' => $color,
+            ];
+        }
+        
+        return view('admin.appointment.index', compact('appointment', 'doctors'));
     }
 
     /**
@@ -48,26 +75,39 @@ class AppointmentController extends Controller
         $this->validate($request,[
             'app_date'=>'required',
             'time_start'=>'required',
-            'time_end'=>'required' 
+            'time_end'=>'required|after:time_start' 
         ]);
-        
-       $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $time_start = Carbon::parse($request->time_start)->toTimeString();
+        $time_end = Carbon::parse($request->time_end)->toTimeString();
+
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+
+        $checkAppointment = Appointment::where('doctor_id', $doctor->id)
+                                        ->where('app_date', $request->app_date)
+                                        ->where('time_start', '<=' ,$time_start)
+                                        ->where('time_end', '>',  $time_start)
+                                        ->exists();
+
+    
+        if($checkAppointment){
+            // return response()->json([
+            //     'errors' =>'Appointment Date/Time exist or overlaps'
+            // ], 404);
+            return redirect()->route('appointment.index')->with('errmessage','Appointment Date & time exist or overlaps');
+        }
+
         $appointment = Appointment::create([
             'doctor_id'=> $doctor->id,
             'app_date'=> $request->app_date,
-            'time_start' => $request->time_start,
-            'time_end' => $request->time_end,
+            'time_start' => $time_start,
+            'time_end' => $time_end,
         ]);
-        
-        //foreach($request->time as $time){
-        //    Time::create([
-        //        'appointment_id'=>$appointment->id,
-        //        'time'=> $time,
-        //    ]);
-        //}
+
+        // return response()->json($appointment);
         return redirect()->back()->with('message','Appointment Created for '. $request->app_date);
     }
-
+   
+   
     /**
      * Display the specified resource.
      *
@@ -80,6 +120,7 @@ class AppointmentController extends Controller
         return view('admin.appointment.delete',compact('appointment'));
     }
 
+  
     /**
      * Show the form for editing the specified resource.
      *
@@ -93,15 +134,26 @@ class AppointmentController extends Controller
         return view('admin.appointment.edit',compact('appointments'));
     }
 
+  
+
     //need to change
     public function showTime($id, $date)
     {
+
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
         $appointments = Appointment::where('doctor_id',$doctor->id)->where('app_date', $date)->orderBy('time_start')->get();
         //$times = Time::where('appointment_id',$appointment->id)->where('status',0)->get();
         return view('admin.appointment.showTime',compact('appointments'));
     }
 
+    public function timeEdit()
+    {
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+
+        return view('admin.appointment.editTime',compact('myappointment'));
+    }
+   
     /**
      * Update the specified resource in storage.
      *
@@ -114,7 +166,38 @@ class AppointmentController extends Controller
         $appointment = Appointment::find($id);
         $data = $request->all();
 
+        $time_start = Carbon::parse($request->time_start)->toTimeString();
+        $time_end = Carbon::parse($request->time_end)->toTimeString();
+        
+        // if(! $appointment){
+        //     return response()->json([
+        //         'error' =>'Unable to locate ID'
+        //     ], 404);
+        // }
+
+        $appointment->update([
+            'time_start' => $time_start,
+            'time_end' => $time_end,
+        ]);
+        
+        // return response()->json($appointment);
+        return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');
+    }
+    public function updateTime(Request $request, $id)
+    {
+        $appointment = Appointment::find($id);
+        $data = $request->all();
+
+        
+        if(! $appointment){
+            return response()->json([
+                'error' =>'Unable to locate ID'
+            ], 404);
+        }
+
         $appointment->update($data);
+        
+        return response()->json($appointment);
         return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');
     }
 
@@ -128,31 +211,15 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::find($id);
         $appointment->delete();
+        return redirect()->route('appointment.index')->with('errmessage','Appointment Deleted Successfuly');
     }
-    public function check(Request $request){
-        $date = $request->app_date;
 
-        $hasAppointment = Appointment::where('app_date', $date)->where('user_id',auth()->user()->id)->first();
-        if (!$hasAppointment) {
-            return redirect()->to('/appointment')->with('errmessage','Appointment time not available for this particular date');       
-        }
-        //$appointmentID= $appointment->id;
-        //$times = Time::where('appointment_id',$appointmentID)->get();
-        $appointment = Appointment::where('app_date', $date)->where('user_id',auth()->user()->id)->get();
+    public function showEditTime()
+    {
+        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
 
-        return view('admin.appointment.index', compact('appointment','date'));
+        return view('admin.appointment.editTime',compact('myappointment'));
     }
-    
-    public function updateTime(Request $request){
-        $appointmentID = $request->appointmentID;
-        $appointment = Time::where('appointment_id',$appointmentID)->delete();
-       // foreach($request->time as $time){
-        //    Time::create([
-       //         'appointment_id'=>$appointmentID,
-                //'time'=>$time,
-                //'status'=>0,
-        //    ]);
-       // }
-        return redirect()->route('appointment.index')->with('message','Appointment Time Updated');
-    }
+
 }

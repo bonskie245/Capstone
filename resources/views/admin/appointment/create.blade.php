@@ -62,9 +62,9 @@
     </div>
         <div class="card-body">
             <label for="time_start">Select start time:</label>
-            <input type="time" id="appt" name="time_start">
+            <input type="text" autocomplete="off" class ="timepicker" id="time_start" name="time_start">
             <label for="time_end">Select end time:</label>
-            <input type="time" id="appt" name="time_end">
+            <input type="text" class ="timepicker" id="time_end" name="time_end">
         </div>
         <!-- <div class ="card-body">
         <table class="table table-clean" id="dynamicAddRemoves">
@@ -98,6 +98,13 @@
     }
 </style>
 
+         
 
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 @endsection

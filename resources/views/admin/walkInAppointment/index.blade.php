@@ -17,10 +17,10 @@
                         <nav class="breadcrumb-container" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="{{route('walkIn.index')}}"><i class="ik ik-home"></i></a>
+                                    <a href="{{route('patient')}}"><i class="ik ik-home"></i></a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Doctors</a>
+                                    <a href="#">Appointment</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Index</li>
                             </ol>
@@ -38,8 +38,8 @@
                                  {{Session::get('message')}}
                                 </div>
                             @endif
-                            <div class="card-header"><h3>Walk-In / Call Appointment </h3>
-                                <a href="{{route('walkIn.create')}}" style="margin-left: 600px;" class="btn btn-primary">Add Walk-In / Call Patient</a>
+                            <div class="card-header"><h3>Book an Appointment For: </h3>
+                                
                             </div>
 
                               <div class="card-body">
@@ -60,11 +60,11 @@
                                 @if(count($users)>0)
                                 @foreach($users as $user)
                             <tr>
-                                <td>{{$user->patient_lName}} {{$user->patient_fName}}</td>
+                                <td>{{$user->user_lName}} {{$user->user_fName}}</td>
                                 
-                                <td>{{$user->patient_gender}}</td>
-                                <td>{{$user->patient_address}}</td>
-                                <td>{{$user->patient_phoneNum}}</td>
+                                <td>{{$user->user_gender}}</td>
+                                <td>{{$user->user_address}}</td>
+                                <td>{{$user->user_phoneNum}}</td>
                                 <td>
                                     <div class="table-actions">
                                         <a href="{{route('walkIn.edit',[$user->id])}}"><i class="ik ik-edit-2" style="color:green"></i>edit</a>

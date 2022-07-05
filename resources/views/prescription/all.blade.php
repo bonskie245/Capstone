@@ -32,13 +32,12 @@
                         @forelse($patients as $key=>$patient)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('profile')}}/{{$patient->user->image}}"
+                          <td><img src="{{asset('profiles')}}/{{$patient->prescription->user->user->image}}"
                               width="80" style="border-radius: 50%;"></td>
                           <td>{{$patient->app_date}}</td>
                           <td>{{$patient->user->user_lName}} ,  {{$patient->user->user_fName}}</td>
-                          <td>{{$patient->user->user_email}}</td>
+                          <td>{{$patient->user->email}}</td>
                           <td>{{$patient->user->user_phoneNum}}</td>
-                          <td>{{$patient->time}}</td>
                           <td>Dr.{{$patient->doctor->user_lName}}, {{$patient->doctor->user_fName}}</td>
                           
                           <td>@if($patient->status===1)

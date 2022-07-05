@@ -43,26 +43,30 @@
                 </div>
             </div>
         </div>
-
-        @foreach($errors->all() as $error)
-                <div class="alert alert-danger">{{$error}}</div>
-            @endforeach
-
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{Session::get('message')}}
-                </div>
-            @endif
-
-             @if(Session::has('errmessage'))
-                <div class="alert alert-danger">
-                    {{Session::get('errmessage')}}
-                </div>
-            @endif
-
+       
+           
             <div class="col-md-9">
-                    <form action="{{route('booking.appointment')}}" method="post">@csrf 
+                    <form action="{{route('walkIn.store')}}" method="post">@csrf 
                         <div class="card">
+                        @foreach($errors->all() as $error)
+                        <div class="card-header"> <div class="alert alert-danger">{{$error}}</div><div>
+                        @endforeach
+
+                        @if(Session::has('message'))
+                        <div class="card-header">
+                            <div class="alert alert-success">
+                                {{Session::get('message')}}
+                            </div>
+                        </div>
+                        @endif
+
+                        @if(Session::has('errmessage'))
+                        <div class="card-header">
+                            <div class="alert alert-danger">
+                                {{Session::get('errmessage')}}
+                            </div>
+                        </div>
+                        @endif
                             <div class="card-header"><strong><h2>Time available on {{date('F j - Y,', strtotime($date))}}</h2></strong></div>
                             <div class="card-body">
                                 <div class="row">
@@ -75,6 +79,7 @@
                                     </div>
                                     <input type="hidden" name="doctorId" value="{{$doctor_id}}">
                                     <input type="hidden" name="app_date" value="{{$appointment->app_date}}">
+                                    <input type="hidden" name="user_id" value="{{$users->id}}">
                                     @empty
                                     <p style="color: red;">&emsp;All slot are allocated</p>
                                     @endforelse

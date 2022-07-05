@@ -7,15 +7,20 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="text-center">Doctor Information</h4>
+                    @if(!$doctor->user->user_image)
+                    <img src="{{asset("/images/mdavatar.png")}}" width="90px" style="border-radius: 100%; display: block; margin: 0 auto;">
+                    @else
                     <img src="{{asset('images')}}/{{$doctor->user->user_image}}" width="120px" style="border-radius: 100%; display: block; margin: 0 auto;">
+                    @endif
                     <br>
-                    <p class="lead"><b>Name:</b> {{ucfirst($doctor->user->user_fName)}} {{ucfirst($doctor->user->user_lName)}}</p>
-                    <p class="lead">Gender: {{ucfirst($doctor->user->user_gender)}}</p>
-                    <p class="lead">Specialize: {{$doctor->user->user_department}}</p>
+                    <p>Name: {{ucfirst($doctor->user->user_fName)}} {{ucfirst($doctor->user->user_lName)}}</p>
+                    <p>Gender: {{ucfirst($doctor->user->user_gender)}}</p>
+                    <p>Specialize: {{$doctor->user->user_department}}</p>
                     
                 </div>
             </div>
         </div>
+        
         <div class="col-md-9">
             @foreach($errors->all() as $error)
                 <div class="alert alert-danger">{{$error}}</div>
@@ -56,7 +61,8 @@
             </div>
             <div class="card-footer bg-white">
                 @if(Auth::check())
-                    <button type="submit" class="btn btn-success" style="width: 150px">Book Appointment</button>
+                    <button type="submit" class="btn btn-success" style="width:170px;">Book Appointment</button>
+                    <a href="{{route('welcome')}}" class="btn btn-secondary">Cancel</a>
                     <!-- <a href="{{route('welcome')}}"><button class="btn btn-secondary" style="width: 150px">Cancel</button></a> -->
                 @else
                     <p style="color: red;">Please login to make an appointment</p>

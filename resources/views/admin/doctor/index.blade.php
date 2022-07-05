@@ -30,8 +30,8 @@
         </div>
 
 
-                <div class="row">
-                    <div class="col-md-11">
+            <div class="row">
+                    <div class="col-md-12">
                         <div class="card">
                             @if(Session::has('message'))
                                 <div class="alert alert-success">
@@ -39,7 +39,7 @@
                                 </div>
                             @endif
                             <div class="card-header"><h3>Doctor Management</h3>
-                                <a href="{{route('doctor.create')}}" style="margin-left: 725px;" class="btn btn-primary">Add Doctor</a>
+                                <a href="{{route('doctor.create')}}" style="margin-left: 605px;" class="btn btn-primary">Add Doctor</a>
                             </div>
                               <div class="card-body">
                                  <table id="data_table" class="table">

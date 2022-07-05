@@ -17,10 +17,10 @@
                         <nav class="breadcrumb-container" aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="{{route('doctor.index')}}"><i class="ik ik-home"></i></a>
+                                    <a href="{{route('receptionist.index')}}"><i class="ik ik-home"></i></a>
                                 </li>
                                 <li class="breadcrumb-item">
-                                    <a href="#">Secretary</a>
+                                    <a href="#">Staff</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">Index</li>
                             </ol>
@@ -41,7 +41,7 @@
   				<h3>Update Secretary</h3>
   			</div>
   			<div class="card-body">
-  				<form class="forms-sample" action="{{route('doctor.update',[$users->id])}}" method="POST" enctype="multipart/form-data">@csrf
+  				<form class="forms-sample" action="{{route('receptionist.update',[$users->id])}}" method="POST" enctype="multipart/form-data">@csrf
                     @method('PUT')
   					<div class="row">
   						<div class="col-lg-6">
@@ -107,20 +107,6 @@
                                     </span>
                                 @enderror 
   						</div>
-  						<div class="col-md-6">
-  							<label for="user_department">Specialization</label>
-  							<select name="user_department" class="form-control @error('user_department') is-invalid @enderror" value="{{$users->user_department}}" placeholder="" required> 
-							   @foreach(App\Models\Department::all() as $department)
-                               <option value="{{$department->dept_name}}" @if($users->user_department==$department->dept_name)selected @endif>{{$department->dept_name}}</option>
-								@endforeach
-                            </select>
-                            
-  								@error('department')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror 
-  						</div>
 		  			</div>
 		  			<div class="row">
 	                            <div class="col-md-6">
@@ -147,7 +133,7 @@
 	                        	</div>
   					</div>
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
-	                        <a href="{{route('doctor.index')}}" class="btn btn-light">Cancel</a>
+	                        <a href="{{route('receptionist.index')}}" class="btn btn-light">Cancel</a>
   			</form>
 
   			</div>

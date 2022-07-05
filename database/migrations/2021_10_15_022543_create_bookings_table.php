@@ -19,6 +19,7 @@ class CreateBookingsTable extends Migration
             $table->integer('user_id');
             $table->integer('doctor_id');
             $table->integer('book_status')->default(0); 
+            $table->date('app_date'); 
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class Booking extends Model
 
     public function doctor()
     {
-        return $this->hasOne('App\Models\Doctor','id','doctor_id');
+        return $this->hasOne(Doctor::class,'id','doctor_id');
     }
 
     public function user()

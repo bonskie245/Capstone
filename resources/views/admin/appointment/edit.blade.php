@@ -51,7 +51,6 @@
     <div class="card">
         <div class="card-header">
             Edit Time For {{$appointment->app_date}}
-
         </div>
     <div class="card">
         <div class="card-header">
@@ -59,13 +58,14 @@
        
         <div class="card-body">
             <label for="time_start">Select start time:</label>
-            <input type="time" id="appt" name="time_start" value="{{$appointment->time_start}}" >
+            <input type="text" class ="timepicker" id="time_start" name="time_start" value="{{$appointment->time_start}}">
         </div>
 
         <div class="card-body">
             <label for="time_end">Select end time:</label>
-            <input type="time" id="appt" name="time_end" value="{{$appointment->time_end}}">
+            <input type="text" class ="timepicker" id="time_end" name="time_end" value="{{$appointment->time_end}}">
         </div>
+        
         
         <div class="card-body">
             <button type="submit" class="btn btn-primary">Submit</button>

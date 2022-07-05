@@ -1,115 +1,70 @@
-<!-- Footer -->
-<footer class="page-footer font-small mdb-color lighten-3 pt-4" style="margin-top: 200px; bottom: 0;">
+ <br>
+ <br>
+ <br>
+ <br>
+ <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ <footer data-stellar-background-ratio="5">
+          <div class="container">
+               <div class="row">
 
-  <!-- Footer Links -->
-  <div class="container text-center text-md-left">
+                    <div class="col-md-4 col-sm-4">
+                         <div class="footer-thumb"> 
+                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contact Info</h4>
+                              <p>Below is the Urgent Care Clinics Contact info incase you need something from us.</p>
 
-    <!-- Grid row -->
-    <div class="row">
-
-      <!-- Grid column -->
-      <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
-
-        <!-- Content -->
-        <h5 class="font-weight-bold text-uppercase mb-4">URGENT CARE CLINIC</h5>
-        <p>Here you can use rows and columns to organize your footer content.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit amet numquam iure provident voluptate
-          esse
-          quasi, veritatis totam voluptas nostrum.</p>
-
-      </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none">
-
-      <!-- Grid column -->
-      <div class="col-md-2 col-lg-2 mx-auto my-md-4 my-0 mt-4 mb-1">
-
-        <!-- Links -->
-        <h5 class="font-weight-bold text-uppercase mb-4">About</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <p>
-              <a href="#!">HOME</a>
-            </p>
-          </li>
-          <li>
-            <p>
-              <a href="#!">ABOUT US</a>
-            </p>
-          </li>
+                              <div class="contact-info">
+                                   <p><i class="fa fa-phone"></i> +63 919 523 5111 </p>
+                                   <p><i class="fa fa-envelope-o"></i> <a href="#">info@company.com</a></p>
+                              </div>
+                         </div>
+                    </div>
 
 
-      </div>
-      <!-- Grid column -->
 
-      <hr class="clearfix w-100 d-md-none">
+                    <div class="col-md-4 col-sm-4"> 
+                         <div class="footer-thumb">
+                              <div class="opening-hours">
+                                   <h4 class="wow fadeInUp" data-wow-delay="0.4s">Opening Hours</h4>
+                                   <p>Monday - Friday <span>06:00 AM - 10:00 PM</span></p>
+                                   <p>Saturday <span>09:00 AM - 08:00 PM</span></p>
+                                   <p>Sunday <span>Closed</span></p>
+                              </div> 
 
-      <!-- Grid column -->
-      <div class="col-md-4 col-lg-3 mx-auto my-md-4 my-0 mt-4 mb-1">
+                              <ul class="social-icon">
+                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
+                                   <li><a href="#" class="fa fa-twitter"></a></li>
+                                   <li><a href="#" class="fa fa-instagram"></a></li>
+                              </ul>
+                         </div>
+                    </div>
 
-        <!-- Contact details -->
-        <h5 class="font-weight-bold text-uppercase mb-4">Address</h5>
+                    <div class="col-md-12 col-sm-12 border-top">
+                         <div class="col-md-4 col-sm-6">
+                              <div class="copyright-text"> 
+                                   <p>Copyright &copy; 2022 Urgent Care Clinic 
+                                   
+                                   | Design: Tooplate</p>
+                              </div>
+                         </div>
+                         <div class="col-md-6 col-sm-6">
+                         </div>
+                         <div class="col-md-2 col-sm-2 text-align-center">
+                              <div class="angle-up-btn"> 
+                                  <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i class="fa fa-angle-up"></i></a>
+                              </div>
+                         </div>   
+                    </div>
+                    
+               </div>
+          </div>
 
-        <ul class="list-unstyled">
-          <li>
-            <p>
-              <i class="fas fa-home mr-3"></i> Valencia City, Bukidnon</p>
-          </li>
-          <li>
-            <p>
-              <i class="fas fa-envelope mr-3"></i> info@example.com</p>
-          </li>
-          <li>
-            <p>
-              <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-          </li>
-          <li>
-            <p>
-              <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
-          </li>
-        </ul>
-
-      </div>
-      <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none">
-
-      <!-- Grid column -->
-      <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
-
-        <!-- Social buttons -->
-        <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
-
-        <!-- Facebook -->
-        <a type="button" class="btn-floating btn-fb">
-          <i class="fab fa-facebook"></i>
-        </a>
-        <!-- Twitter -->
-        <a type="button" class="btn-floating btn-tw">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <!-- Google +-->
-        <a type="button" class="btn-floating btn-gplus">
-          <i class="fab fa-google-plus-g"></i>
-        </a>
-
-
-      </div>
-      <!-- Grid column -->
-
-    </div>
-    <!-- Grid row -->
-
-  </div>
-  <!-- Footer Links -->
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2022 Copyright:
-    <a href="https://mdbootstrap.com/"> Urgent Care Clinic</a>
-  </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
+     </footer>

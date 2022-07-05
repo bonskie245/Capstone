@@ -18,10 +18,7 @@ class CreatePrescriptionsTable extends Migration
             $table->String('pres_findings');
             $table->integer('user_id');
             $table->integer('doctor_id');
-            $table->String('app_date');
-            $table->String('medicine_name');   
-            $table->String('medicine_gram');   
-            $table->String('medicine_intake');   
+            $table->string('app_date');  
             $table->timestamps();
         });
     }

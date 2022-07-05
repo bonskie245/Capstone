@@ -6,9 +6,20 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
-                <form action="{{route('patient')}}" method="GET">
-                <div class="card-header">
-                    
+                <form action="{{route('all.appointments')}}" method="GET">
+                
+
+                @if(Session::has('message'))
+                                <div class="alert alert-success">
+                                 {{Session::get('message')}}
+                                </div>
+                            @endif
+                            @if(Session::has('errmessage'))
+                                <div class="alert alert-danger">
+                                 {{Session::get('errmessage')}}
+                                </div>
+                @endif
+              <div class="card-header">
                 Search by date:
                         <div class="row">
                         <div class="col-md-10">
@@ -19,6 +30,8 @@
                         </div>
                      </div>   
                     </form>
+
+                        
                 </div>
                 <div class="card-body">
                    <table class="table table-striped">
@@ -54,10 +67,23 @@
                           <td>
       
                               
-                                @if($booking->status==0)
+                                @if($booking->book_status==0)
                                 <a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Accept</button></a>
-                                @else
-                                <a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-success">Checked</button></a>
+                                <a href="{{route('decline.status',[$booking->id])}}"><button class="btn btn-danger">Decline</button></a>
+                                @endif
+                                @if($booking->book_status==1)
+                                <a href="{{route('visited.status',[$booking->id])}}"><button class="btn btn-success">Visited</button></a>
+                                <a href="{{route('notVisited.status',[$booking->id])}}"><button class="btn btn-danger">Not Visited</button></a>
+                                @endif
+                                @if($booking->book_status==2)
+                                <button class="btn btn-danger" style ="background-color:#47ceff;">Visited</button>
+                                @endif
+                                @if($booking->book_status==3)
+                                <button class="btn btn-danger" style ="background-color:#eb095c;">Not Visited</button>
+                                @endif
+                                @if($booking->book_status==4)
+                                <a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Undo</button></a>
+                                <button class="btn btn-danger" style ="background-color:#eb095c;">Declined</button>
                                 @endif
                           </td>
                         </tr>

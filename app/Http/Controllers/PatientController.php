@@ -125,6 +125,7 @@ class PatientController extends Controller
         }
         return redirect()->route('patient.index')->with('message','Patient Deleted Succesfully');
     }
+    
     public function validateStore($request)
     {
         return $request->validate([

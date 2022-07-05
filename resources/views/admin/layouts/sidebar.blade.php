@@ -54,23 +54,24 @@
 
                                 @if(auth()->check()&&auth()->user()->role->name ==='doctor')
                                 <div class="nav-lavel">Create Appointment</div>
-                                <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Appointment Management</span></a>
-                                    <div class="submenu-content">
-                                        <a href="{{route('appointment.index')}}" class="menu-item">View Appointment</a>
-                                        <a href="{{route('appointment.create')}}" class="menu-item">Create Appointment</a>
+                                <div class="nav-item">
+                                    <a href="{{route('appointment.index')}}"><i class="ik ik-calendar"></i><span>Appointment Management</span></a>
+                                    <!-- <div class="submenu-content">
+                                        <a href="{{route('appointment.index')}}" class="menu-item">View Appointment</a> -->
+                                        <!-- <a href="{{route('appointment.create')}}" class="menu-item">Create Appointment</a> -->
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                                 @endif
 
-                                @if(auth()->check()&&auth()->user()->role->name ==='doctor')
-                                <div class="nav-lavel">All User Appointment</div>
+                                @if(auth()->check()&&auth()->user()->role->name ==='receptionist')
+                                <div class="nav-lavel">All Appointment</div>
                                 <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>All Patient Appointment</span></a>
+                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patients Appointment</span></a>
                                     <div class="submenu-content">
-                                        <a href="{{route('patient')}}" class="menu-item">View Appointment Today</a>
+                                        <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
+                                        <a href="{{route('patient.today')}}" class="menu-item">View Appointment Today</a>
                                         <a href="{{route('all.appointments')}}" class="menu-item">All Appointment</a>
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
@@ -84,37 +85,31 @@
                                         <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Appointments</span></a>
                                         <div class="submenu-content">
                                             <a href="{{route('patients.today')}}" class="menu-item">My Patient Today</a>
-                                            <a href="{{route('prescribed.patients')}}" class="menu-item">All Prescribed Patient</a>
+                                            <a href="{{route('prescribed.patients')}}" class="menu-item">Patient Medical history</a>
                                             <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                             <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                         </div>
                                     </div>
 
                                     @endif
-                                    @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                    @if(auth()->check()&&auth()->user()->role->name ==='receptionist')
                                     <div class="nav-lavel">CRUD Patient</div>
-                                    <div class="nav-item has-sub">
-                                        <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Online/WalkIn Patient</span></a>
-                                        <div class="submenu-content">
-                                            <a href="{{route('patient.index')}}" class="menu-item">View Online-Patient</a>
-                                            <a href="{{route('walkIn.index')}}" class="menu-item">View Walk-In Patients</a>
-                                            <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
-                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
-                                        </div>
+                                    <div class="nav-item">
+                                        <a href="{{route('patient.index')}}"><i class="ik ik-user"></i><span> Patient CRUD</span></a>
                                     </div>
                                     @endif
 
-                                    <div class="nav-lavel">Walk In / Call Appointment</div>
+                                    <!-- <div class="nav-lavel">Walk In / Call Appointment</div>
                                     <div class="nav-item has-sub">
                                         <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Walk-In/Call Appointment</span></a>
                                         <div class="submenu-content">
-                                            <a href="{{route('walkIn.index')}}" class="menu-item">View Walk-In Patients</a>
+                                            
                                             <a href="{{route('patient.create')}}" class="menu-item">Create Walk-In Patients</a>
                                             <a href="{{route('patient.create')}}" class="menu-item">Create Walk-In Patients</a>
-                                            <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
-                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
+                                             <a href="pages/widget-data.html" class="menu-item">Data</a>
+                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <br>
                                     <br>

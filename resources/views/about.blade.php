@@ -8,33 +8,60 @@
 </div>
 <br>
 <br> -->
-<h2 style="text-align:center">Our Doctors</h2>
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+                    <div class="section-tittle text-center mb-100">
+                        <!-- <span>Our Doctors</span> -->
+                        <h2>Urgent Care Clinic</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+              <h4>Urgent Care Clinic is a small establishment with approximately two (2) physicians and nurse. The clinic is managed by 
+                Dr. Conchita B. Bergado & Dr. Stephen Paul M. Bergado, who specializes in Family Medicine. Currently, 
+                it is located at P Valero Street, Poblacion, Valencia City, Bukidnon.</h4>
+            </div>
+</div>
+<br>
+<br>
+<br>
+<div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="section-tittle text-center mb-100">
+                        <!-- <span>Our Doctors</span> -->
+                        <h2>Our Doctors</h2>
+                    </div>
+                </div>
+            </div>
 <br>
 
-
+<div class="container">
 <div class="row" style="margin: auto;">
 @foreach($doctors as $doctor)
   <div class="column">
     <div class="card">
-    @if(!$doctor->user_image)
+
+    @if(!$doctor->user->user_image)
     <center>
-        <img src="{{asset("/images/user.png")}}"  style="width: 250px; border-radius: 100%; margin-top: 20px;">
+        <img src="{{asset("/images/mdavatar.png")}}"  style="width: 250px; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
    </center>
       @else
       <center>
-      <img src="{{asset('images')}}/{{$doctor->user_image}}" style="width: 250px;  height: 300px; border-radius: 100%; margin-top: 20px;">
+      <img src="{{asset('images')}}/{{$doctor->user->user_image}}" style="width: 250px; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
       </center>
       @endif
       <div class="container">
-        <h2>Dr. {{$doctor->user_fName}} {{$doctor->user_lName}}</h2>
-        <p class="title">{{$doctor->user_department}}</p>
-        <p><i class="fas fa-envelope mr-3"></i>{{$doctor->email}}</p>
-        <p><i class="fas fa-phone mr-3"></i>{{$doctor->user_phoneNum}}</p>
-        <p><i class="fas fa-home mr-3"></i>{{$doctor->user_address}}</p>
+        <h2>Dr. {{$doctor->user->user_fName}} {{$doctor->user->user_lName}}, {{$doctor->doctor_title}} {{\Carbon\Carbon::parse($doctor->user_birthdate)->age;}}</h2>
+        <p class="title">{{$doctor->doctor_department}}</p>
+        <p><i class="fas fa-envelope mr-3"></i>{{$doctor->user->email}}</p>
+        <p><i class="fas fa-phone mr-3"></i>{{$doctor->user->user_phoneNum}}</p>
+        <p><i class="fas fa-home mr-3"></i>{{$doctor->user->user_address}}</p>
       </div>
     </div>
   </div>
 @endforeach
+</div>
+
 <!-- 
   <div class="column">
     <div class="card">

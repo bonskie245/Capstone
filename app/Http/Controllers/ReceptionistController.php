@@ -53,7 +53,7 @@ class ReceptionistController extends Controller
         $data['password'] = bcrypt($request->password);
         User::create($data);
         
-        return redirect()->back()->with('message','Patient Added successfully');
+        return redirect()->back()->with('message','Staff Added successfully');
     }
 
     /**
@@ -65,7 +65,7 @@ class ReceptionistController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('patient.delete',compact('user'));
+        return view('admin.receptionist.show',compact('user'));
     }
 
     /**
@@ -77,7 +77,7 @@ class ReceptionistController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-        return view('patient.edit',compact('users'));
+        return view('admin.receptionist.edit',compact('users'));
     }
 
     /**
@@ -107,7 +107,7 @@ class ReceptionistController extends Controller
             $data['password'] = $userPassword;
         }
             $user->update($data);
-            return redirect()->route('patient.index')->with('message','Patient updated Succesfully');
+            return redirect()->route('receptionist.index')->with('message','Staff updated Succesfully');
     }
 
     /**
@@ -123,7 +123,7 @@ class ReceptionistController extends Controller
         if($userDelete){
              File::delete(public_path('profiles/'.$user->user_image));
         }
-        return redirect()->route('patient.index')->with('message','Patient Deleted Succesfully');
+        return redirect()->route('receptionist.index')->with('message','Patient Deleted Succesfully');
     }
     public function validateStore($request)
     {

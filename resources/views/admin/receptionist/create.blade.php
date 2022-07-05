@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('content')
+
 <div class="page-header">
             <div class="row align-items-end">
                 <div class="col-lg-8">
@@ -40,7 +41,7 @@
   				<h3>Add Secretary</h3>
   			</div>
   			<div class="card-body">
-  				<form class="forms-sample" action="{{route('doctor.store')}}" method="POST" enctype="multipart/form-data">@csrf
+  				<form class="forms-sample" action="{{route('receptionist.store')}}" method="POST" enctype="multipart/form-data">@csrf
   					<div class="row">
   						<div class="col-lg-6">
   							<label for="user_fName">First Name</label>

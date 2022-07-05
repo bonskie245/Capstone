@@ -62,7 +62,7 @@
   			<div class="card-body" align="center">
                 <p></p>
                 <h4>Are you sure to delete Time</h4>
-                <h5><strong>{{date('H:i a', strtotime($appointment->time_start))}} - {{date('H:i a', strtotime($appointment->time_end))}}</strong></h5>
+                <h5><strong>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</strong></h5>
   				<form class="forms-sample" action="{{route('appointment.destroy',[$appointment->id])}}" method="POST">@csrf
                     @method('DELETE')
 

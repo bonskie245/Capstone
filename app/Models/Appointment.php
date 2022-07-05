@@ -11,8 +11,7 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $guarded =[];
-    protected $primaryKey = 'app_id';
-    
+
     public function doctor(){ 
         return $this->belongsTo(Doctor::class,'doctor_id','id');
 

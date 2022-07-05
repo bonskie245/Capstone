@@ -61,28 +61,29 @@
                             <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
                                 width="80" style="border-radius: 50%;"></td>
                             <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
-                            <td>{{$user->user_email}}</td>
+                            <td>{{$user->email}}</td>
                             <td>{{$user->user_phoneNum}}</td>
                             @endforeach
                             <td>{{$booking->app_date}}</td>
                             @foreach($booking->appointment as $appointment)
-                            <td>{{$appointment->time_start}} - {{$appointment->time_end}}</td>
+                            <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
                             @endforeach
                           <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                           
-                          <td>@if($booking->book_status===1)
-                                Visited
+                          <td>@if($booking->book_status===2)
+                                <p style="background-color:#47ceff;" >Visited</p>
                               @endif 
                           </td>   
                           <td>
                               @if(!App\Models\Prescription::where('app_date',date('Y-m-d'))->where('doctor_id',$doctorID->id)->where('user_id',$booking->user_id)->exists())
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
+                                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
                                   Write Prescription
-                                </button>
+                                </button> -->
+                                <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id])}}">Write Prescription</a></button>
                                 @include('prescription.form')
 
                                 @else
-                               <a href="{{route('prescription.show',[$booking->user_id,$booking->date])}}" class="btn btn-secondary">View Prescription</a>
+                               <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a>
                                 @endif
                           </td>
                         </tr>

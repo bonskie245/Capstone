@@ -39,7 +39,8 @@
                                 </div>
                             @endif
                             <div class="card-header"><h3>Patient CRUD Management</h3>
-                                <a href="{{route('patient.create')}}" style="margin-left: 725px;" class="btn btn-primary">Add Patient</a>
+                                <a href="{{route('patient.create')}}" style="float:right; margin-left: 500px;" class="btn btn-primary">Add Patient</a>
+                                <a href="{{route('walkIn.index')}}" style="margin-left: 10px;" class="btn btn-primary">Book Patient</a>
                             </div>
                               <div class="card-body">
                                  <table id="data_table" class="table">

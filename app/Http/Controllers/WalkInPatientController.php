@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Booking;
 use App\Models\WalkIn_Patient;
 
 
@@ -18,7 +19,10 @@ class WalkInPatientController extends Controller
      */
     public function index()
     {
-        $users = WalkIn_patient::all();
+        $users  = User::where('role_id','!=',2)
+        ->where('role_id','!=',3)
+        ->where('role_id','!=',1)
+        ->get();
         return view('admin.walkInAppointment.index', compact('users'));
     }
 
@@ -41,17 +45,30 @@ class WalkInPatientController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData =  $request->validate([
-            'patient_fName' => 'required',
-            'patient_lName' => 'required',
-            'patient_gender' => 'required',
-            'patient_address' => 'required',
-            'patient_phoneNum' => 'required',
+        date_default_timezone_set('Asia/Manila');
+       // $request->validate(['time'=>'required']);
+        
+        $check = $this->checkBookingTimeInterval($request->doctorId,$request->user_id);
+        
+        if($check){
+            return redirect()->back()->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
+        }
+
+        /*Create Booking*/
+        $booking = Booking::create([
+                'app_id'=> $request->app_id,
+                'user_id'=>$request->user_id,
+                'doctor_id' => $request->doctorId,
+                'app_date' => $request->app_date,
+                'book_status'=> 0
         ]);
 
-        $patient = WalkIn_Patient::create($validateData);
+        if($booking){
+            Appointment::where('id',$request->app_id)
+                        ->update(['app_status' => 1]);
+        }
 
-        return redirect()->back()->with('message','Patient Added');
+        return redirect()->back()->with('message','Your appointment is Booked Succesfully');
     }
 
      /**
@@ -118,7 +135,7 @@ class WalkInPatientController extends Controller
     {
          date_default_timezone_set('Asia/Manila');
         
-         $users = WalkIn_Patient::find($id);
+         $users = User::find($id);
 
         if(request('app_date'))
         {
@@ -130,6 +147,7 @@ class WalkInPatientController extends Controller
           $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
           return view('admin.walkInAppointment.appointment',compact('doctors','date','users'));
     }
+    
     public function findDoctorsBasedOnDate($date)
     {
         $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
@@ -140,11 +158,20 @@ class WalkInPatientController extends Controller
     {
         $appointments = Appointment::where('doctor_id',$doctorId)->where('app_date',$date)->where('app_status',0)->orderBy('time_start')->get();
 
-        $users = WalkIn_Patient::find($id);
+        $users = User::find($id);
         $doctor = Doctor::where('id',$doctorId)->first();
         $doctor_id = $doctorId;
 
         return view('admin.walkInAppointment.showTime',compact('date','doctor','doctor_id','appointments','users'));
+    }
+
+    public function checkBookingTimeInterval($doctorId,$userid)
+    {
+        return Booking::orderby('id','desc')
+        ->where('user_id',$userid)
+        ->where('doctor_id',$doctorId)
+        ->whereDate('app_date',date('Y-m-d'))
+        ->exists();
     }
 
 }

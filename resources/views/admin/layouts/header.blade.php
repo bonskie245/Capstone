@@ -28,7 +28,16 @@
         <link rel="stylesheet" href="{{asset('template/plugins/owl.carousel/dist/assets/owl.theme.default.min.css')}}">
         <link rel="stylesheet" href="{{asset('template/dist/css/theme.min.css')}}">
         <script src="{{asset('template/src/js/vendor/modernizr-2.8.3.min.js')}}"></script>
-     
+        
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+        
+        <!-- Full-Calendar -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+
+      
+        
+        // <!-- End Full Calendar -->
+        
     </head>
 
     <body>
@@ -127,6 +136,7 @@
                     </div>
                 </div>
             </header>
+
             <script type="text/javascript">
                 var dateToday = new Date();
                    $(function(){

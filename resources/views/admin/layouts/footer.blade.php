@@ -110,12 +110,16 @@
         <script src="{{asset('template/js/charts.js')}}"></script>
         <script src="{{asset('template/dist/js/theme.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
 
         <script type="text/javascript">
         var i = 0;
-            $("#add").click(function () {
+            
+        $("#add").click(function () {
             ++i;
-            $("#dynamicAddRemove").append('<tr><td><input type="text" name="addmore['+i+'][medicine_name]" placeholder="Input Medicine" class="form-control" /></td><td><input type="text" name="addmore['+i+'][medicine_gram]" placeholder="Input Grams of Medicine" class="form-control"/></td> <td><select name="addmore['+i+'][medicine_intake]" placeholder="Indicate Intake" class="form-control"><option value="OnceAfterMeal">Once a day / After Meal</option> <option value="TwiceAfterMeal">Twice a day / After Meal</option> <option value="ThriceAfterMeal">Thrice a day / After Meal</option><option value="OnceBeforeMeal">Once a day / 30 mins Before Meal</option><option value="TwiceBeforeMeal">Twice a day / 30 mins Before Meal</option><option value="ThriceBeforeMeal">Thrice a day / 30 mins Before Meal</option></select></td> <td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            $("#dynamicAddRemove").append('<tr><td><input type="text" autocomplete="off" id="medicine_name" name="medicine_name[]" placeholder="Input Medication" class="form-control" list="medicine"/></td><td><input type="text" autocomplete="off"name="medicine_frequency[]" placeholder="Indicate Frequency" class="form-control" list="frequency"></td><td><input type="text" autocomplete="off"name="medicine_duration[]" placeholder="Indicate Duration" class="form-control" list="duration"></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
                 );
              });
             $(document).on('click', '.remove-input-field', function () {
@@ -124,19 +128,59 @@
 
             //  $(document).on('click', '.remove-input-field', function () {
             //   $(this).parents('tr').remove();
-            //  });
+            //  });  
 
-             
-           
+
+ 
        </script>
-        
+         
+
+        <!-- Date Picker -->
         <script>
                 $(document).ready(function(){
-                                $("#datepicker").datetimepicker({
-                                    format: 'YYYY-MM-DD'
-                                })
+                            $("#datepicker").datetimepicker({
+                                format: 'YYYY-MM-DD'
                             })
+                });
+
         </script>
+        <!-- END Date Picker -->
+                
+           <!-- Time Picker -->
+           <script>
+                        $(document).ready(function(){
+                        $('#time_start').timepicker({
+                            timeFormat : 'hh:mm a',
+                            interval : 30,
+                            maxTime : '11:00 PM',
+                            startTime : '08:00 AM',
+                            dynamic : false,
+                            dropdown : true,
+                            scrollbar : true
+                        });
+                         
+                        $('#time_start').timepicker('option', 'change', function(time) {
+                            var later = new Date(time.getTime() + (0.5 * 60 * 60 * 1000));
+
+                                $('#time_end').timepicker('option', 'minTime', time);
+                                $('#time_end').timepicker('setTime', later);
+                            });
+                        $('#time_end').timepicker({
+                            timeFormat : 'hh:mm a',
+                                interval : 30,
+                                maxTime : '11:00 PM',
+                                startTime : '08:00 AM',
+                                dynamic : false,
+                                dropdown : true,
+                                scrollbar : true
+                        });
+                         });
+            </script>
+            <!-- END Time Picker -->
+
+            
+
+            <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>            
         
         <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=

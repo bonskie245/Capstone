@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 </head>
 <body class="hold-transition register-page">
-<div class="register-box"">
+<div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic </b>| Registration</a>
@@ -99,6 +99,24 @@
         </div>
 
         <div class="input-group mb-3">
+        <label>
+            Birthdate: 
+        </label>
+        <input id="user_birthdate" type="date" class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate"  >
+     
+                @error('user_birthdate')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-calendar"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
                     <select name="user_gender" class="form-control @error('user_gender') is-invalid @enderror">
                                    <option value="">Please select gender</option>
                                    <option value="male">Male</option>
@@ -140,7 +158,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
               <input type="checkbox" id="agreeTerms" name="terms" value="agree">
@@ -148,7 +166,7 @@
                I agree to the <a href="#">terms</a>
               </label>
             </div>
-          </div>
+          </div> -->
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>

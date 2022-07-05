@@ -1,55 +1,75 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+  <div class="container">
                             @if(Session::has('message'))
                                 <div class="alert alert-success">
-                                 {{Session::get('message')}}
+                                 <h5>{{Session::get('message')}}</h5>
                                 </div>
                             @endif
+                            @if(Session::has('errmessage'))
+                                <div class="alert alert-danger">
+                                 <h5>{{Session::get('errmessage')}}</h5>
+                                </div>
+                            @endif
+
     <div class="row justify-content-center">
-        <div class="col-md-11">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h1>My appointments ({{$bookings->count()}})</h1></div>
+                <div class="card-header"><h2>My appointments ({{$bookings->count()}})</h2></div>
                 <div class="card-body">
-                   <table id="data_table" class="table">
+                   <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Doctor</th>
-                          <th scope="col">Time</th>
-                          <th scope="col">Date for</th>
-                          <th scope="col">Status</th>
+                          <th scope="col"  style="font-size: 20px;">#</th>
+                          <th scope="col"  style="font-size: 20px;">Doctor</th>
+                          <th scope="col"  style="font-size: 20px;">Time</th>
+                          <th scope="col"  style="font-size: 20px;">Date for</th>
+                          <th scope="col"  style="font-size: 20px;">Status</th> 
+                          <th class="nosort">&nbsp;</th>
+                          
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($bookings as $booking)
+                        @forelse($bookings as $key => $booking)
                         <tr>
-                          <th scope="row"></th>
-                          <td>Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
+                          <th scope="row"  style="font-size: 16px;">{{$key+1}}</th>
+                          <td style="font-size: 16px;">Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
                             @foreach($booking->appointment as $book)
-                              <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                              <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
+                              <td style="font-size: 16px;">{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
+                              <td style="font-size: 16px;">{{date('F j, Y', strtotime($book->app_date))}}</td>
                             @endforeach
                           <td>
                               
                                 @if($booking->book_status==0)
-                                <button class="btn btn-secondary">Pending</button>
+                                <button style="color:grey; border: none; font-size: 16px;">Pending</button>
                                 @endif
                                 @if($booking->book_status==1)
-                                <button class="btn btn-success">Appointment Accepted</button>
+                                <button style="color:green; border: none; font-size: 16px;">Appointment Accepted</button>
                                 @endif
                                 @if($booking->book_status==2)
-                                <button class="btn btn-danger">Appointment Declined</button>
+                                <button style="color:red; border: none; font-size: 16px;">Appointment Declined</button>
                                 @endif
                                 @if($booking->book_status==3)
-                                <button class="btn btn-success">Visited</button>
+                                <button style="color:blue; border: none; font-size: 16px;">Visited</button>
                                 @endif
                                 @if($booking->book_status==4)
-                                <button class="btn btn-success">Did not Visit</button>
+                                <button style="color:red; border: none; font-size: 16px; ">Did not Visit</button>
                                 @endif
                           </td>
+                          
+                          <td>
+                            <div class="table-actions">
+                                      <a href="{{route('booking.showDoctor',[$booking->id])}}" style="font-size: 16px;"><i class="fa fa-edit" style="color:green">Edit Booking</i></a>
+                                      <!-- <form action="{{route('booking.deleteBooking',[$booking->id])}}" method="POST">@csrf
+                                      @method('DELETE') -->
+                                      <a href="{{route('booking.delete',[$booking->id])}}" style="font-size: 16px;"><i class="fa fa-trash" style="color:red">Cancel Booking</i></button>
+                                      <!-- </form> -->
+                            </div>
+                            <td></td>
+                        </td>
                         </tr>
+                        
                         @empty
                         <td>You have no any appointment</td>
                         @endforelse
@@ -60,4 +80,5 @@
         </div>
     </div>
 </div>
+
 @endsection

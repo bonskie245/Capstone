@@ -29,6 +29,7 @@ class User extends Authenticatable
         'user_description',
         'user_image',
         'user_gender',
+        'user_birthdate',
     ];
 
     /**
