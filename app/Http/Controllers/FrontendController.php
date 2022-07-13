@@ -18,15 +18,16 @@ class FrontendController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         
-        if(request('app_date')){
-            $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
-            $date = request('app_date');
-            return view('welcome',compact('doctors','date'));
-        }
-        $date = date('Y-m-d');
-          $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
-          return view('welcome',compact('doctors','date'));
+        // if(request('app_date')){
+        //     $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
+        //     $date = request('app_date');
+        //     return view('welcome',compact('doctors','date'));
+        // }
+        // $date = date('Y-m-d');
+        //   $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
+        //   return view('welcome',compact('doctors','date'));
 
+        return view('welcome');
     }
 
     public function show($doctorId,$date)
