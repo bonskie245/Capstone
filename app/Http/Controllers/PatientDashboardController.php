@@ -34,6 +34,8 @@ class PatientDashboardController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         
+
+
         if(request('app_date')){
             $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
             $date = request('app_date');

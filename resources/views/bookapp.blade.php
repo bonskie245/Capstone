@@ -50,7 +50,7 @@
                           <td style="font-size: 20px;">Dr. {{$doctor->doctor->user->user_fName}} {{$doctor->doctor->user->user_lName}}, {{$doctor->doctor->doctor_title}}</td>
                           <td style="font-size: 20px;">{{$doctor->doctor->doctor_department}}</td>
                           <td>
-                              <a href="{{route('create.appointment',[$doctor->doctor_id,$doctor->app_date])}}"><button class="btn btn-primary">Book an appointment</button></a>
+                              <a href="{{route('create.appointment',[$doctor->doctor_id, $doctor->app_date])}}"><button class="btn btn-primary">Book an appointment</button></a>
                           </td>
                         @empty
                         <tr>
