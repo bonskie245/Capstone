@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -55,14 +55,19 @@
                         @empty
                         <p style="color: red;">&emsp;All slot are allocated</p>
                         @endforelse
-                
                     </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                <p><label for="w3review">Reason for Booking </label></p>
+                <textarea id="w3review" name="book_reason" rows="4" cols="100"></textarea>
                 </div>
             </div>
             <div class="card-footer bg-white">
                 @if(Auth::check())
-                    <button type="submit" class="btn btn-success" style="width:170px;">Book Appointment</button>
-                    <a href="{{route('welcome')}}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary" style="width:170px;">Book Appointment</button>
+                    <a href="{{route('users.create')}}" class="btn btn-secondary">Cancel</a>
                     <!-- <a href="{{route('welcome')}}"><button class="btn btn-secondary" style="width: 150px">Cancel</button></a> -->
                 @else
                     <p style="color: red;">Please login to make an appointment</p>

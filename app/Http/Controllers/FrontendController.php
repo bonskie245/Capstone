@@ -10,6 +10,7 @@ use App\Models\Booking;
 use App\Mail\AppointmentMail;
 use App\Models\Prescription;
 use App\Models\Doctor;
+use App\Models\PrescriptionMedicines;
 
 class FrontendController extends Controller
 {
@@ -52,6 +53,10 @@ class FrontendController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
        // $request->validate(['time'=>'required']);
+       $this->validate($request,[
+        'app_id'=>'required', 
+    ]);
+  
         $date = $request->app_date;
         $check = $this->checkBookingTimeInterval($request->doctorId, $date);
         
@@ -65,7 +70,8 @@ class FrontendController extends Controller
                 'user_id'=>auth()->user()->id,
                 'doctor_id' => $request->doctorId,
                 'app_date' => $request->app_date,
-                'book_status'=> 0
+                'book_status'=> 0,
+                'book_reason' => $request->book_reason
         ]);
 
         if($booking){
@@ -108,7 +114,7 @@ class FrontendController extends Controller
     public function myBookings()
     {
         $bookings = Booking::where('user_id',auth()->user()->id)
-                    ->orderBy('created_at','desc')->get();
+                    ->orderBy('created_at','desc')->paginate(5);
 
 
         return view('booking.index',compact('bookings'));
@@ -126,7 +132,7 @@ class FrontendController extends Controller
 
     public function myPrescription()
     {
-        // $prescriptions = Prescription::where('user_id',auth()->user()->id)->get();
+        $prescriptions = Prescription::where('user_id',auth()->user()->id)->orderBy('app_date', 'desc')->get();
         
         return view('my-prescription',compact('prescriptions'));
     }
@@ -210,6 +216,14 @@ class FrontendController extends Controller
             Appointment::where('id', $appID)->update(['app_status' => '0']);
         }
         return redirect()->route('my.booking')->with('errmessage','Appointment Cancelled');
+    }
+
+    // Show Prescription
+    public function showPrescription($id)
+    {
+        $prescription1 = Prescription::where('id', $id)->first();
+        $prescriptions = PrescriptionMedicines::where('prescription_id', $prescription1->id)->get();
+       return view('showPrescription',compact('prescriptions','prescription1'));
     }
 }
 

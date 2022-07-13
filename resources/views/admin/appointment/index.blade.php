@@ -136,8 +136,8 @@
 
                    
                     <div class="card">
-                        <div class="Card-header"><h2>Legend:</h2></div>
-                        <div class="Card-body">
+                        <div class="card-header"><h2>Legend:</h2></div>
+                        <div class="card-body">
                         <div class='box blue'> = Available</div>
                         <div class='box red'> = Not Available</div>
                         <br><br>
@@ -149,9 +149,13 @@
                         </div>
                         <br>
                     </div>
-                    <div id="calendar">
-                            
-                    </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="calendar">
+                                        
+                                    </div>
+                                </div>
+                            </div>
 </div>                
         <!-- Modal -->
         <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -368,7 +372,7 @@
                                 {
                                     'left': 'prev,next today', 
                                     'center': 'title',
-                                    'right': 'month, agendaWeek, agendaDay'
+                                    'right': 'month, agendaWeek, agendaDay, listMonth'
                                 },
                                     events: appointment,
                                     // selectable: true,

@@ -17,9 +17,35 @@
                 </div>
             </div>
             <div class="container">
-              <h4>Urgent Care Clinic is a small establishment with approximately two (2) physicians and nurse. The clinic is managed by 
-                Dr. Conchita B. Bergado & Dr. Stephen Paul M. Bergado, who specializes in Family Medicine. Currently, 
-                it is located at P Valero Street, Poblacion, Valencia City, Bukidnon.</h4>
+              <div class="card">
+              <div class="card-header" style="text-align: center;"><h1>Valencia City, Bukidnon <br> Philippines</h1></div>
+                <div class="card-body">
+                        <h1>Mission & Vision</h1>
+                        <br>
+                        <h2>The UCC WAY</h2>
+                        <br>
+                        <h2>The URGENT CARE CLINIC VISION:</h2>
+                        <p>The Urgent care Clinic is commited to be a leading provider of preventive health care services by delivering
+                           high quality outcomes for clients and ensuring long term patient friendly relatioship.</p>
+                        <p>	&emsp;• We are caring, progressive, enjoying our work and use positive spirit to succeed.</p>
+                        <p>	&emsp;• We take pride in our achievements and actively seek new ways of doing things better.</p>
+                        <p>	&emsp;• We value Integrity credibility and respect for the individual & family.</p>
+                        <p>	&emsp;• We built constructive relationships to achieve positive outcomes for all.</p>
+                        <p>	&emsp;• We believe that success comes through recognizing and encouraging the value of people and teams.</p>
+                        <p>	&emsp;• We aim to grow & improve our medical services while closely maintaing our patient care.</p>
+
+                        <br>
+                        <h2>The URGENT CARE CLINIC Mission:</h2>
+                        <p>	&emsp;• To participate in the creation of a healther lives within the community.</p>
+                        <p>	&emsp;• To provide health care services in a responsible manner which contribute to the physical. psychological, social & spirital well being of the patients 
+                          & <br> &emsp;&emsp;community which it serves.</p>
+                        <p>	&emsp;• To provide assistance to the whole person in a christian spirit of equality & interfaith serving all regardless of age, color, creed or gender.</p>
+
+
+
+
+                </div>
+            </div>
             </div>
 </div>
 <br>

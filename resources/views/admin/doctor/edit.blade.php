@@ -36,6 +36,7 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+			<div class="card shadow-sm p-3 mb-5 bg-white rounded">
   			<div class="card-header">
   				<h3>Update Doctor</h3>
   			</div>
@@ -149,6 +150,7 @@
 	                        <a href="{{route('doctor.index')}}" class="btn btn-light">Cancel</a>
   			</form>
 
+  			</div>
   			</div>
   		</div>
   </div>

@@ -30,12 +30,13 @@
   </div>
 
   <div class="row justify-content-center">
-  		<div class="col-lg-3">
+  		<div class="col-lg-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     {{Session::get('message')}}
                 </div>
             @endif
+            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
   			<div class="card-header" align="center">
   				<h3>Delete</h3>
   			</div>
@@ -46,14 +47,13 @@
                 <h5><strong>{{$user->user_fName." ". $user->user_lName."?"}}</strong></h5>
   				<form class="forms-sample" action="{{route('doctor.destroy',[$user->id])}}" method="POST">@csrf
                     @method('DELETE')
-
                         <div class="card-footer">
   					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
 	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
                         </div>
 				</div>
   			</form>
-
+            </div>
   			</div>
   		</div>
   </div>

@@ -32,22 +32,24 @@
 
             <div class="row">
                     <div class="col-md-12">
-                        <div class="card">
+                    <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                             @if(Session::has('message'))
                                 <div class="alert alert-success">
                                  {{Session::get('message')}}
                                 </div>
                             @endif
                             <div class="card-header"><h3>Staff Management</h3>
-                                <a href="{{route('receptionist.create')}}" style="margin-left: 605px;" class="btn btn-primary">Add Staff</a>
+                                <a href="{{route('receptionist.create')}}" style="margin-left: 750px;" class="btn btn-primary">Add Staff</a>
                             </div>
                               <div class="card-body">
-                                 <table id="data_table" class="table">
+                              <table id="data_table" class="table table-bordered table-hover" style="font-size: 15px;">
                                    <thead>
                                     <tr>
+                                        
+                                        
+                                        <th class="nosort">Avatar</th>
                                         <th>Lastname</th>
                                         <th class="nosort">Firstname</th>
-                                        <th class="nosort">Avatar</th>
                                         <th class="nosort">Email</th>
                                         <th class="nosort">PhoneNumber</th>
                                         <th class="nosort">&nbsp;</th>
@@ -60,9 +62,13 @@
                                 @if(count($users)>0)
                                 @foreach($users as $user)
                             <tr>
+                                @if(!$user->user_image)
+                                <td><img src="{{asset('images/user.png')}}" class="table-user-thumb" style="width: 50px; height: 50px; border-radius: 50%;" alt=""></td>
+                                @else
+                                <td><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" style="width: 50px; height: 50px; border-radius: 50%;" alt=""></td>
+                                @endif
                                 <td>{{$user->user_lName}}</td>
-                                <td>{{$user->user_fName}}</td>
-                                <td><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" alt=""></td>
+                                <td>{{$user->user_fName}}</td>        
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->user_phoneNum}}</td>
                                 <td>{{$user->user_department}}</td>

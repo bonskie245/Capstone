@@ -36,8 +36,9 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+			<div class="card shadow-sm p-3 mb-5 bg-white rounded">
   			<div class="card-header">
-  				<h3>Add Doctor</h3>
+  				<h2>Add Doctor</h2>
   			</div>
   			<div class="card-body">
   				<form class="forms-sample" action="{{route('doctor.store')}}" method="POST" enctype="multipart/form-data">@csrf
@@ -166,7 +167,7 @@
 	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
 				</div>
   			</form>
-
+</div>
   			</div>
   		</div>
   </div>

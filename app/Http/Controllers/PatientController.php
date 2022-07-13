@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Prescription;
 use File;
+use App\Models\PrescriptionMedicines;
 
 class PatientController extends Controller
 {
@@ -47,9 +49,11 @@ class PatientController extends Controller
     {
         $this->validateStore($request);
         $data = $request->all();
+        if($request->hasFile('user_image')){
         $name = (new User)->patientAvatar($request);
-
         $data['user_image'] = $name;
+        }
+        
         $data['password'] = bcrypt($request->password);
         User::create($data);
         
@@ -125,7 +129,21 @@ class PatientController extends Controller
         }
         return redirect()->route('patient.index')->with('message','Patient Deleted Succesfully');
     }
+
+    public function showHistory($id)
+    {
+        $user = User::where('id', $id)->first();
+        $prescriptions = Prescription::where('user_id', $id)->orderBy('app_date', 'desc')->get();
+        return view('patient.showMedical', compact('prescriptions', 'user'));
+        
+    }
     
+    public function showPrescription($userID, $date)
+    {
+        $prescription1 = Prescription::where('user_id', $userID)->where('app_date', $date)->first();
+        $prescriptions = PrescriptionMedicines::where('prescription_id', $prescription1->id)->get();
+       return view('patient.showPrescription',compact('prescriptions', 'prescription1'));
+    }
     public function validateStore($request)
     {
         return $request->validate([
@@ -135,7 +153,6 @@ class PatientController extends Controller
         'password'=>'required|min:6|max:12',
         'user_phoneNum'=>'required|numeric',
         'user_address'=>'required',
-        'user_image'=>'required|mimes:jpeg,jpg,png',
         'user_gender'=>'required',  
         ]);     
     }
@@ -148,7 +165,6 @@ class PatientController extends Controller
         'role_id'=>'required',
         'user_phoneNum'=>'required|numeric',
         'user_address'=>'required',
-        'user_image'=>'mimes:jpeg,jpg,png',
         'user_gender'=>'required',  
         ]);     
     }

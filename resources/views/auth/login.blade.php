@@ -18,6 +18,17 @@
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
+     @if (session('confirmation'))
+        <div class="alert alert-info" role="alert">
+            {!! session('confirmation') !!}
+        </div>
+    @endif
+
+    @if ($errors->has('confirmation') > 0 )
+        <div class="alert alert-danger" role="alert">
+            {!! $errors->first('confirmation') !!}
+        </div>
+    @endif
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic</b></a>
     </div>
@@ -81,10 +92,14 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+                          @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
       </p>
       <p class="mb-0">
-        <a href="{{route('register')}}" class="text-center">Register a new membership</a>
+        <a href="{{route('register')}}" class="btn btn-link">Register a new membership</a>
       </p>
     </div>
     <!-- /.card-body -->

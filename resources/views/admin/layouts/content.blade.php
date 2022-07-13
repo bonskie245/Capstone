@@ -1,4 +1,5 @@
 
+                    
                     <div class="container-fluid">
                         <div class="row clearfix">
                             <div class="col-lg-3 col-md-6 col-sm-12">
@@ -76,5 +77,46 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="col-lg-6 col-xl-6" >
+                                <div class="card" >
+                                    <div class="card-header">
+                                        <h3>Registered Users</h3>
+                                    </div>
+                                    <div class="card-block text-center">
+                                     <div class="card-body">
+                                        <canvas id="myBarChart" width="100%" height="25%">
+                                        </canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-xl-6" >
+                                <div class="card" >
+                                    <div class="card-header">
+                                        <h3>Total Bookings</h3>
+                                    </div>
+                                    <div class="card-block text-center">
+                                     <div class="card-body">
+                                        <canvas id="myBarChart2" width="100%" height="25%">
+                                        </canvas></div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                                <div style="height:400px; width:500px; margin:auto;">
+                                    <canvas id="barChart">
+                                    </canvas>
+                                </div>
+                        <script>
+                            var _ydata= JSON.parse('{!! json_encode($months) !!}');
+                            var _xdata= JSON.parse('{!! json_encode($monthCount) !!}');
+
+                            var _yBooking= JSON.parse('{!! json_encode($bookMonths) !!}');
+                            var _xBooking= JSON.parse('{!! json_encode($bookingCount) !!}');
+                        </script>
                         </div>
+                        
+                      
+                    
                       

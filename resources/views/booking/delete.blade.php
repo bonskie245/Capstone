@@ -1,15 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="row justify-content-center">
-  		<div class="col-lg-3">
+  		<div class="col-lg-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     {{Session::get('message')}}
                 </div>
             @endif
+
+            <div class="card">
   			<div class="card-header" align="center">
   				<h3>Delete</h3>
+            </div>
+            <div class="card-body" align="center">
                 <p></p>
                 <h4>Are you sure to delete</h4>
                 @foreach($bookings->appointment as $appointment)
@@ -17,14 +21,14 @@
                 @endforeach
   				<form class="forms-sample" action="{{route('booking.deleteBooking',[$bookings->id])}}" method="POST">@csrf
                     @method('DELETE')
-
-                        <div class="card-footer">
+                    </div>
+                        <div class="card-footer" align="center">
   					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
-	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
+	                        <a href="{{route('my.booking')}}" class="btn btn-secondary">Cancel</a>
                         </div>
-				</div>
-  			</form>
 
+  			</form>
+              </div>
   			</div>
   		</div>
   </div>

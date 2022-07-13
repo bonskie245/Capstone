@@ -33,7 +33,8 @@
 
     <div class="card">
     @foreach($bookings->user as $user)
-        <div class="card-header"><h3>Prescription for {{$user->user_fName}} {{$user->user_lName}}</h3></div>
+        <div class="card-header"><h3>Prescription for {{$user->user_fName}} {{$user->user_lName}}</h3>
+        </div>
         @endforeach
         @if(Session::has('message'))
             <div class="alert bg-success alert-success text-white" role="alert">
@@ -45,7 +46,14 @@
                 {{$error}}
                 
             </div>           
-        @endforeach
+            @endforeach
+        <div class="card-body">
+            <p><strong>Date:</strong> {{$bookings->app_date}} </p>
+            <p><strong>Age:</strong> {{\Carbon\Carbon::parse($user->user_birthdate)->age}}</p>
+            <p><strong>Address:</strong> {{$user->user_address}} </p>
+
+        </div>
+      
         <div class="card-body">
         <form Action="{{route('prescription.store')}}" method="post">@csrf
             <div class="form-group">
@@ -70,6 +78,9 @@
                                 <td><input type="text" autocomplete="off"name="medicine_duration[]" placeholder="Indicate Duration" class="form-control" list="duration"></td>
                                 <td><button type="button" name="add" id="add" class="btn btn-outline-primary">Add</button></td>
                             </tr>
+                            <input type="hidden" name="user_id" value="{{$bookings->user_id}}">
+                            <input type="hidden" name="doctor_id" value="{{$bookings->doctor_id}}">
+                            <input type="hidden" name="app_date" value="{{$bookings->app_date}}">
                     </table>
                 </div>  
 
@@ -86,7 +97,7 @@
                     </datalist>
                     <datalist id="medicine" style="font-size: 20px;">
                         @foreach(App\Models\medicine::All() as $medicine)
-                                    <option value="{{$medicine->medicine_name}}" >{{$medicine->medicine_name}}</option>
+                                    <option value="{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}" >{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}</option>
                         @endforeach
                     </datalist>
                    
@@ -131,9 +142,7 @@
                     <label>Medicine Intake</label>
                     <textarea name="medicine_intake" class="form-control" placeholder="Intake" required=""></textarea>
                 </div> -->
-                <input type="text" name="user_id" value="{{$bookings->user_id}}">
-                <input type="text" name="doctor_id" value="{{$bookings->doctor_id}}">
-                <input type="text" name="app_date" value="{{$bookings->app_date}}">
+               
 
                 <a href="{{route('patients.today')}}"class="btn btn-secondary"style ="color: white;" >Cancel</a>
                 <button type="submit" class="btn btn-primary">Save changes</button>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -85,17 +85,17 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header"><h2>Update Profile Picture</h2></div>
                 <form action="{{route('profile.pic')}}" method="post" enctype="multipart/form-data">@csrf
                 <div class="card-body">
                     <br>
                     @if(!auth()->user()->user_image)
-                    <img src="{{asset("/images/user.png")}}" width="140">
+                    <img src="{{asset("/images/user.png")}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto;" width="150"  height="150">
                     @else
                     <br>
-                    <img src="{{asset('profiles')}}/{{auth()->user()->user_image}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto; width: 75%;">
+                    <img src="{{asset('profiles')}}/{{auth()->user()->user_image}}" style="display: block; margin-left: auto; margin-top: -50px;  margin-right: auto;" width="150"  height="150">
                     @endif
                     <input type="file" name="file" class="form-control" required="">
                     @error('file')

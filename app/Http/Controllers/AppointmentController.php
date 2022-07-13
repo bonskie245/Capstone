@@ -22,13 +22,18 @@ class AppointmentController extends Controller
     public function index()
     {
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        // $doctor = Doctor::get();
         $doctors= array();
-        $doctors = $doctor->user->user_fName . ' ' . $doctor->user->user_lName;
         
-        // $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+        // foreach($doctor as $doc){
+        //  $doctors = $doc->user->user_fName . ' ' . $doc->user->user_lName;
+        // }
+        $doctors = $doctor->user->user_fName . ' ' . $doctor->user->user_lName. 'Appointment';
+        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
         $appointment = array();
         $color = null;
         $myappointments = Appointment::where('doctor_id', $doctor->id)->get();
+        // $myappointments = Appointment::get();
 
         foreach($myappointments as $myappointment){
             $start =  $myappointment->app_date . ' ' . $myappointment->time_start;
@@ -42,7 +47,7 @@ class AppointmentController extends Controller
             }
             $appointment [] =[
                 'id' => $myappointment->id,
-                'title' => 'Dr.'. $myappointment->doctor->user->user_fName. ' ' .  $myappointment->doctor->user->user_lName ,
+                'title' => 'Dr.'. $myappointment->doctor->user->user_fName. ' ' .  $myappointment->doctor->user->user_lName . ' Appointment',
                 'start' =>  Carbon::parse($start)->toDateTimeString(),
                 'end' =>  Carbon::parse($end)->toDateTimeString(),
                 'color' => $color,

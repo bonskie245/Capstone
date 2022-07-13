@@ -192,7 +192,7 @@ html {
 }
 
 </style>
-@include('layouts.footer')
+@include('layouts.footer2')
      <script>
           var dateToday = new Date();
           $( function() {

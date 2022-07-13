@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 class PatientlistController extends Controller
 {
+    
     public function index(Request $request)
     {
         date_default_timezone_set('Asia/Manila');
@@ -71,6 +72,7 @@ class PatientlistController extends Controller
 
     public function acceptStatus($id)
     {
+        
          // Booking status 0 - pending
         // Booking status 1 - Accepted
         // Booking status 2 - Visited
@@ -78,15 +80,17 @@ class PatientlistController extends Controller
         // Booking status 4 - Declined
 
         $booking = Booking::find($id);
-        $booking->book_status = 1;
-        
-        $bookings = $booking->save();   
-        
-       
+        // $booking->book_status = 1;
+            $booking->update([
+                'book_status' => 1,
+            ]);
+        // $bookings = $booking->();   
+
                 $doctorID = Doctor::where('id', $booking->doctor_id)->first();
                 $userID = User::where('id', $booking->user_id)->first();
                 $appointment = Appointment::where('id', $booking->app_id)->first();
-       
+            
+                
             $mailData = [
             'fName'=> $userID->user_fName, 
             'lName'=> $userID->user_lName,
@@ -95,11 +99,12 @@ class PatientlistController extends Controller
             'app_date'=>$booking->app_date,
             'doctor_fName' =>$doctorID->user->user_fName, 
             'doctor_LName' =>$doctorID->user->user_lName, 
-                ];
+            ];
          
+            $email = $userID->email;
             
         try{
-            \Mail::to($userID->email)->send(new AppointmentMail($mailData));
+            \Mail::to($email)->send(new AppointmentMail($mailData));
             
           }catch(\Exception $e){
 
@@ -163,6 +168,7 @@ class PatientlistController extends Controller
     
     public function allTimeAppointment(Request $request)
     {
+        date_default_timezone_set('Asia/Manila');
         if($request->app_date){
             $bookings =Booking::latest()->where('app_date',$request->app_date)->get();
            return view('patientlist.allpatient',compact('bookings'));
@@ -173,16 +179,17 @@ class PatientlistController extends Controller
     }
     public function patientToday(Request $request)
     {
-        if($request->app_date){
-            $bookings =Booking::latest()->where('app_date',$request->app_date)->get();
-           return view('patientlist.patientToday',compact('bookings'));
-       }          
+        date_default_timezone_set('Asia/Manila');
+            if($request->app_date){
+                $bookings =Booking::latest()->where('app_date',$request->app_date)->get();
+            return view('patientlist.patientToday',compact('bookings'));
+        }          
             // $appointments = Appointment::where('app_date',date('Y-m-d'))->where('app_status','1')->get();
             // foreach($appointments as $appointment){
             //     dd($bookings = Booking::where('app_id',$appointment->id)->get());
             // }
-             $bookings =Booking::latest()->where('app_date',date('Y-m-d'))->get();
-
+            $bookings =Booking::where('app_date', date('Y-m-d'))->paginate(5);
+                
              return view('patientlist.patientToday',compact('bookings'));
     }
 }

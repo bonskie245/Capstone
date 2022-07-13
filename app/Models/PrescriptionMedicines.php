@@ -10,10 +10,11 @@ use App\Models\medicine;
 
 class PrescriptionMedicines extends Model
 {
-    protected $guarded =[];
+    
     use HasFactory;
 
+    protected $guarded =[];
     public function prescription(){
-        return $this->belongsTo(Prescription::class,'prescription_id', 'id');
+        return $this->has(Prescription::class,'prescription_id', 'id');
     }
 }

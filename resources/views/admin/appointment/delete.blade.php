@@ -48,14 +48,14 @@
             </div>  
         @endforeach
     </form>
-    <h3>Delete Time</h3>
     <div class="row justify-content-center">
-  		<div class="col-lg-3">
+  		<div class="col-lg-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     {{Session::get('message')}}
                 </div>
             @endif
+            <div class="card">
   			<div class="card-header" align="center">
   				<h3>Delete</h3>
   			</div>
@@ -72,7 +72,7 @@
                         </div>
 				</div>
   			</form>
-
+</div>
   			</div>
   		</div>
   </div>

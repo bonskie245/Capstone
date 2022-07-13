@@ -35,21 +35,20 @@
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
                 
                 <div class="card-body">
-                   <table id="data_table" class="table">
+                   <table class="table table-bordered table-hover">
                    <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Photo</th>
                           <th scope="col">Name</th>
-                          <th scope="col">Email</th>
+                          <th scope="col">Reason</th>
                           <th scope="col">Phone Number</th>
                           <th scope="col">Date</th>
                           <th scope="col">Time</th>
                           <th scope="col">Doctor</th>
                           <th scope="col">Status</th>
                           <th scope="col">Action</th>
-                          <th class="nosort">&nbsp;</th>
-                          <th class="nosort">&nbsp;</th>
+
 
                         </tr>
                       </thead>
@@ -59,9 +58,13 @@
                           <th scope="row">{{$booking->id}}</th>
                             @foreach($booking->user as $user)
                             <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
-                                width="80" style="border-radius: 50%;"></td>
+                                width="80" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                             <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
-                            <td>{{$user->email}}</td>
+                            @if(!$booking->book_reason)
+                              <td>Did not indicate reason</td>
+                              @else
+                                <td>{{$booking->book_reason}}</td>
+                             @endif
                             <td>{{$user->user_phoneNum}}</td>
                             @endforeach
                             <td>{{$booking->app_date}}</td>
@@ -79,11 +82,9 @@
                                  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
                                   Write Prescription
                                 </button> -->
-                                <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id])}}">Write Prescription</a></button>
-                                @include('prescription.form')
-
+                                <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id,$booking->app_date,$booking->doctor_id])}}">Write Prescription</a></button>                             
                                 @else
-                               <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a>
+                                <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a>
                                 @endif
                           </td>
                         </tr>
@@ -91,6 +92,7 @@
                         <td>No appointments Today</td>
                         @endforelse
                       </tbody>
+                      {{$bookings->links()}}
                     </table>
                 </div>
             </div>

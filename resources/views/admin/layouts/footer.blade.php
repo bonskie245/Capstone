@@ -1,6 +1,22 @@
  
-        
-        
+<br>
+<br>
+    <footer class="main-footer" >
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
         
 
         <div class="modal fade apps-modal" id="appsModal" tabindex="-1" role="dialog" aria-labelledby="appsModalLabel" aria-hidden="true" data-backdrop="false">
@@ -100,6 +116,7 @@
         <script src="{{asset('template/plugins/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
         <script src="{{asset('template/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js')}}"></script>
         <script src="{{asset('template/plugins/jvectormap/jquery-jvectormap.min.js')}}"></script>
+        <script src="{{asset('plugins/datedropper/datedropper.min.js')}}"></script>
         <script src="{{asset('template/plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js')}}"></script>
         <script src="{{asset('template/plugins/moment/moment.js')}}"></script>
         <script src="{{asset('template/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js')}}"></script>
@@ -107,8 +124,10 @@
         <script src="{{asset('template/plugins/c3/c3.min.js')}}"></script>
         <script src="{{asset('template/js/tables.js')}}"></script>
         <script src="{{asset('template/js/widgets.js')}}"></script>
-        <script src="{{asset('template/js/charts.js')}}"></script>
+        <!-- <script src="{{asset('template/js/charts.js')}}"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('template/dist/js/theme.min.js')}}"></script>
+        <script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
@@ -137,17 +156,26 @@
 
         <!-- Date Picker -->
         <script>
-                $(document).ready(function(){
+              $(document).ready(function(){
                             $("#datepicker").datetimepicker({
-                                format: 'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD',
+                            minDate:new Date(),
+                            disabledWeekDays:[0]
                             })
                 });
+        </script>
 
+        <script>
+                $(document).ready(function(){
+                            $("#datepicker2").datetimepicker({
+                            format:"YYYY-MM-DD",
+                            })
+                });
         </script>
         <!-- END Date Picker -->
                 
            <!-- Time Picker -->
-           <script>
+                <script>
                         $(document).ready(function(){
                         $('#time_start').timepicker({
                             timeFormat : 'hh:mm a',
@@ -178,7 +206,8 @@
             </script>
             <!-- END Time Picker -->
 
-            
+              
+           
 
             <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>            
         

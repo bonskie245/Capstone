@@ -31,7 +31,7 @@
 
 
   <div class="row justify-content-center">
-  		<div class="col-lg-3">
+  		<div class="col-lg-4">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     {{Session::get('message')}}
@@ -45,12 +45,12 @@
                 <p></p>
                 <h4>Are you sure to delete</h4>
                 <h5><strong>{{$user->user_fName." ". $user->user_lName."?"}}</strong></h5>
-  				<form class="forms-sample" action="{{route('doctor.destroy',[$user->id])}}" method="POST">@csrf
+  				<form class="forms-sample" action="{{route('receptionist.destroy',[$user->id])}}" method="POST">@csrf
                     @method('DELETE')
 
                         <div class="card-footer">
   					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
-	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
+	                        <a href="{{route('receptionist.index')}}" class="btn btn-secondary">Cancel</a>
                         </div>
 				</div>
   			</form>

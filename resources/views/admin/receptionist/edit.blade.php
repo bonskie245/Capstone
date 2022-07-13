@@ -37,8 +37,9 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+			<div class="card shadow-sm p-3 mb-5 bg-white rounded">
   			<div class="card-header">
-  				<h3>Update Secretary</h3>
+  				<h2>Update Secretary</h2>
   			</div>
   			<div class="card-body">
   				<form class="forms-sample" action="{{route('receptionist.update',[$users->id])}}" method="POST" enctype="multipart/form-data">@csrf
@@ -135,7 +136,7 @@
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
 	                        <a href="{{route('receptionist.index')}}" class="btn btn-light">Cancel</a>
   			</form>
-
+</div>
   			</div>
   		</div>
   </div>

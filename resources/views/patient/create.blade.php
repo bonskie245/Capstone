@@ -36,11 +36,13 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+			<div class="card border-dark mb-3">
   			<div class="card-header">
-  				<h3>Add Patient</h3>
+  				<h2>Add Patient</h2>
   			</div>
   			<div class="card-body">
-  				<form class="forms-sample" action="{{route('patient.store')}}" method="POST" enctype="multipart/form-data">@csrf
+  				<form class="forms-sample" action="{{route('patient.store')}}" method="POST" enctype="multipart/form-data">
+					@csrf
   					<div class="row">
   						<div class="col-lg-6">
   							<label for="user_fName">First Name</label>
@@ -61,18 +63,18 @@
                               	@enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="user_email">Email</label>
-  							<input type="email" name="user_email" class="form-control @error('user_email') is-invalid @enderror" placeholder="Email" required>
-  								@error('user_email')
+  							<label for="email">Email</label>
+  							<input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required>
+  								@error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror 
   						</div>
   						<div class="col-lg-6">
-  							<label for="user_password">Password</label>
-  							<input type="password" name="user_password" class="form-control @error('user_password') is-invalid @enderror" placeholder= "Password" required>
-  								@error('user_password')
+  							<label for="password">Password</label>
+  							<input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder= "Password" required>
+  								@error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -100,6 +102,7 @@
                                     </span>
                                 @enderror 
   						</div>
+						  
   						<div class="col-md-6">
   							<label for="user_phoneNum">Phonenumber</label>
   							<input type="text" name="user_phoneNum" class="form-control @error('user_phoneNum') is-invalid @enderror" value="{{old('user_phoneNum')}}" placeholder="Phonenumber"> 
@@ -109,18 +112,27 @@
                                     </span>
                                 @enderror 
   						</div>
+						  <div class="col-md-6">
+  							<label for="user_birthdate">Birthdate</label>
+  							<input type="date" class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate">
+								@error('user_birthdate')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+  						</div>
 		  			</div>
 		  			<div class="row">
 	                            <div class="col-md-6">
 	                            	<div class="form-group">
 		                            		<label>Photo</label>
-				                                <input type="file" class="form-control file-upload-info @error('user_image') is-invalid @enderror" placeholder="Upload Image" name="user_image" required>
+				                                <input type="file" class="form-control" placeholder="Upload Image" name="user_image">
 				                                <span class="input-group-append">
-				                            @error('user_image')
+				                            <!-- @error('user_image')
                                     			<span class="invalid-feedback" role="alert">
                                       			  <strong>{{ $message }}</strong>
                                     			</span>
-                                			@enderror     
+                                			@enderror      -->
 	                            	</div>
 	                        	</div>
 	                        	<div class="col-md-6">
@@ -141,9 +153,10 @@
   					</div>
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
 	                        <a href="{{route('patient.index')}}" class="btn btn-secondary">Cancel</a>
+							</form>
 				</div>
-  			</form>
-
+				
+				</div>
   			</div>
   		</div>
   </div>

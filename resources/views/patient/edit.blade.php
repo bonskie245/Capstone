@@ -36,6 +36,7 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+			<div class="card border-dark mb-3">
   			<div class="card-header">
   				<h3>Update Patient</h3>
   			</div>
@@ -106,6 +107,15 @@
                                     </span>
                                 @enderror 
   						</div>
+						<div class="col-md-6">
+						<label for="user_birthdate">Birthdate</label>
+  							<input type="date" class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate" value="{{$users->user_birthdate}}">
+								@error('user_birthdate')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+						</div>
 		  			</div>
 		  			<div class="row">
 	                            <div class="col-md-6">
@@ -134,7 +144,7 @@
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
 	                        <a href="{{route('patient.index')}}" class="btn btn-light">Cancel</a>
   			</form>
-
+			  </div>
   			</div>
   		</div>
   </div>

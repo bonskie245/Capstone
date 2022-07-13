@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
 <div class="container">
@@ -33,9 +33,9 @@
                 </div>
             @endif
 
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-body">{{$appID}}</div>
-            </div>
+            </div> -->
 
             <form action="{{route('booking.updateTime',[$bookings->id])}}" method="POST">@csrf 
             @method('PUT')
@@ -61,7 +61,8 @@
                 </div>
             </div>
             <div class="card-footer bg-white">
-                    <button type="submit" class="btn btn-success" style="width: 150px">Book Appointment</button>
+                    <button type="submit" class="btn btn-success" style="width: 180px">Book Appointment</button>
+                    <a href="{{route('my.booking')}}"><button class="btn btn-success" style="width: 150px">Cancel</button></a>
             </div>
             </form>
         </div>

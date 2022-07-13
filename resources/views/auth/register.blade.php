@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 </head>
 <body class="hold-transition register-page">
-<div class="register-box">
+<div class="register-box" style="width: 500px; ">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic </b>| Registration</a>
@@ -25,6 +25,8 @@
 
       <form method="POST" action="{{ route('register') }}">
         @csrf
+        <div class="row">
+        <div class="col">
         <div class="input-group mb-3">
           <input id="user_fName" type="text" class="form-control @error('user_fName') is-invalid @enderror" name="user_fName" required placeholder="First Name">
                         @error('user_fName')
@@ -37,8 +39,9 @@
               <span class="fas fa-user"></span>
             </div>
           </div>
+        </div>  
         </div>
-
+        <div class="col">
         <div class="input-group mb-3">
           <input id="user_lName" type="text" class="form-control @error('user_fName') is-invalid @enderror" name="user_lName" required placeholder="Last Name">
                         @error('user_lName')
@@ -52,70 +55,77 @@
             </div>
           </div>
         </div>
+        </div></div>
+        <div class="row">
+          <div class ="col">
+          <div class="input-group mb-3">
+              <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
 
-        <div class="input-group mb-3">
-            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+                                  @error('email')
+                                      <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="input-group mb-3">
-        <input id="user_phoneNum" type="text" class="form-control @error('user_phoneNum') is-invalid @enderror" name="user_phoneNum" required placeholder="Phone Number" >
-
-                @error('user_phoneNum')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-phone"></span>
-            </div>
           </div>
-        </div>
 
-        <div class="input-group mb-3">
-        <input id="user_address" type="text" class="form-control @error('user_address') is-invalid @enderror" name="user_address" required Placeholder="Address" >
 
-                @error('user_address')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-address-card"></span>
+          <div class ="col">
+            <div class="input-group mb-3">
+            <input id="user_phoneNum" type="text" class="form-control @error('user_phoneNum') is-invalid @enderror" name="user_phoneNum" required placeholder="Phone Number" >
+
+                    @error('user_phoneNum')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-phone"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="input-group mb-3">
-        <label>
-            Birthdate: 
-        </label>
-        <input id="user_birthdate" type="date" class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate"  >
-     
-                @error('user_birthdate')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-calendar"></span>
             </div>
-          </div>
-        </div>
+      </div>     
+      
+      <div class="row">
+        <div class="col">
+              <div class="input-group mb-3">
+              <input id="user_address" type="text" class="form-control @error('user_address') is-invalid @enderror" name="user_address" required Placeholder="Address" >
 
+                      @error('user_address')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-address-card"></span>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+              <div class="input-group mb-3">
+              <input id="user_birthdate #dropper-default"  type="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate"  >
+                      @error('user_birthdate')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                      @enderror
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-calendar"></span>
+                  </div>
+                </div>
+              </div>
+        </div>
+        </div>
         <div class="input-group mb-3">
                     <select name="user_gender" class="form-control @error('user_gender') is-invalid @enderror">
                                    <option value="">Please select gender</option>
@@ -174,7 +184,7 @@
           <!-- /.col -->
         </div>
       </form>
-
+      
       <!-- <div class="social-auth-links text-center">
         <a href="#" class="btn btn-block btn-primary">
           <i class="fab fa-facebook mr-2"></i>
@@ -193,11 +203,11 @@
 </div>
 <!-- /.register-box -->
 
-<!-- jQuery -->
-<script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+    <!-- jQuery -->
+    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 </body>
 </html>

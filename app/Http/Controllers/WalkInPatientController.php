@@ -48,7 +48,7 @@ class WalkInPatientController extends Controller
         date_default_timezone_set('Asia/Manila');
        // $request->validate(['time'=>'required']);
         
-        $check = $this->checkBookingTimeInterval($request->doctorId,$request->user_id);
+        $check = $this->checkBookingTimeInterval($request->doctorId,$request->user_id, $request->app_date);
         
         if($check){
             return redirect()->back()->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
@@ -165,12 +165,12 @@ class WalkInPatientController extends Controller
         return view('admin.walkInAppointment.showTime',compact('date','doctor','doctor_id','appointments','users'));
     }
 
-    public function checkBookingTimeInterval($doctorId,$userid)
+    public function checkBookingTimeInterval($doctorId,$userid,$date)
     {
         return Booking::orderby('id','desc')
         ->where('user_id',$userid)
         ->where('doctor_id',$doctorId)
-        ->whereDate('app_date',date('Y-m-d'))
+        ->whereDate('app_date', $date)
         ->exists();
     }
 

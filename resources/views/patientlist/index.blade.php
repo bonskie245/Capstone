@@ -132,22 +132,26 @@
                     
                         <div class ="card">
                             
-                            <div class="Card-header"><h2>Legend:</h2></div>
-                                <div class="Card-body">
+                            <div class="card-header"><h2>Legend:</h2></div>
+                                <div class="card-body">
                                 <div class='box grey'> = Pending</div>
                                 <div class='box green'> = Accepted</div>
                                 <div class='box blue'> = Visited</div>
                                 <div class='box pink'> = Not Visited</div>
                                 <div class='box red'> = Declined</div>
                                 <br><br>
-                                <a href="{{route('patient.today')}}" class="btn btn-primary" >Appointments Today</a>
+                                <a href="{{route('patient.today')}}" class="btn btn-primary">Appointments Today</a>
                                 <a href="{{route('all.appointments')}}" class="btn btn-primary" >All Appointments</a>
+                                <br><br>
                             </div>
                         </div>
-                        
-                                <div id="calendar">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div id="calendar">
                                         
+                                    </div>
                                 </div>
+                            </div>
                      
             
 
@@ -307,7 +311,7 @@
                                 header: {
                                     'left': 'prev,next today', 
                                     'center': 'title',
-                                    'right': 'month, agendaWeek, agendaDay'
+                                    'right': 'month, agendaWeek, agendaDay, listMonth'
                                 },
                             events: bookings,
                             selectable: true,

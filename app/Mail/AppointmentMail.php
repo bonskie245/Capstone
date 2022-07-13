@@ -29,7 +29,7 @@ class AppointmentMail extends Mailable
      */
     public function build()
     {
-        return $this    ->subject('Mail from Urgent Care Clinic')
-                        ->view('email.appointment');
+        return $this->subject('Mail from Urgent Care Clinic')
+                    ->view('email.appointment');
     }
 }

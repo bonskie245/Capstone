@@ -14,7 +14,8 @@ class medicineController extends Controller
      */
     public function index()
     {
-        return view('medicine.create');
+        $medicines = Medicine::all();
+        return view('medicine.index', compact('medicines'));
     }
 
     /**
@@ -36,10 +37,11 @@ class medicineController extends Controller
     public function store(Request $request)
     {
         
-        
-        $data = $request->medicine_name . '/ ' . $request->medicine_dosage.'/ '. $request->medicine_type;
+        $data = $request->all();
         medicine::create([
-            'medicine_name' => $data,
+            'medicine_name' => $data['medicine_name'],
+            'medicine_dosage' => $data['medicine_dosage'],
+            'medicine_type' => $data['medicine_type']
         ]);
 
         return redirect()->back()->with('message','Medicine Added');
@@ -53,7 +55,7 @@ class medicineController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -64,7 +66,9 @@ class medicineController extends Controller
      */
     public function edit($id)
     {
-        //
+        $medicine = Medicine::find($id);
+
+        return view('medicine.edit', compact('medicine'));
     }
 
     /**
@@ -76,7 +80,16 @@ class medicineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $medicine = Medicine::find($id);
+        
+        $medicine->update([
+            'medicine_name' => $request->medicine_name,
+            'medicine_dosage' => $request->medicine_dosage,
+            'medicine_type' => $request->medicine_type
+        ]);
+        $medicine->save();
+        return redirect()->route('medicine.index')->with('message','Medicine updated Successfully'); 
+
     }
 
     /**
@@ -87,6 +100,9 @@ class medicineController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $medicine = Medicine::find($id);
+        $medicine->delete();
+
+        return redirect()->route('medicine.index')->with('message','Medicine Deleted Successfully'); 
     }
 }

@@ -108,9 +108,9 @@ class DoctorController extends Controller
         $data = $request->all();
         $user = User::find($id);
         $imageName = $user->user_image;
-        $userPassword = $user->user_password;
+        $userPassword = $user->password;
         
-        $doctor = Doctor::where('user_id', $user->id)->update(['doctor_department' => $data->user_department]);
+        $doctor = Doctor::where('user_id', $user->id)->update(['doctor_department' => $data['user_department']]);
         
         if($request->hasFile('user_image')) {
             $imageName = (new User)->userAvatar($request);

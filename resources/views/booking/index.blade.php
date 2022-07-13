@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
   <div class="container">
@@ -16,55 +16,62 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"><h2>My appointments ({{$bookings->count()}})</h2></div>
+                <div class="card-header"><h2>My Bookings ({{$bookings->count()}})</h2></div>
                 <div class="card-body">
-                   <table class="table">
+                   <table class="table table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th scope="col"  style="font-size: 20px;">#</th>
-                          <th scope="col"  style="font-size: 20px;">Doctor</th>
-                          <th scope="col"  style="font-size: 20px;">Time</th>
-                          <th scope="col"  style="font-size: 20px;">Date for</th>
-                          <th scope="col"  style="font-size: 20px;">Status</th> 
-                          <th class="nosort">&nbsp;</th>
+                          <th scope="col"  style="font-size: 16px;">#</th>
+                          <th scope="col"  style="font-size: 16px;">Image</th>
+                          <th scope="col"  style="font-size: 16px;">Doctor</th>
+                          <th scope="col"  style="font-size: 16px;">Time</th>
+                          <th scope="col"  style="font-size: 16px;">Date for</th>
+                          <th scope="col"  style="font-size: 16px;">Status</th> 
+                          <th scope="col" style="font-size: 16px;">Action</th>
+                          <th scope="col"></th>
                           
                         </tr>
                       </thead>
                       <tbody>
                         @forelse($bookings as $key => $booking)
                         <tr>
-                          <th scope="row"  style="font-size: 16px;">{{$key+1}}</th>
-                          <td style="font-size: 16px;">Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
+                          <th scope="row">{{$key+1}}</th>
+                          <td><img src="{{asset('images')}}/{{$booking->doctor->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                          <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
                             @foreach($booking->appointment as $book)
-                              <td style="font-size: 16px;">{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                              <td style="font-size: 16px;">{{date('F j, Y', strtotime($book->app_date))}}</td>
+                              <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
+                              <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
                             @endforeach
                           <td>
                               
                                 @if($booking->book_status==0)
-                                <button style="color:grey; border: none; font-size: 16px;">Pending</button>
+                               <span class="badge badge-pill badge-secondary mb-1">Pending</span>
                                 @endif
                                 @if($booking->book_status==1)
-                                <button style="color:green; border: none; font-size: 16px;">Appointment Accepted</button>
+                                <span class="badge badge-pill badge-success mb-1">Appointment Accepted</span>
                                 @endif
                                 @if($booking->book_status==2)
-                                <button style="color:red; border: none; font-size: 16px;">Appointment Declined</button>
+                                <span class="badge badge-pill badge-primary mb-1">Visited</span>
                                 @endif
                                 @if($booking->book_status==3)
-                                <button style="color:blue; border: none; font-size: 16px;">Visited</button>
+                                <span class="badge badge-pill badge-warning mb-1">Did not Visit</span>
                                 @endif
                                 @if($booking->book_status==4)
-                                <button style="color:red; border: none; font-size: 16px; ">Did not Visit</button>
+                                <span class="badge badge-pill badge-danger mb-1">Appointment Declined</span>
                                 @endif
                           </td>
-                          
+
                           <td>
-                            <div class="table-actions">
-                                      <a href="{{route('booking.showDoctor',[$booking->id])}}" style="font-size: 16px;"><i class="fa fa-edit" style="color:green">Edit Booking</i></a>
+                          <div class="table-actions">
+                            @if($booking->book_status==0)
+                                      <a href="{{route('booking.showDoctor',[$booking->id])}}" style="font-size: 12px;"><i class="fa fa-edit" style="color:green">Edit Booking</i></a>
+                            @endif
+                            @if($booking->book_status!=2)
                                       <!-- <form action="{{route('booking.deleteBooking',[$booking->id])}}" method="POST">@csrf
                                       @method('DELETE') -->
-                                      <a href="{{route('booking.delete',[$booking->id])}}" style="font-size: 16px;"><i class="fa fa-trash" style="color:red">Cancel Booking</i></button>
+                                      <a href="{{route('booking.delete',[$booking->id])}}" style="font-size: 12px;"><i class="fa fa-trash" style="color:red">Cancel Booking</i></button>
                                       <!-- </form> -->
+                            @endif
                             </div>
                             <td></td>
                         </td>
@@ -75,6 +82,7 @@
                         @endforelse
                       </tbody>
                     </table>
+                    {{$bookings->links()}}
                 </div>
             </div>
         </div>

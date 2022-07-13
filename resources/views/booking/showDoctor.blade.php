@@ -1,25 +1,20 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
+
     <div class="container">
-        <div class="card">
-            @foreach($booking->user as $book)
-            <div class="card-header"><h3>Edit appointment for {{$book->user_fName}} {{$book->user_lName}}</h3></div>
-            @endforeach
-        </div>
         <!-- Search Doctor -->
         <form action="{{route('booking.showDoctor',[$booking->id])}}" method="GET">
             <div class="card">
-                <div class="card-body">
-                    <div class="card-header"><h2>Find Doctors by Date</h2></div>
+            <div class="card-header"><h1>Edit appointment</h1></div>
                     <div class="card-body">
+                    <div class="card-header"><h2>Find Doctors by Date</h2></div>
                         <div class="row">
                             <div class="col-md-8">
-                                    <input type="text" autocomplete="off" name="app_date" class="form-control" id="datepicker">
+                            <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker" name="app_date">
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-primary" type="submit">Search</button>
-                                
+                                <button class="btn btn-primary" type="submit">Search</button>     
                             </div>
                         </div>
                     </div>
@@ -28,7 +23,6 @@
         </form>
         <!-- end search doctor -->
         <!-- display doctors -->
-        <div class="row">
         <div class="card">
         <div class="card-body">       
             <div class="card-header"> <h2>List of Doctors on <strong>{{date('F j, Y', strtotime($date))}}</strong></h2></div>

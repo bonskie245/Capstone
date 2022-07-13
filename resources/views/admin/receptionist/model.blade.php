@@ -2,13 +2,13 @@
               <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Doctor information</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Staff information</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body" style="text-align: justify;">
-                    <p style="text-align: center;"><img src="{{asset('images')}}/{{$user->user_image}}" class="table-user-thumb" alt="" width="200`"></p>
+                    <p style="text-align: center;"><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" alt="" width="200`"></p>
                     <p class="badge badge-pill badge-dark">Role:{{$user->role->name}}</p>
                     <p><strong>Firstname:</strong> {{$user->user_fName}}</p>
                     <p><strong>Lastname:</strong> {{$user->user_lName}}</p>

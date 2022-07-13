@@ -11,7 +11,7 @@
                     <i class="ik ik-command bg-blue"></i>
                     <div class="d-inline">
                         <h5>Booking</h5>
-                        <span>Booking Calendar</span>
+                        <span>Booking Today</span>
                     </div>
                 </div>
             </div>
@@ -48,31 +48,40 @@
                         <h3>Date Today: <strong>{{ date('F j, Y') }}</strong></h3>
                 </div>
                 <div class="card-body">
-                   <table  class="table">
+                   <table class="table  table-bordered table-hover">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Photo</th>
                           <th scope="col">Name</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">Time</th>
+                          <th scope="col">Reason</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Time</th>
+                          <th scope="col">Date</th>
                           <th scope="col">Doctor</th>
-                          <th scope="col">Status</th>
-                          <th class="nosort">&nbsp;</th>
-                          
+                          <th scope="col">Action</th>
+                          <th scope="col"></th>
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse($bookings as $key => $booking)
+                        @forelse($bookings as $key =>$booking)
                         <tr>
-                          <th scope="row">{{$key +1}}</th>
+                          <th scope="row">{{$key+1}}</th>
                           @foreach($booking->user as $user)
+                          @if(!$user->user_image)
+                          <td><img src="{{asset('images/user.png')}}"
+                              width="80px "  height="80px" style="border-radius: 50%;"></td>
+                          @else
                             <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
-                            width="80px "  height="80px"style="border-radius: 50%;"></td>
-                            <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
-                          <td>{{$user->email}}</td>
+                              width="80px "  height="80px" style="border-radius: 50%;"></td>
+                          @endif
+                              <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
+                          
+                              @if(!$booking->book_reason)
+                              <td>Did not indicate reason</td>
+                              @else
+                                <td>{{$booking->book_reason}}</td>
+                             @endif
                           <td>{{$user->user_phoneNum}}</td>
                           @endforeach
                               @foreach($booking->appointment as $book)
@@ -80,28 +89,24 @@
                               <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
                              @endforeach
                           <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
-                          <td>
-      
-                              
                                 @if($booking->book_status==0)
-                                <a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Accept</button></a>
-                                <a href="{{route('decline.status',[$booking->id])}}"><button class="btn btn-danger">Decline</button></a>
+                                <td><a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Accept</button></a></td>
+                                <td><a href="{{route('decline.status',[$booking->id])}}"><button class="btn btn-danger">Decline</button></a></td>
                                 @endif
                                 @if($booking->book_status==1)
-                                <a href="{{route('visited.status',[$booking->id])}}"><button class="btn btn-success">Visited</button></a>
-                                <a href="{{route('notVisited.status',[$booking->id])}}"><button class="btn btn-danger">Not Visited</button></a>
+                                <td><a href="{{route('visited.status',[$booking->id])}}"><button class="btn btn-success">Visited</button></a></td>
+                                <td><a href="{{route('notVisited.status',[$booking->id])}}"><button class="btn btn-danger">Not Visited</button></a></td>
                                 @endif
                                 @if($booking->book_status==2)
-                                <button class="btn btn-danger" style ="background-color:#47ceff;">Visited</button>
+                                <td><button class="btn btn-danger" style ="background-color:#47ceff;">Visited</button></td>
                                 @endif
                                 @if($booking->book_status==3)
-                                <button class="btn btn-danger" style ="background-color:#eb095c;">Not Visited</button>
+                                <td><button class="btn btn-danger" style ="background-color:#eb095c;">Not Visited</button></td>
                                 @endif
                                 @if($booking->book_status==4)
-                                <a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Declined</button></a>
-                                <button class="btn btn-danger" style ="background-color:#eb095c;">Declined</button>
+                                <td><a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Undo</button></a></td>
+                                <td><button class="btn btn-danger" style ="background-color:#eb095c;">Declined</button></td>
                                 @endif
-                          </td>
                         </tr>
                         @empty
                         <td>No appointments Today</td>
