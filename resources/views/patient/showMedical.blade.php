@@ -52,6 +52,9 @@
                                     @endforelse
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-center">
+                                {!! $prescriptions->onEachSide(5)->links() !!}
+                                </div>
                             </div>
                         </div>
                     </div>

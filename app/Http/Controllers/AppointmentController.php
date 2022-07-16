@@ -29,7 +29,9 @@ class AppointmentController extends Controller
         //  $doctors = $doc->user->user_fName . ' ' . $doc->user->user_lName;
         // }
         $doctors = $doctor->user->user_fName . ' ' . $doctor->user->user_lName. 'Appointment';
-        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+        // $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+
+        $myappointment = Appointment::select('app_date')->where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
         $appointment = array();
         $color = null;
         $myappointments = Appointment::where('doctor_id', $doctor->id)->get();
@@ -222,7 +224,8 @@ class AppointmentController extends Controller
     public function showEditTime()
     {
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
-        $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+        // $myappointment = Appointment::where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
+        $myappointment = Appointment::select('*')->where('doctor_id', $doctor->id)->groupBy('app_date')->orderBy('app_date', 'desc')->get();
 
         return view('admin.appointment.editTime',compact('myappointment'));
     }

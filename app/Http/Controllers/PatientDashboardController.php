@@ -42,7 +42,7 @@ class PatientDashboardController extends Controller
             return view('bookapp',compact('doctors','date'));
         }
         $date = date('Y-m-d');
-          $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
+          $doctors = Appointment::select('*')->where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
           return view('bookapp',compact('doctors','date'));
     }
 

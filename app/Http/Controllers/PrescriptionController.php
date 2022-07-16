@@ -69,7 +69,7 @@ class PrescriptionController extends Controller
     public function showHistory($id)
     {
         $user = User::where('id', $id)->first();
-        $prescriptions = Prescription::where('user_id', $id)->orderBy('app_date', 'desc')->get();
+        $prescriptions = Prescription::where('user_id', $id)->orderBy('app_date', 'desc')->paginate(5);
 
         return view('prescription.showMedical', compact('prescriptions', 'user')); 
     }

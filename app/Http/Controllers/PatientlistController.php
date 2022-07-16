@@ -173,7 +173,7 @@ class PatientlistController extends Controller
             $bookings =Booking::latest()->where('app_date',$request->app_date)->get();
            return view('patientlist.allpatient',compact('bookings'));
        }          
-        $bookings =Booking::latest()->paginate(20);
+        $bookings =Booking::latest()->paginate(10);
             return view('patientlist.allpatient',compact('bookings'));
 
     }

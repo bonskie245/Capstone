@@ -55,16 +55,22 @@ class FrontendController extends Controller
         date_default_timezone_set('Asia/Manila');
        // $request->validate(['time'=>'required']);
        $this->validate($request,[
-        'app_id'=>'required', 
-    ]);
-  
+        'app_id'=>'required',
+        'book_reason' => 'required'
+    ],
+    [
+        'app_id.required' => 'Appointment Time is required',
+        'book_reason.required' => 'Reason is required'
+    ]
+    );
+
         $date = $request->app_date;
         $check = $this->checkBookingTimeInterval($request->doctorId, $date);
         
         if($check){
             return redirect()->back()->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
         }
-
+    
         /*Create Booking*/
         $booking = Booking::create([
                 'app_id'=> $request->app_id,

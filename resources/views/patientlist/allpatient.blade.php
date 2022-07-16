@@ -127,8 +127,13 @@
                         @empty
                         <td>No appointments Today</td>
                         @endforelse
+                        
                       </tbody>
                     </table>
+                    <div class="d-flex justify-content-center">
+            {!! $bookings->onEachSide(5)->links() !!}
+        </div>
+                   
                 </div>
             </div>
         </div>

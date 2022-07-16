@@ -57,10 +57,15 @@
                         <tr>
                           <th scope="row">{{$booking->id}}</th>
                             @foreach($booking->user as $user)
+                            @if(!$user->user_image)
+                            <td><img src="{{asset('images/user.png')}}"
+                                width="80" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                            @else
                             <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
                                 width="80" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                            @endif
                             <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
-                            @if(!$booking->book_reason)
+                                @if(!$booking->book_reason)
                               <td>Did not indicate reason</td>
                               @else
                                 <td>{{$booking->book_reason}}</td>

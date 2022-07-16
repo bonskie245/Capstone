@@ -71,7 +71,7 @@
                                 </td>
                                 <td><form action="{{route('medicine.destroy',[$medicine->id])}}" method="post">@csrf 
                                             @method('DELETE') 
-                                            <button type="submit"><i class="ik  ik-trash">Delete</i></button>
+                                            <button type="submit" style="padding: 0;border: none;background: none; color:red;"><i class="ik  ik-trash">Delete</i></button>
                                         </form></td>
                                 <td></td>
                                 <td></td>

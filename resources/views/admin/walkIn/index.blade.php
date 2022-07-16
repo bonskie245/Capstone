@@ -53,16 +53,15 @@
                       </thead>
                       @forelse($bookings as $key => $booking)
                       <tbody>
-                            
                           <td>{{$key+1}}</td>
                           <td>{{$booking->user->user_fName}}</td>
-                            @if(!$booking->user->user_image)
+                          @if(!$booking->user->user_image)
                           <td><img src="{{asset('images/user.png')}}"
-                                width="80" style="border-radius: 50%;"></td>
-                            @else
-                          <td><img src="{{asset('profiles')}}/{{$booking->user->user_image}}"
-                                width="80" style="border-radius: 50%;"></td>
-                            @endif
+                              width="80px "  height="80px" style="border-radius: 50%;"></td>
+                          @else
+                            <td><img src="{{asset('profiles')}}/{{$booking->user->user_image}}"
+                              width="80px "  height="80px" style="border-radius: 50%;"></td>
+                          @endif
                           <td>{{$booking->user->email}}</td>
                           <td>{{$booking->user->user_phoneNum}}</td>
                           <td>{{$booking->app_date}}</td>

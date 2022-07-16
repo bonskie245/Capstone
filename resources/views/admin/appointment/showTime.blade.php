@@ -48,8 +48,12 @@
             </div>  
         @endforeach
     </form>
-    <h3>My Time list</h3>
-    <table class="table table-striped">
+    <div class="card">
+       
+            <div class="card-header"><h3>My Time list</h3></div>
+            <div class ="card-body">
+        
+                <table class="table table-striped">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -63,7 +67,7 @@
                         @forelse($appointments as $key => $appointment)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td>{{$appointment->doctor->user_lName}}</td>
+                          <td>{{$appointment->doctor->user->user_lName}}, {{$appointment->doctor->user->user_fName}}</td>
                           <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
                           <td>{{date('F j - Y,', strtotime($appointment->app_date))}}</td>
                           <td>       
@@ -76,6 +80,8 @@
                         @endforelse
                       </tbody>
     </table>
+    </div>
+    </div>
 </div>
 
 
