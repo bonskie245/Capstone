@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
     {
       $birthdate = "2000-10-25";
       
-      Role::create(['name'=>'admin']);
-      Role::create(['name'=>'doctor']);
-      Role::create(['name'=>'receptionist']);
-      Role::create(['name'=>'patient']);
+      Role::create(['id'=> '1' , 'name'=>'admin']);
+      Role::create(['id'=> '2', 'name'=>'doctor']);
+      Role::create(['id'=> '3', 'name'=>'receptionist']);
+      Role::create(['id'=> '4', 'name'=>'patient']);
         // \App\Models\User::factory(10)->create();
       
         User::create([
