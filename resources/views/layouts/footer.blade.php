@@ -138,7 +138,7 @@
                 });
         </script>
 
-<script>
+        <script>
                 $(document).ready(function(){
                             $("#datepicker2").datetimepicker({
                             format:"YYYY-MM-DD",

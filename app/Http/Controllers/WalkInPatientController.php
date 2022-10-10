@@ -22,7 +22,7 @@ class WalkInPatientController extends Controller
         $users  = User::where('role_id','!=',2)
         ->where('role_id','!=',3)
         ->where('role_id','!=',1)
-        ->get();
+        ->paginate(10);
         return view('admin.walkInAppointment.index', compact('users'));
     }
 

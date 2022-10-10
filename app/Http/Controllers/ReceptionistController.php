@@ -22,7 +22,7 @@ class ReceptionistController extends Controller
         $users  = User::where('role_id','!=',2)
         ->where('role_id','!=',4)
         ->where('role_id','!=',1)
-        ->get();
+        ->paginate(10);
         return view('admin.receptionist.index', compact('users'));
     }
 

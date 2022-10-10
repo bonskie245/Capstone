@@ -16,7 +16,7 @@ class DoctorController extends Controller
      $users  = User::where('role_id','!=',4)
                     ->where('role_id','!=',3)
                     ->where('role_id','!=',1)
-                    ->get();
+                    ->paginate(10);
          return view('admin.doctor.index', compact('users'));
     }
 
