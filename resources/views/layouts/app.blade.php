@@ -7,22 +7,22 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="secure_assets/img/favicon.ico">
 
 	<!-- CSS here -->
-	<link rel="stylesheet" href="{{asset('welcome/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/owl.carousel.min.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/slicknav.css')}}">
-     <link rel="stylesheet" href="{{asset('welcome/css/flaticon.css')}}">
-     <link rel="stylesheet" href="{{asset('welcome/css/gijgo.css')}}">
-     <link rel="stylesheet" href="{{asset('welcome/css/animate.min.css')}}">
-     <link rel="stylesheet" href="{{asset('welcome/css/animated-headline.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/magnific-popup.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/fontawesome-all.min.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/themify-icons.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/slick.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/nice-select.css')}}">
-	<link rel="stylesheet" href="{{asset('welcome/css/style.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/slicknav.css')}}">
+     <link rel="stylesheet" href="{{secure_asset('welcome/css/flaticon.css')}}">
+     <link rel="stylesheet" href="{{secure_asset('welcome/css/gijgo.css')}}">
+     <link rel="stylesheet" href="{{secure_asset('welcome/css/animate.min.css')}}">
+     <link rel="stylesheet" href="{{secure_asset('welcome/css/animated-headline.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/magnific-popup.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/fontawesome-all.min.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/themify-icons.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/slick.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/nice-select.css')}}">
+	<link rel="stylesheet" href="{{secure_asset('welcome/css/style.css')}}">
 
      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"defer></script>
@@ -206,41 +206,41 @@ html {
    </script>
 
 
-<script src="{{asset('welcome/js/vendor/modernizr-3.5.0.min.js')}}"></script>
+<script src="{{secure_asset('welcome/js/vendor/modernizr-3.5.0.min.js')}}"></script>
     <!-- Jquery, Popper, Bootstrap -->
-    <script src="{{asset('welcome/js/vendor/jquery-1.12.4.min.js')}}"></script>
-    <script src="{{asset('welcome/js/popper.min.js')}}"></script>
-    <script src="{{asset('welcome/js/bootstrap.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/vendor/jquery-1.12.4.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/popper.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/bootstrap.min.js')}}"></script>
     <!-- Jquery Mobile Menu -->
-    <script src="{{asset('welcome/js/jquery.slicknav.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.slicknav.min.js')}}"></script>
 
     <!-- Jquery Slick , Owl-Carousel Plugins -->
-    <script src="{{asset('welcome/js/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('welcome/js/slick.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/owl.carousel.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/slick.min.js')}}"></script>
     <!-- One Page, Animated-HeadLin -->
-    <script src="{{asset('welcome/js/wow.min.js')}}"></script>
-    <script src="{{asset('welcome/js/animated.headline.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.magnific-popup.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/wow.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/animated.headline.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.magnific-popup.js')}}"></script>
 
     <!-- Date Picker -->
-    <script src="{{asset('welcome/js/gijgo.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/gijgo.min.js')}}"></script>
     <!-- Nice-select, sticky -->
-    <script src="{{asset('welcome/js/jquery.nice-select.min.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.sticky.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.nice-select.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.sticky.js')}}"></script>
     
     <!-- counter , waypoint -->
-    <script src="{{asset('welcome/js/jquery.counterup.min.js')}}"></script>
-    <script src="{{asset('welcome/js/waypoints.min.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.countdown.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.counterup.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/waypoints.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.countdown.min.js')}}"></script>
     <!-- contact js -->
-    <script src="{{asset('welcome/js/contact.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.form.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('welcome/js/mail-script.js')}}"></script>
-    <script src="{{asset('welcome/js/jquery.ajaxchimp.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/contact.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.form.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.validate.min.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/mail-script.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/jquery.ajaxchimp.min.js')}}"></script>
     
     <!-- Jquery Plugins, main Jquery -->	
-    <script src="{{asset('welcome/js/plugins.js')}}"></script>
-    <script src="{{asset('welcome/js/main.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/plugins.js')}}"></script>
+    <script src="{{secure_asset('welcome/js/main.js')}}"></script>
      </body>
      </html>

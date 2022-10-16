@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Appointment;
@@ -98,20 +99,16 @@ class PatientlistController extends Controller
             'time_end'=>$appointment->time_end,
             'app_date'=>$booking->app_date,
             'doctor_fName' =>$doctorID->user->user_fName, 
-            'doctor_LName' =>$doctorID->user->user_lName, 
+            'doctor_lName' =>$doctorID->user->user_lName, 
             ];
          
             $email = $userID->email;
             
-        try{
-            \Mail::to($email)->send(new AppointmentMail($mailData));
-            
-          }catch(\Exception $e){
-
-            } 
         
-         
-        return redirect()->back()->with('message','Appointment Accepted');
+            Mail::to("$userID->email")->send(new AppointmentMail($mailData));
+
+            // return "email sent";
+             return redirect()->route('patient')->with('message','Appointment Accepted');
        
     }
 

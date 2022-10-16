@@ -35,7 +35,7 @@
                          </div>
                     </div>
 
-                    <div class="col-md-12 col-sm-12 border-top">
+                    <div class="col-md-20 col-sm-12 border-top">
                          <div class="col-md-4 col-sm-6">
                               <div class="copyright-text"> 
                                    <p>Copyright &copy; 2022 Urgent Care Clinic 
