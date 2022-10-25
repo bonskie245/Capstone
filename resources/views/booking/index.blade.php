@@ -36,10 +36,10 @@
                         @forelse($bookings as $key => $booking)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          @if(!$doctor->user->user_image)
+                          @if(!$booking->doctor->user->user_image)
                           <td><img src="{{asset("/images/mdavatar.png")}}" width="90px" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                           @else
-                          <td><img src="{{asset('images')}}/{{$booking->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                          <td><img src="{{asset('images')}}/{{$booking->doctor->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                           @endif
                           
                           <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
