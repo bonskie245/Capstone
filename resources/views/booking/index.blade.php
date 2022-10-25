@@ -36,7 +36,12 @@
                         @forelse($bookings as $key => $booking)
                         <tr>
                           <th scope="row">{{$key+1}}</th>
-                          <td><img src="{{asset('images')}}/{{$booking->doctor->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                          @if(!$doctor->user->user_image)
+                          <img src="{{asset("/images/mdavatar.png")}}" width="90px" style="border-radius: 100%; display: block; margin: 0 auto;">
+                          @else
+                          <td><img src="{{asset('images')}}/{{$booking->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
+                          @endif
+                          
                           <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
                             @foreach($booking->appointment as $book)
                               <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
