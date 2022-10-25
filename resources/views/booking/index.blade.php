@@ -37,7 +37,7 @@
                         <tr>
                           <th scope="row">{{$key+1}}</th>
                           @if(!$doctor->user->user_image)
-                          <img src="{{asset("/images/mdavatar.png")}}" width="90px" style="border-radius: 100%; display: block; margin: 0 auto;">
+                          <td><img src="{{asset("/images/mdavatar.png")}}" width="90px" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                           @else
                           <td><img src="{{asset('images')}}/{{$booking->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;"></td>
                           @endif
