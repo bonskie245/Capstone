@@ -1,7 +1,7 @@
  <div class="page-wrap">
                 <div class="app-sidebar colored">
                     <div class="sidebar-header">
-                        <a class="header-brand" href="{{url('dashboard')}}">
+                        <a class="header-brand" href="{{url('dashboard/admin')}}">
                             <span class="text">Urgent Care Clinic</span>
                         </a>
                         <button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>

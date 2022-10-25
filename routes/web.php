@@ -36,7 +36,7 @@ Auth::routes();
 Route::name('auth.resend_confirmation')->get('/register/confirm/resend', 'App\Http\Controllers\Auth\RegisterController@resendConfirmation');
 Route::name('auth.confirm')->get('/register/confirm/{confirmation_code}', 'App\Http\Controllers\Auth\RegisterController@confirm');
 
-Route::get('/dashboard/admin', [App\Http\Controllers\DashboardController::class, 'index']);
+Route::get('/dashboard/admin', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
