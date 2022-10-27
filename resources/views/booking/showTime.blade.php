@@ -62,9 +62,10 @@
             </div>
             <div class="card-footer bg-white">
                     <button type="submit" class="btn btn-success" style="width: 180px">Book Appointment</button>
+                    </form>
                     <a href="{{route('my.booking')}}"><button class="btn btn-success" style="width: 150px">Cancel</button></a>
             </div>
-            </form>
+           
         </div>
     </div>
 </div>
