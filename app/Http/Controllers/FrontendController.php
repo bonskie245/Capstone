@@ -180,11 +180,13 @@ class FrontendController extends Controller
                             ->where('app_status',0)
                             ->orderBy('time_start')
                             ->get();
+
            $bookings = Booking::find($id);
 
             $appID = $bookings->app_id;
             $doctor = Doctor::where('id',$doctorId)->first();
             $doctor_id = $doctorId;
+            
             return view('booking.showTime',compact('date','doctor','doctor_id','appointments','bookings','appID'));
     }
 
