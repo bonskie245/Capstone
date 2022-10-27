@@ -66,7 +66,7 @@ Route::group(['middleware'=>['auth','patient']],function(){
     Route::Delete('booking/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'deleteBooking'])->name('booking.deleteBooking');
 
     Route::get('booking/show/Edit/BookTime/{doctorId}/{id}/{date}',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');
-    Route::put('booking/show/Edit/editTime/{doctorId}/{id}/{date}',[App\Http\Controllers\FrontendController::class, 'updateTime'])->name('booking.updateTime');
+    Route::put('booking/show/Edit/editTime/{id}',[App\Http\Controllers\FrontendController::class, 'updateTime'])->name('booking.updateTime');
     Route::get('/medicalHistory/Prescription/{id}', [App\Http\Controllers\FrontendController::class, 'showPrescription'])->name('show.prescription');
     
     //Patients Dashboad
