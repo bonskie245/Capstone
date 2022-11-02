@@ -20,7 +20,7 @@
                                         <a href="{{route('users.create')}}"><i class="ik ik-calendar"></i><span>Book an Appointment</span></a>
                                     </div>
                                     <div class="nav-item">
-                                        <a href="{{route('my.booking')}}"><i class="fa fa-book"></i><span>My Booking</span></a>
+                                        <a href="{{route('my.booking')}}"><i class="fa fa-book"></i><span>My Booking ({{App\Models\Booking::where('book_status', 0)->where('user_id', auth()->user()->id)->count()}}) </span></a>
                                     </div>
                                     <div class="nav-item">
                                         <a href="{{route('myPrescription')}}"><i class="ik ik-clipboard"></i><span>My History</span></a>
