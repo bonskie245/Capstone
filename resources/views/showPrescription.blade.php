@@ -12,10 +12,8 @@
         <div class="container" style="position: relative;">
         <div class="ticket">
             <!-- <button id="btnPrint" class="hidden-print" >Print</button> -->
-            <h3 class="centered">CONCHITA BRANZUELA BERGADO, M.D.</h3>
-                  <h4 class="centered">Fellow, Philipphine Academy of Familiy Physician
-                    <br>Practitioner, Newborn & Childrens's Diseases
-                    <br>Practitioner, Occupational Medicine
+            <h3 class="centered">Dr. {{$prescription1->doctor->user->user_fName}} {{$prescription1->doctor->user->user_lName}}, {{$prescription1->doctor->doctor_title}}</h3>
+                  <h4 class="centered">{{$prescription1->doctor->doctor_department}}
                   </h4  ></span>
                   <div class="second-header" style="font-size: 11px; ">
                     <strong><p>Urgent Care Clinic
@@ -37,10 +35,11 @@
             @endforeach            
                 <br>
 
-                    <div class="bottom-right" style="margin-right: 95px; position: absolute; bottom: 0;   right: 25%;">
+                    <div class="bottom-right" style="margin-right: 95px; position: absolute; bottom: 0;   left: 600px">
                         <h4>M.D_____________________________</h3>
-                        <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3>
-                        
+                        <!-- <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3> -->
+                        <br>
+                        <br>
                     </div>
             </div>
            

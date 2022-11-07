@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('content')
-<div class="container">
+<!-- <div class="container"> -->
 <div class="page-header">
             <div class="row align-items-end">
                 <div class="col-lg-8">
@@ -50,9 +50,11 @@
                           <th scope="col">Last Name</th>
                           <th scope="col">Phone Number</th>
                           <th scope="col">Address</th>
-                          <th class="nosort">&nbsp;</th>
-                          <th class="nosort">&nbsp;</th>
                           <th scope="col">Action</th>
+                          <th class="nosort">&nbsp;</th>
+                          <th class="nosort">&nbsp;</th>
+                          
+                          
                         </tr>
                       </thead>
                       <tbody>

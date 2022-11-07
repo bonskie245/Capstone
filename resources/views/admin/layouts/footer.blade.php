@@ -132,7 +132,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 
-
+        
+        <!-- Data TAbles  NOV 7, 2022-->
+       
+        <!-- End of Datatables -->
         <script type="text/javascript">
         var i = 0;
             

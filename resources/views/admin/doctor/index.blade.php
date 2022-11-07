@@ -39,7 +39,9 @@
                                 </div>
                             @endif
                             <div class="card-header"><h3>Doctor Management</h3>
+                                <div class="pull-right">
                                 <a href="{{route('doctor.create')}}" style="margin-left: 750px;" class="btn btn-primary">Add Doctor</a>
+                                </div>
                             </div>
                               <div class="card-body">
                                  <table id="data_table" class="table table-bordered table-hover" style="font-size: 15px;">
@@ -98,4 +100,7 @@
             </div>
         </div>
     </div>
+        
+       
+
 @endsection
