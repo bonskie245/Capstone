@@ -35,7 +35,7 @@
             @endforeach            
                 <br>
 
-                    <div class="bottom-right" style="margin-right: 95px; position: absolute; bottom: 0;   left: 600px">
+                <div class="bottom-right" style="position: relative;top: 220px;width: 100%;display: flex;justify-content: center;">
                         <h4>M.D_____________________________</h3>
                         <!-- <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3> -->
                         <br>
@@ -63,15 +63,15 @@ table {
 
 td.description,
 th.description {
-    width: 150mm;
-    max-width: 150mm;
+    width: 200mm;
+    max-width: 250mm;
 }
 span.rx {
   content: "\211E";
 }
 
 .pres-text{
-  font-size: 11.5px;
+  font-size: 12px;
 }
 /* td.quantity,
 th.quantity {
@@ -97,8 +97,8 @@ th.price {
   box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
   padding:2mm;
   margin: 0 auto;
-  width: 127mm;
-  height: 205mm;
+  width: 130mm;
+  height: 183mm;
   background: #FFF;
 }
 

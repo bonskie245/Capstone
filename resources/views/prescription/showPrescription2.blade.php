@@ -12,10 +12,8 @@
         <div class="container" style="position: relative;">
         <div class="ticket">
             <button id="btnPrint" class="hidden-print" >Print</button>
-            <h3 class="centered">CONCHITA BRANZUELA BERGADO, M.D.</h3>
-                  <h4 class="centered">Fellow, Philipphine Academy of Familiy Physician
-                    <br>Practitioner, Newborn & Childrens's Diseases
-                    <br>Practitioner, Occupational Medicine
+            <h3 class="centered">Dr. {{$prescription1->doctor->user->user_fName}} {{$prescription1->doctor->user->user_lName}}, {{$prescription1->doctor->doctor_title}}</h3>
+                  <h4 class="centered">{{$prescription1->doctor->doctor_department}}
                   </h4  ></span>
                   <div class="second-header" style="font-size: 11px; ">
                     <strong><p>Urgent Care Clinic
@@ -24,7 +22,7 @@
                     <br>Poblacion, Valencia City</p></strong>
                 </div>     
               <p>_____________________________________________________________  Patient Name: {{$prescription1->user->user_fName}} {{$prescription1->user->user_lName}}<span style="float: right; margin-right: 30px;">Age: {{\Carbon\Carbon::parse($prescription1->user->user_birthdate)->age}} &emsp; Gender: {{$prescription1->user->user_gender}} </span></p> 
-            <p>Address: {{$prescription1->user->user_address}} <span style="float: right; margin-right: 30px;">Date: 2022-30-6 </span>
+            <p>Address: {{$prescription1->user->user_address}} <span style="float: right; margin-right: 30px;">Date: {{$prescription1->app_date}} </span>
             _____________________________________________________________ </p>
             <p><span class="rx" style="font-size: 50px;">&#8478;  </span> Findings: {{$prescription1->pres_findings}}</p>
             <div class="prescription-box" style="margin-left: 30px;">     
@@ -36,11 +34,12 @@
                         
             @endforeach            
                 <br>
-
-                    <div class="bottom-right" style="margin-right: 75px; position: absolute; bottom: 0;   right: 25%;">
+<!-- position: absolute; bottom: 20px;  right: 100px; left: 250 px -->
+                    <div class="bottom-right" style="position: relative;top: 220px;width: 100%;display: flex;justify-content: center;">
                         <h4>M.D_____________________________</h3>
-                        <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3>
-                        
+                        <!-- <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3> -->
+                        <br>
+                        <br>
                     </div>
             </div>
            
@@ -64,15 +63,15 @@ table {
 
 td.description,
 th.description {
-    width: 150mm;
-    max-width: 150mm;
+    width: 200mm;
+    max-width: 250mm;
 }
 span.rx {
   content: "\211E";
 }
 
 .pres-text{
-  font-size: 11.5px;
+  font-size: 12px;
 }
 /* td.quantity,
 th.quantity {
@@ -98,8 +97,8 @@ th.price {
   box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
   padding:2mm;
   margin: 0 auto;
-  width: 127mm;
-  height: 205mm;
+  width: 130mm;
+  height: 183mm;
   background: #FFF;
 }
 
