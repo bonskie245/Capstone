@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 </head>
 <body class="hold-transition register-page">
-<div class="register-box" style="width: 500px; ">
+<div class="register-box" style="width: 78% ">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic </b>| Registration</a>
@@ -134,10 +134,10 @@
                                </select>
 
                 @error('user_gender')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
 
           <div class="input-group-append">
             <div class="input-group-text">
@@ -148,7 +148,6 @@
 
         <div class="input-group mb-3">
         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" Placeholder="Password">
-
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -178,7 +177,7 @@
             </div>
           </div> -->
           <!-- /.col -->
-          <div class="col-4">
+          <div class="col">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
           </div>
           <!-- /.col -->

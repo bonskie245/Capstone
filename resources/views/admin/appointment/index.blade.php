@@ -30,12 +30,16 @@
         <script src="{{asset('template/src/js/vendor/modernizr-2.8.3.min.js')}}"></script>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
         <!-- Full-Calendar -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 
-      
+
         
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
         // <!-- End Full Calendar -->
         <meta name="csrf-token" content="{{ csrf_token() }}" />
     </head>
@@ -44,7 +48,12 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <style>
+            body {
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
 
+        }
+        </style>
         <div class="wrapper">
             <header class="header-top" header-theme="light">
                 <div class="container-fluid">
@@ -117,35 +126,53 @@
 
             <div class="container">
                     @if(Session::has('message'))
-                        <div class="alert bg-success alert-success text-white" role="alert">
-                            {{Session::get('message')}}
-                        </div>
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
                     @endif
                     @if(Session::has('errmessage'))
-                        <div class="alert bg-danger alert-success text-white" role="alert">
-                            {{Session::get('errmessage')}}
-                        </div>
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
                     @endif
                     @foreach($errors->all() as $error)
-                        <div class="alert alert-danger">
-                            {{$error}}
-                            
-                        </div>  
+                        <!-- <div class="alert alert-danger">
+                            {{$error}}                        
+                        </div>   -->
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
                     @endforeach
                     </div>
 
                    
                     <div class="card">
+                    <input type="hidden" id="doctor_id" name="doctor_id" value="{{App\Models\Doctor::where('user_id', auth()->user()->id)->first()->id}}" />
                         <div class="card-header"><h2>Legend:</h2></div>
                         <div class="card-body">
                         <div class='box blue'> = Available</div>
                         <div class='box red'> = Not Available</div>
                         <br><br>
-                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appointmentModal">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appointmentModal">
                         Add Appointment
-                        </button> -->
-                        <a href="{{route('appointment.create')}}" class="btn btn-primary" >Add Appointment</a>
-                        <a href="{{route('appointment.timeEdit')}}" class="btn btn-primary" >Edit/Delete Appointment</a>
+                        </button>
+                        <!-- <a href="{{route('appointment.create')}}" class="btn btn-primary" >Add Appointment</a> -->
+                        <!-- <a href="{{route('appointment.timeEdit')}}" class="btn btn-primary" >Edit/Delete Appointment</a> -->
                         </div>
                         <br>
                     </div>
@@ -158,41 +185,9 @@
                             </div>
 </div>                
         <!-- Modal -->
-        <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Appointment Time</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <h3 id="error" class = "text-danger"></h3>
-                <label for="app_date">Choose Date: </label>
-                    <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker" name="app_date">
-                    <span id="dateError" class="text-danger"></span>
-                    <br>
-                        <label for="time_start">Select start time:</label>
-                            <input type="text" class ="timepicker" id="time_start" name="time_start">
-                             <span id="startError" class="text-danger"></span>
-
-                         <label for="time_end">Select end time:</label>
-                             <input type="time" id="time_end" name="time_end">
-                            <span id="endError" class="text-danger"></span>
-                             
-                           
-                             
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" id="saveBtn" class="btn btn-primary">Save changes</button>
-            </div>
-            </div>
-        </div>
-        </div>
+        @include('admin.appointment.createModal')
         <!-- end modal -->
-<!-- 
+<!--
             editable: true,
 
                                     eventDrop: function(event)
@@ -372,7 +367,7 @@
                                 {
                                     'left': 'prev,next today', 
                                     'center': 'title',
-                                    'right': 'month, agendaWeek, agendaDay, listMonth'
+                                    'right': 'month, listMonth'
                                 },
                                     events: appointment,
                                     // selectable: true,
@@ -405,9 +400,13 @@
                                                     'end': app_date,
                                                     'color': '#47ceff'
                                                 });
-                                                swal({title: "Good job", text: "You created an Appointment!", type: 
-                                                "success"}).then(function(){ 
-                                                location.reload();
+                                                swal.fire
+                                                ({
+                                                    title: "Good job", 
+                                                    text: "You created an Appointment!", 
+                                                    type: "success"
+                                                }).then(function(){ 
+                                                    location.reload();
                                                 });
                                             },
                                             error:function(error)
@@ -435,31 +434,91 @@
                                 var app_date = moment(event.start).format('YYYY-MM-DD');
                                 var time_start = moment(event.start).format('hh:mm');
                                 var time_end = moment(event.end).format('hh:mm');
-
+                                var doctorId = $('#doctor_id').val();
+                                
                                 $.ajax
                                 ({
                                     url: url,
                                     type: "PATCH",
                                     dataType: 'json',
-                                    data:{app_date, time_start, time_end},
+                                    data:{app_date, time_start, time_end, doctorId},
                                 
                                     success:function(response)
                                     {
-                                        swal({
+                                        swal.fire({
                                         title: "Good job!",
                                         text: "Appointment Updated",
                                         icon: "success",
                                         });
+                                        // console.log(response)
                                     },
                                     error:function(error)
                                     {
-                                        console.log(error)
+                                        
+                                        swal.fire({
+                                        title: "Error!",
+                                        text: error.responseJSON.message,
+                                        icon: "error",
+                                        }).then(function(){ 
+                                            location.reload();
+                                            });
                                     },
                                 });
                             },
                             selectAllow: function(event)
                             {
                                 return moment(event.start).utcOffset(false).isSame(moment(event.end).subtract(1, 'second').utcOffset(false),'day');
+                            },
+                            eventClick: function(event){
+                                var id = event.id;
+                            
+                                const swalWithBootstrapButtons = Swal.mixin({
+                                customClass: {
+                                    confirmButton: 'btn btn-success',
+                                    cancelButton: 'btn btn-danger'
+                                },
+                                buttonsStyling: false
+                                })
+                                    
+                                swalWithBootstrapButtons.fire({
+                                title: 'Are you sure to remove?? ',
+                                text: moment(event.start).format('LL') + ' / ' + moment(event.start).format('h:mm A') + ' - ' + moment(event.end).format('h:mm A') ,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes, delete it!',
+                                cancelButtonText: 'No, cancel!',
+                                reverseButtons: true
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax
+                                    ({
+                                        url: "{{route('appointment.destroy', '')}}" +'/'+ id,
+                                        type: "DELETE",
+                                        dataType: 'json',
+                                        success:function(response)
+                                        {
+                                            var id = response.id
+                                            swalWithBootstrapButtons.fire(
+                                            'Deleted!',
+                                            'The Date ' + moment(event.start).format('LL') + ' Time '+ moment(event.start).format('h:mm A') + ' - ' + moment(event.end).format('h:mm A') + ' has been Deleted'  ,
+                                            'success'
+                                            ).then(function(){ 
+                                            location.reload();
+                                            });
+                                            
+                                        }
+                                    });        
+                                } else if (
+                                    /* Read more about handling dismissals below */
+                                    result.dismiss === Swal.DismissReason.cancel
+                                ) {
+                                    swalWithBootstrapButtons.fire(
+                                    'Cancelled',
+                                    'The Appointment date and time deletion is cancelled',
+                                    'error'
+                                    )
+                                }
+                                })                        
                             }
                         })
                 });      
@@ -468,18 +527,57 @@
                 
             <script type="text/javascript">
                 
-               $(document).ready(function(){
-                            $("#datepicker").datetimepicker({
-                                format: 'YYYY-MM-DD',
-                            })
+                $(document).ready(function(){
+                        $("#datepicker").datetimepicker({
+                        format: 'YYYY-MM-DD',
+                        minDate : moment(),
+                        daysOfWeekHighlighted: "0",
+                        daysOfWeekDisabled: [0]
+                        })
                 });
+
+                $(document).ready(function(){
+                        $("#datepickers2").datetimepicker({
+                        format: 'YYYY-MM-DD',
+                        minDate : moment(),
+                        daysOfWeekHighlighted: "0",
+                        daysOfWeekDisabled: [0]
+                        })
+                });
+                
+                
             </script>
 
             <!-- Time Picker -->
                 <script>
-                        $(document).ready(function(){
-                        $('#time_start').timepicker({});
-                         });
+                    $(document).ready(function()
+                    {
+                        $('#time_start').timepicker({
+                            template: 'modal',
+                            timeFormat : 'hh:mm a',
+                            interval : 30,
+                            minTime: '8',
+                            startTime : '08:00',
+                            maxTime : '5:00pm',    
+                            dynamic : true,
+                            dropdown : true,
+                            scrollbar : true,
+                            zindex: 9999999
+                        });
+                        
+                        $('#time_end').timepicker({
+                            template: 'modal',
+                            timeFormat : 'hh:mm a',
+                            interval : 30,
+                            minTime: '8',
+                            startTime : '08:00',
+                            maxTime : '5:00pm',
+                            dynamic : true,
+                            dropdown : true,
+                            scrollbar : true,
+                            zindex: 9999999
+                        });
+                    });
                 </script>
             <!-- END Time Picker -->
 

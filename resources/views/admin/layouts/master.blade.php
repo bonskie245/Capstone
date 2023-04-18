@@ -2,7 +2,7 @@
 @include('admin.layouts.sidebar')
 
 <div class="main-content">
-@yield('content')
-
+    @yield('content')
 </div> 
+
 @include('admin.layouts.footer')

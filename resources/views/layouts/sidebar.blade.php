@@ -1,5 +1,5 @@
 <div class="page-wrap">
-                <div class="app-sidebar colored">
+<div class="app-sidebar colored">
                     <div class="sidebar-header">
                         <a class="header-brand" href="{{url('dashboard/users')}}">
                             <span class="text">Urgent Care Clinic</span>
@@ -7,7 +7,6 @@
                         <button type="button" class="nav-toggle"><i data-toggle="expanded" class="ik ik-toggle-right toggle-icon"></i></button>
                         <button id="sidebarClose" class="nav-close"><i class="ik ik-x"></i></button>
                     </div>
-                    
                     <div class="sidebar-content">
                         <div class="nav-container">
                             <nav id="main-menu-navigation" class="navigation-main">

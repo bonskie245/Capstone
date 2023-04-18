@@ -95,7 +95,7 @@ http://www.tooplate.com/view/2098-health
                               @if(auth()->check() && auth()->user()->role->name === 'patient')
                                    <a class="dropdown-item" href="{{url('user-profile')}}">Profile</a>
                               @else
-                              <a class="dropdown-item" href="{{url('dashboard')}}">Dashboard</a>
+                              <a class="dropdown-item" href="{{route('dashboard.index')}}">Dashboard</a>
                               @endif
                               <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

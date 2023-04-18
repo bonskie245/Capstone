@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Doctor;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Label84\HoursHelper\Facades\HoursHelper;
 
 class AppointmentController extends Controller
 {
@@ -37,7 +39,8 @@ class AppointmentController extends Controller
         $myappointments = Appointment::where('doctor_id', $doctor->id)->get();
         // $myappointments = Appointment::get();
 
-        foreach($myappointments as $myappointment){
+        foreach($myappointments as $myappointment)
+        {
             $start =  $myappointment->app_date . ' ' . $myappointment->time_start;
             $end = $myappointment->app_date . ' ' . $myappointment->time_end;
             
@@ -76,45 +79,89 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //need to change
-    public function store(Request $request)
-    {
-        $this->validate($request,[
-            'app_date'=>'required',
-            'time_start'=>'required',
-            'time_end'=>'required|after:time_start' 
-        ]);
-        $time_start = Carbon::parse($request->time_start)->toTimeString();
-        $time_end = Carbon::parse($request->time_end)->toTimeString();
+    
+    public function store(Request $request){
+        // Using Times helper
+
+        // Check if time start is greater than time end
+
+       
+            // Get date Ranges
+            $startDate = Carbon::createFromFormat('Y-m-d', $request->app_date)->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('Y-m-d', $request->app_date2)->format('Y-m-d');
+
+            $daterange = CarbonPeriod::create($startDate, $endDate);
+            // $dates = [];
+            
+            
+            // dd($dates);
+           
+           
+        
+        
 
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
+        
+        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
+        $endtime   = Carbon::parse($request->time_end)->format('H:i');
 
-        $checkAppointment = Appointment::where('doctor_id', $doctor->id)
-                                        ->where('app_date', $request->app_date)
-                                        ->where('time_start', '<=' ,$time_start)
-                                        ->where('time_end', '>',  $time_start)
-                                        ->exists();
+        
+        $duration = $request->app_interval;
 
-    
-        if($checkAppointment){
-            // return response()->json([
-            //     'errors' =>'Appointment Date/Time exist or overlaps'
-            // ], 404);
-            return redirect()->route('appointment.index')->with('errmessage','Appointment Date & time exist or overlaps');
+        $array_of_time = array ();
+        $start_time    = strtotime ($starttime); //change to strtotime
+        $end_time      = strtotime ($endtime); //change to strtotime
+
+        $add_mins  = $duration * 60;
+       
+        if($start_time > $end_time)
+        {
+            return redirect()->route('appointment.index')->with('errmessage','The start time must not be greater than the end time');
+        }
+        
+        while ($start_time <= $end_time) // loop between time
+        {
+            $array_of_time[] = date ("H:i", $start_time);
+            $start_time += $add_mins; // to check endtie=me
         }
 
-        $appointment = Appointment::create([
-            'doctor_id'=> $doctor->id,
-            'app_date'=> $request->app_date,
-            'time_start' => $time_start,
-            'time_end' => $time_end,
-        ]);
-
-        // return response()->json($appointment);
-        return redirect()->back()->with('message','Appointment Created for '. $request->app_date);
+        
+        $new_array_of_time = array ();
+        
+    foreach ($daterange as $date) 
+    {  
+        $day_num = $date->format("N");
+            if($day_num < 7) 
+            { 
+                    for($i = 0; $i < count($array_of_time) - 1; $i++)
+                    {
+                            $checkAppointment = Appointment::where('doctor_id', $doctor->id)
+                                                    ->where('app_date', $date->format('Y-m-d'))
+                                                    ->where('time_start', '<=' ,$array_of_time[$i])
+                                                    ->where('time_end', '>', $array_of_time[$i])
+                                                    ->exists();
+                            if($checkAppointment)
+                            {
+                                return redirect()->route('appointment.index')->with('errmessage','Appointment Date and time exist or overlaps');
+                                break;
+                            }
+                            else
+                            {           
+                                    $new_array_of_time[] = Appointment::create
+                                    ([
+                                        'doctor_id'=> $doctor->id,
+                                        'app_date'=> $date->format('Y-m-d'),
+                                        'time_start' => $array_of_time[$i],
+                                        'time_end' => $array_of_time[$i + 1],
+                                    ]);    
+                                    continue;
+                            }       
+                    }
+             } 
     }
-   
-   
+        return redirect()->route('appointment.index')->with('message','Appointment Created for '. $request->app_date);
+    
+    }   
     /**
      * Display the specified resource.
      *
@@ -128,7 +175,7 @@ class AppointmentController extends Controller
     }
 
   
-    /**
+    /**U
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -190,22 +237,63 @@ class AppointmentController extends Controller
         // return response()->json($appointment);
         return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');
     }
+
     public function updateTime(Request $request, $id)
     {
         $appointment = Appointment::find($id);
-        $data = $request->all();
+        // $data [] = ['app_date' => $request->app_date,
+        //             'time_start' => $request->time_start,
+        //             'time_end' => $request->time_end,
+        //             'doctor_id' => $request->doctorId];
 
-        
-        if(! $appointment){
+        $checkAppointment = Appointment::where('doctor_id', $request->doctorId)
+                                        ->where('app_date', $request->app_date)
+                                        ->where('time_start', '<=' ,$request->time_start)
+                                        ->where('time_end', '>',  $request->time_start)
+                                        ->exists();
+
+        // First If
+        if(! $appointment)
+        {
             return response()->json([
                 'error' =>'Unable to locate ID'
             ], 404);
         }
+        else
+        {
+                // Second If
 
-        $appointment->update($data);
-        
-        return response()->json($appointment);
-        return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');
+                if($checkAppointment)
+                {
+                    return response()->json([
+                        'error' => true,
+                        'message' =>  'The appointment already exist',
+                    ], 404);
+                }
+                else
+                {
+                    if($request->app_date < date('Y-m-d')){
+                        return response()->json([
+                            'error' =>true,
+                            'message' => 'The date you have chosen is a past date',
+                        ], 404);
+                    }
+                    if($appointment->app_status == 1){
+                        return response()->json([
+                            'error' =>true,
+                            'message' => 'This appointment is already occupied',
+                        ], 404);
+                    }
+                    $appointment->update([
+                        'app_date' => $request->app_date,
+                        'time_start' => $request->time_start,
+                        'time_end' => $request->time_end
+                    ]);
+                    // return response()->json($request->time_start);
+                        return response()->json("$appointment");
+                    // return redirect()->route('appointment.index')->with('message','Appointment Edited Successfuly');    
+                }
+        } 
     }
 
     /**
@@ -218,7 +306,8 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::find($id);
         $appointment->delete();
-        return redirect()->route('appointment.index')->with('errmessage','Appointment Deleted Successfuly');
+        return $id;
+        // return redirect()->route('appointment.index')->with('errmessage','Appointment Deleted Successfuly');
     }
 
     public function showEditTime()

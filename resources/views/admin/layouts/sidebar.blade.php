@@ -18,8 +18,8 @@
 
 
                                  @if(auth()->check()&&auth()->user()->role->name ==='admin')
-                                 <div class="nav-lavel">CRUD Management</div>
-                                <div class="nav-item has-sub">
+                                 <!-- <div class="nav-lavel">CRUD Management</div> -->
+                                    <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="ik ik-users"></i><span>Doctor/Receptionist</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('doctor.index')}}" class="menu-item">View Doctor</a>
@@ -27,7 +27,9 @@
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
+                                    
                                 </div>
+                                
                                 @endif
                                 <!-- @if(auth()->check()&&auth()->user()->role->name ==='admin')
                                 <div class="nav-lavel">SECRETARY CRUD</div>
@@ -49,7 +51,7 @@
                                     </div>
                                 </div>
                                 @endif -->
-
+                            <!-- Checkpoint APRIL 13, 2023 -->
                                 @if(auth()->check()&&auth()->user()->role->name ==='admin')
                                 <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="fa fa-heartbeat"></i><span>Medicine</span></a>
@@ -60,6 +62,15 @@
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
                                 </div>
+                                <div class="nav-item">
+                                    <a href="{{route('about.index')}}"><i class="ik ik-message-square"></i><span>About us</span></a>
+                                </div>
+                                <div class="nav-item">
+                                  <a href="{{route('department.create')}}"><i class="fas fa-hospital"></i><span>Add Department</span></a>
+                                </div>
+                                <div class="nav-item">
+                                      <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
+                                    </div>
                                 @endif
 
                                 @if(auth()->check()&&auth()->user()->role->name ==='doctor')
@@ -73,6 +84,7 @@
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     <!-- </div> -->
                                 </div>
+                               
                                 @endif
 
                                 @if(auth()->check()&&auth()->user()->role->name ==='patient')
@@ -81,8 +93,8 @@
                                     <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patients Appointment</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
-                                        <a href="{{route('patient.today')}}" class="menu-item">View Appointment Today</a>
-                                        <a href="{{route('all.appointments')}}" class="menu-item">All Appointment</a>
+                                        <a href="{{route('patient.today')}}" class="menu-item">View Booking Tables</a>
+                                        <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a>
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
@@ -95,8 +107,8 @@
                                     <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patients Appointment</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
-                                        <a href="{{route('patient.today')}}" class="menu-item">View Appointment Today</a>
-                                        <a href="{{route('all.appointments')}}" class="menu-item">All Appointment</a>
+                                        <a href="{{route('patient.today')}}" class="menu-item">View Booking Table Data</a>
+                                        <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a>
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
@@ -107,12 +119,15 @@
                                     <div class="nav-item has-sub">
                                         <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Appointment Management</span></a>
                                         <div class="submenu-content">
-                                            <a href="{{route('patients.today')}}" class="menu-item">My Online-Patient Today</a>
-                                            <a href="{{route('walkin.index')}}" class="menu-item">My Walkin-Patient Today</a>
+                                            <a href="{{route('patients.today')}}" class="menu-item">Patient Today</a>
+                                            <!-- <a href="{{route('walkin.index')}}" class="menu-item">My Walkin-Patient Today</a> -->
                                             <a href="{{route('prescribed.patients')}}" class="menu-item">Patient Medical history</a>
                                             <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                             <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                         </div>
+                                    </div>
+                                    <div class="nav-item">
+                                      <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
                                     </div>
                                     @endif
 
@@ -127,12 +142,17 @@
                                             <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                         </div>
                                     </div>
+                                        <div class="nav-item">
+                                            <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
+                                        </div>
+                                      
+                                   
                                     @endif
                                     <br>
                                     <br>
 
                                    
-                                    <div class="nav-item" style="position: absolute; width: 50%; bottom: 10px;">
+                                    <div class="nav-item" style="position: absolute; bottom: 10px; width: 50%;">
                                     <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
                                                      href="{{ route('logout') }}"><i class="ik ik-power"></i><span>Log Out</span></a>
                                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

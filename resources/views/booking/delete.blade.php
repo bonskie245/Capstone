@@ -26,7 +26,6 @@
   					 		<button type="submit" class="btn btn-danger mr-2">Confirm</button>
 	                        <a href="{{route('my.booking')}}" class="btn btn-secondary">Cancel</a>
                         </div>
-
   			</form>
               </div>
   			</div>

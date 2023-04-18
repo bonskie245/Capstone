@@ -118,6 +118,7 @@ class ReceptionistController extends Controller
      */
     public function destroy($id)
     {
+      
         $user = User::find($id);
         $userDelete = $user->delete();
         if($userDelete){

@@ -29,13 +29,45 @@
                     </div>
             </div>
         </div>
+        @if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <!-- <div class="alert alert-danger">
+                            {{$error}}                        
+                        </div>   -->
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endforeach
     <div class="row justify-content-center">
         <div class="col-md-12 col-xl-14">
             <div class="card">
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
-                
                 <div class="card-body">
-                   <table class="table table-bordered table-hover">
+                   <table id="data_tables" class="table table-hover" style="width:100%">
                    <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -46,10 +78,7 @@
                           <th scope="col">Date</th>
                           <th scope="col">Time</th>
                           <th scope="col">Doctor</th>
-                          <th scope="col">Status</th>
                           <th scope="col">Action</th>
-
-
                         </tr>
                       </thead>
                       <tbody>
@@ -76,18 +105,13 @@
                             @foreach($booking->appointment as $appointment)
                             <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
                             @endforeach
-                          <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
-                          
-                          <td>@if($booking->book_status===2)
-                                <p style="background-color:#47ceff;" >Visited</p>
-                              @endif 
-                          </td>   
+                          <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td> 
                           <td>
-                              @if(!App\Models\Prescription::where('app_date',date('Y-m-d'))->where('doctor_id',$doctorID->id)->where('user_id',$booking->user_id)->exists())
+                                @if(!App\Models\Prescription::where('app_date',date('Y-m-d'))->where('doctor_id',$doctorID->id)->where('user_id',$booking->user_id)->exists())
                                  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
                                   Write Prescription
                                 </button> -->
-                                <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id,$booking->app_date,$booking->doctor_id])}}">Write Prescription</a></button>                             
+                                    <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id,$booking->app_date,$booking->doctor_id])}}" style="color:white">Write Prescription</a></button>                             
                                 @else
                                 <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a>
                                 @endif

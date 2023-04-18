@@ -50,7 +50,7 @@
                     <p>Name: {{ucfirst($user->user_fName)}} {{ucfirst($user->user_lName)}}</p>
                     <p>Gender: {{ucfirst($user->user_gender)}}</p>
                     <p>Address: {{$user->user_address}}</p>
-                    <p>Birthdate: {{$user->user_birthdate}}</p>
+                    <p>Birthdate: {{date('F j, Y', strtotime($user->user_birthdate))}}</p>
                 </div>
             </div>
             </div>
@@ -58,8 +58,7 @@
                     <div class="card">
                         <div class="card-header"><strong><h2>Medical Records</h2></strong></div>
                         <div class="card-body">
-                            <div class="row">
-                                <table class="table table-hover">
+                                <table id="data_tables" class="table table-hover" style="width: 100%">
                                     <thead>
                                         <tr>
                                             <th scope="col">Date of appointment</th>
@@ -69,22 +68,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @forelse($prescriptions as $prescription)
+                                    @foreach($prescriptions as $prescription)
                                             <tr>
                                             <td>{{date('F j, Y', strtotime($prescription->app_date))}}</td>
                                             <td>Dr. {{$prescription->doctor->user->user_fName}} {{$prescription->doctor->user->user_lName}}</td>
-                                            <td>{{$prescription->pres_findings}}</td>
+                                                <td>{{$prescription->pres_findings}}</td>
                                             <td><a href="{{route('prescription.show',[$prescription->user_id,$prescription->app_date])}}"><button class="btn btn-secondary" style="font-size: 12px;">View Prescription</button></a></td>
                                             </tr>
-                                            @empty
-                                            <td> You have no History</td>
-                                    @endforelse
+                    
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center">
-                                {!! $prescriptions->onEachSide(5)->links() !!}
+                                
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>

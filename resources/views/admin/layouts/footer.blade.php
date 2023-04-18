@@ -128,13 +128,39 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('template/dist/js/theme.min.js')}}"></script>
         <script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
+        <script src="{{asset('template/plugins/summernote/dist/summernote-bs4.min.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 
         
-        <!-- Data TAbles  NOV 7, 2022-->
-       
+        <!-- Data TAbles  April 4, 23-->
+        <script>
+            $(document).ready(function () {
+                $('#data_tables').DataTable({
+                    pagingType: 'full_numbers',
+                    scrollX: true,
+                });
+            });
+            $(document).ready(function() {
+                $('#summernote').summernote({
+                    tabsize: 1,
+                    toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                    ],
+                    height: 300,                 // set editor height
+                    minHeight: null,             // set minimum height of editor
+                    maxHeight: null,             // set maximum height of editor
+                    focus: true           
+                });
+            });
+        </script>
         <!-- End of Datatables -->
         <script type="text/javascript">
         var i = 0;
@@ -156,7 +182,14 @@
  
        </script>
          
-
+        <script type="text/javascript">
+            let startYear = 2020;
+            let endYear = new Date().getFullYear();
+                for (i = endYear; i > startYear; i--)
+                {
+                    $('#yearpicker').append($('<option />').val(i).html(i));
+                }
+        </script>
         <!-- Date Picker -->
         <script>
               $(document).ready(function(){
@@ -175,43 +208,127 @@
                             })
                 });
         </script>
+        <script>
+                $(document).ready(function(){
+                            $("#datepicker3").datetimepicker({
+                            format:"YYYY-MM-DD",
+                            })
+                });
+        </script>
         <!-- END Date Picker -->
                 
            <!-- Time Picker -->
                 <script>
                         $(document).ready(function(){
-                        $('#time_start').timepicker({
-                            timeFormat : 'hh:mm a',
-                            interval : 30,
-                            maxTime : '11:00 PM',
-                            startTime : '08:00 AM',
-                            dynamic : false,
-                            dropdown : true,
-                            scrollbar : true
-                        });
-                         
-                        $('#time_start').timepicker('option', 'change', function(time) {
-                            var later = new Date(time.getTime() + (0.5 * 60 * 60 * 1000));
-
-                                $('#time_end').timepicker('option', 'minTime', time);
-                                $('#time_end').timepicker('setTime', later);
+                            $('#time_start').timepicker({
+                                timeFormat : 'hh:mm a',
+                                interval : 30,
+                                maxTime : '5:00 PM',
+                                startTime : '08:00 AM',
+                                dynamic : false,
+                                dropdown : true,
+                                scrollbar : true
                             });
+                         
                         $('#time_end').timepicker({
                             timeFormat : 'hh:mm a',
                                 interval : 30,
-                                maxTime : '11:00 PM',
+                                maxTime : '5:00 PM',
                                 startTime : '08:00 AM',
                                 dynamic : false,
                                 dropdown : true,
                                 scrollbar : true
                         });
                          });
+                        //  END Time Picker
+                        
+                        
             </script>
-            <!-- END Time Picker -->
+          
 
               
-           
+           <!-- Print PDF -->
+           <!-- <script>
+            function createPDF() 
+            {
+                var pdf = new jspdf('l', 'px', 'a4');
+                // source can be HTML-formatted string, or a reference
+                // to an actual DOM element from which the text will be scraped.
+                source = $('#tab')[0];
+                pdf.canvas.height = 72 * 11.69;
+                pdf.canvas.width = 72 * 8.27;
 
+
+                pdf.setFontSize(22);
+                
+               
+                pdf.text(22, 22, 'Appointment History');
+                
+
+                // we support special element handlers. Register them with jQuery-style 
+                // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+                // There is no support for any other type of selectors 
+                // (class, of compound) at this time.
+                specialElementHandlers = {
+                // element with id of "bypass" - jQuery style selector
+                    '#bypassme': function (element, renderer) 
+                    {
+                            // true = "handled elsewhere, bypass text extraction"
+                            return true
+                        }
+                    };
+                    margins = {
+                        top: 80,
+                        bottom: 60,
+                        left: 40,
+                        width: 522
+                    };
+                    // all coords and widths are in jsPDF instance's declared units
+                    // 'inches' in this case
+                    pdf.fromHTML(
+                    source, // HTML string or DOM elem ref.
+                    margins.left, // x coord
+                    margins.top, { // y coord
+                        'width': margins.width, // max width of content on PDF
+                        'elementHandlers': specialElementHandlers
+                    },
+
+                    function (dispose) {
+                        // dispose: object with X, Y of the last line add to the PDF 
+                        //          this allow the insertion of new lines after html
+                        pdf.save('AppointmentHistory.pdf');
+                    }, margins);
+                }
+            </script> -->
+           <!-- End Print PDF -->
+           <script>
+                    function createPDF() {
+                    var sTable = document.getElementById('tab').innerHTML;
+
+                    var style = "<style>";
+                    style = style + "table {width: 100%;font: 17px Calibri;}";
+                    style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+                    style = style + "padding: 2px 3px;text-align: center;}";
+                    style = style + "</style>";
+
+                    // CREATE A WINDOW OBJECT.
+                    var win = window.open('', '', 'height=700,width=700');
+
+                    win.document.write('<html><head>');
+                    win.document.write('<title>Appointment History</title>');   // <title> FOR PDF HEADER.
+                    win.document.write('<h1 style="text-align: center;"> Appointment History </h1>');
+                    win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+                    win.document.write('</head>');
+                    win.document.write('<body>');
+                    win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+                    win.document.write('</body></html>');
+
+                    win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+                    win.print();    // PRINT THE CONTENTS.
+                }
+            </script>
+                
             <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>            
         
         <script>

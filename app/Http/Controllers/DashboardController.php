@@ -8,7 +8,8 @@ use App\Models\User;
 use App\Models\Booking;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
+use App\Models\About;
+use App\Models\Prescription;
 class DashboardController extends Controller
 {   
      public function __construct()
@@ -24,6 +25,7 @@ class DashboardController extends Controller
             {
                 return Carbon::parse($data->created_at)->format('M');
             });
+
             $months = [];
             $monthCount = [];
             foreach($data as $month => $values){
@@ -31,10 +33,11 @@ class DashboardController extends Controller
                 $monthCount[]=count($values);
             }
 
-            $booking = Booking::select('id', 'created_at')->get()->groupBy(function($booking){
-                return Carbon::parse($booking->created_at)->format('M');
+            $booking = Booking::select('id', 'app_date')->get()->groupBy(function($booking){
+                return Carbon::parse($booking->app_date)->format('M');
             });
-
+            
+            
             $bookMonths =[];
             $bookingCount = [];
 
@@ -42,6 +45,8 @@ class DashboardController extends Controller
                 $bookMonths[]=$month;
                 $bookingCount[]=count($values);
             }
+
+
 
             // $users = User::select(DB::raw("COUNT(*) as count"))
             //         ->whereYear('created_at', date('Y'))
@@ -52,7 +57,18 @@ class DashboardController extends Controller
             //         ->groupBy(DB::raw("MONTH(created_at)"))
             //         ->pluck('month');
             
-
         return view ('dashboard', compact('data','months','monthCount','booking','bookMonths','bookingCount'));
+    }
+    public function aboutUS()
+    {
+        $about = About::latest('created_at')->first();
+        return view('admin.layouts.about', compact('about'));
+    }
+    public function aboutSubmit(Request $request)
+    {
+        // $data = DB::insert('about')->insert(['description' => $request->about]);
+       
+        About::create(['description'=> $request->about]);
+        return redirect()->back()->with('message','Added successfully');
     }
 }

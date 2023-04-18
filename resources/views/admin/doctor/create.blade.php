@@ -36,7 +36,7 @@
                     {{Session::get('message')}}
                 </div>
             @endif
-			<div class="card shadow-sm p-3 mb-5 bg-white rounded">
+			<div class="card border-dark mb-3">
   			<div class="card-header">
   				<h2>Add Doctor</h2>
   			</div>
@@ -163,6 +163,15 @@
                                 		@enderror 
 	                        	</div>
   					</div>
+					<div class="row">
+						<div class="col">
+							<div class="form-group">
+								<label>Description</label>
+								<textarea class="form-control" id="exampleTextarea1" rows="4" name="medical_description" required>
+								</textarea>
+							</div>
+						</div>
+					</div>
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
 	                        <a href="{{route('doctor.index')}}" class="btn btn-secondary">Cancel</a>
 				</div>

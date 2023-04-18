@@ -16,4 +16,6 @@ class Appointment extends Model
         return $this->belongsTo(Doctor::class,'doctor_id','id');
 
     }
+
+    
 }

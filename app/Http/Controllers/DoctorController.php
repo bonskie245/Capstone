@@ -62,6 +62,7 @@ class DoctorController extends Controller
                 'user_id'=>$user->id,
                 'doctor_department'=>$user->user_department,
                 'doctor_title' => $request->doctor_title,
+                'description' => $request->medical_description
             ]);
         }
         return redirect()->back()->with('message','Doctor Added successfully');

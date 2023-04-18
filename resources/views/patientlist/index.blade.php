@@ -29,13 +29,15 @@
         <link rel="stylesheet" href="{{asset('template/dist/css/theme.min.css')}}">
         <script src="{{asset('template/src/js/vendor/modernizr-2.8.3.min.js')}}"></script>
         
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
         <!-- Full-Calendar -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 
-      
+
         
         // <!-- End Full Calendar -->
-        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css" rel="stylesheet">
     </head>
 
     <body>
@@ -112,26 +114,42 @@
     </div>
 
                 <div class="container">
-                        @if(Session::has('message'))
-                            <div class="alert bg-success alert-success text-white" role="alert">
-                                {{Session::get('message')}}
-                            </div>
-                        @endif
-                        @if(Session::has('errmessage'))
-                            <div class="alert bg-danger alert-success text-white" role="alert">
-                                {{Session::get('errmessage')}}
-                            </div>
-                        @endif
-                        @foreach($errors->all() as $error)
-                            <div class="alert alert-danger">
-                                {{$error}}
-                                
-                            </div>  
-                        @endforeach
+                @if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <!-- <div class="alert alert-danger">
+                            {{$error}}                        
+                        </div>   -->
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endforeach
                 </div>
                     
                         <div class ="card">
-                            
                             <div class="card-header"><h2>Legend:</h2></div>
                                 <div class="card-body">
                                 <div class='box grey'> = Pending</div>
@@ -140,8 +158,8 @@
                                 <div class='box pink'> = Not Visited</div>
                                 <div class='box red'> = Declined</div>
                                 <br><br>
-                                <a href="{{route('patient.today')}}" class="btn btn-primary">Appointments Today</a>
-                                <a href="{{route('all.appointments')}}" class="btn btn-primary" >All Appointments</a>
+                                <a href="{{route('patient.today')}}" class="btn btn-primary">Booking Data</a>
+                                <!-- <a href="{{route('all.appointments')}}" class="btn btn-primary" >All Appointments</a> -->
                                 <br><br>
                             </div>
                         </div>

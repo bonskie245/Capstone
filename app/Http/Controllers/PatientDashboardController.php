@@ -30,20 +30,51 @@ class PatientDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         date_default_timezone_set('Asia/Manila');
         
-
-
-        if(request('app_date')){
-            $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
-            $date = request('app_date');
-            return view('bookapp',compact('doctors','date'));
+        // if(request('date'))
+        // {          
+        //     $doctors= $this->findDoctorsBasedOnDate(request('date'),request('doctorId'));
+        //     $date = request('app_date');
+        //     dd($request->date);
+        //     return response()->json($doctors);
+        //     // return view('bookapp',compact('doctors','date'));
+        // }
+        if($request->date){
+            $doctors= $this->findDoctorsBasedOnDate(request('date'),request('doctorId'));
+            return response()->json($doctors);
+            // return view('bookapp',compact('doctors','date'));
         }
-        $date = date('Y-m-d');
-          $doctors = Appointment::select('*')->where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
-          return view('bookapp',compact('doctors','date'));
+
+        if($request->doctorId)
+        {
+            // $doctors = Appointment::where('doctor_id', $request->doctorId)->where('app_date', '>=', date('Y-m-d'))->groupBy('app_date')->distinct()->get();
+            $doctors = Appointment::where('doctor_id', $request->doctorId)->where('app_date', '>=', date('Y-m-d'))->where('app_status', 0)->get();
+              
+            return response()->json($doctors);
+        }
+        
+          $date = date('Y-m-d');
+        // $doctors = Appointment::select('*')->where('app_date',date('Y-m-d'))->groupBy('doctor_id')->orderBy('time_start')->get();
+        
+        $doctors = Doctor::all();
+        $dates = array();
+        
+        $availableDate = Appointment::groupBy('app_date')->distinct()->get();
+        
+        foreach($availableDate as $date){
+            
+            $dates [] = [
+                'app_date' =>  $date->app_date,
+                'doctor_id' => $date->doctor_id
+            ];
+            
+        }
+       
+          return view('bookapp',compact('doctors','date','dates'));
+            
     }
 
     /**
@@ -105,11 +136,20 @@ class PatientDashboardController extends Controller
     {
         return view('user-profile');
     }
-    public function findDoctorsBasedOnDate($date)
+
+    public function getTimeSlot($date, $id)
     {
-        $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
+        $doctors= $this->findDoctorsBasedOnDate($date,$id);
+        return response()->json($doctors);
+    }
+
+    public function findDoctorsBasedOnDate($date, $id)
+    {
+        // $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
+        $doctors = Appointment::where('app_date', $date)->where('doctor_id', $id)->where('app_status', 0)->get();
         return $doctors;
     }
+
     public function checkBookingTimeInterval($doctorId,$date)
     {
         return Booking::where('user_id',auth()->user()->id)

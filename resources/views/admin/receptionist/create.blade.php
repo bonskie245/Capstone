@@ -32,12 +32,17 @@
 
   <div class="row justify-content-center">
   		<div class="col-lg-10">
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{Session::get('message')}}
-                </div>
-            @endif
-			<div class="card shadow-sm p-3 mb-5 bg-white rounded">
+		@if(Session::has('message'))
+            <script>
+                Swal.fire({
+                	title: 'Success',
+                	text: '{{Session::get('message')}}',
+                	icon: 'success',
+                	confirmButtonText: 'Okay  '
+            	})
+    		</script>
+        @endif
+			<div class="card border-dark mb-3">
   			<div class="card-header">
   				<h2>Add Secretary</h2>
   			</div>

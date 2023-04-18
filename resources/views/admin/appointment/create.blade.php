@@ -44,7 +44,7 @@
         @endforeach
     
         
-    <form action="{{route('appointment.store')}}" method="post">@csrf
+    <form autocomplete="off" action="{{route('appointment.store')}}" method="post">@csrf
  
     <div class="card">
         <div class="card-header">
@@ -62,9 +62,16 @@
     </div>
         <div class="card-body">
             <label for="time_start">Select start time:</label>
-            <input type="text" autocomplete="off" class ="timepicker" id="time_start" name="time_start">
+            <input type="text" autocomplete="false" class ="timepicker" id="time_start" name="time_start">
             <label for="time_end">Select end time:</label>
-            <input type="text" class ="timepicker" id="time_end" name="time_end">
+            <input type="text" autocomplete="false" class ="timepicker" id="time_end" name="time_end">
+            <label for="app_interval">Time interval:</label>
+                    <select id="app_interval" name="app_interval">
+                    <option value="10">10 Minutes</option>
+                    <option value="20">20 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    </select>
         </div>
         <!-- <div class ="card-body">
         <table class="table table-clean" id="dynamicAddRemoves">

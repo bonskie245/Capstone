@@ -1,6 +1,14 @@
 @extends('admin.layouts.master')
 
 @section('content')
+<style>/* style sheet for "A4" printing */
+@media print and (width: 21cm) and (height: 29.7cm) {
+     @page {
+        margin: 3cm;
+     }
+}
+
+</style>
 <div class="container">
 <div class="page-header">
         <div class="row align-items-end">
@@ -10,8 +18,8 @@
                 <div class="page-header-title">
                     <i class="ik ik-command bg-blue"></i>
                     <div class="d-inline">
-                        <h5>Booking</h5>
-                        <span>All time Booking</span>
+                        <h5>Appointment</h5>
+                        <span>Appointment History</span>
                     </div>
                 </div>
             </div>
@@ -33,8 +41,6 @@
             <div class="card">
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
                 <form action="{{route('all.appointments')}}" method="GET">
-                
-
                 @if(Session::has('message'))
                                 <div class="alert alert-success">
                                  {{Session::get('message')}}
@@ -45,22 +51,29 @@
                                  {{Session::get('errmessage')}}
                                 </div>
                 @endif
+                
               <div class="card-header">
-                Search by date:
+            
                         <div class="row">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker2" data-toggle="datetimepicker" data-target="#datepicker2" name="app_date">
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                     </div>   
-                    </form>
-
-                        
+                        &nbsp;  &nbsp;  Filter By date From: 
+                            <div class="col-md-2">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker2" data-toggle="datetimepicker" data-target="#datepicker2" name="date_from">
+                            </div>
+                            <label for="date_to"> Date To: </label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker3" data-toggle="datetimepicker" data-target="#datepicker3" name="date_to">
+                            </div>
+                                 
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                                <input type="button" class= "btn btn-success" value="Print"  id="btPrint" onclick="createPDF()" />
+                            </div>
+                            
+                        </div>   
+                    </form>            
                 </div>
-                <div class="card-body">
-                   <table class="table table-bordered table-hover">
+                <div class="card-body" id="tab">
+                   <table id="data_tables" class="table table-hover" style="width: 100%; margin:auto;">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -71,8 +84,7 @@
                           <th scope="col">Time</th>
                           <th scope="col">Date</th>
                           <th scope="col">Doctor</th>
-                          <th scope="col">Action</th>
-                          <th scope="col"></th>
+
                         </tr>
                       </thead>
                       <tbody>
@@ -102,27 +114,6 @@
                               <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
                              @endforeach
                           <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
-                                @if($booking->book_status==0)
-                                <td><a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Accept</button></a></td>
-                                <td><a href="{{route('decline.status',[$booking->id])}}"><button class="btn btn-danger">Decline</button></a></td>
-                                @endif
-                                @if($booking->book_status==1)
-                                <td><a href="{{route('visited.status',[$booking->id])}}"><button class="btn btn-success">Visited</button></a></td>
-                                <td><a href="{{route('notVisited.status',[$booking->id])}}"><button class="btn btn-danger">Not Visited</button></a></td>
-                                @endif
-                                @if($booking->book_status==2)
-                                <td><button class="btn btn-danger" style ="background-color:#47ceff;">Visited</button></td>
-                                <td></td>
-                                @endif
-                                @if($booking->book_status==3)
-                                <td><button class="btn btn-danger" style ="background-color:#eb095c;">Not Visited</button></td>
-                                <td></td>
-
-                                @endif
-                                @if($booking->book_status==4)
-                                <td><a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Undo</button></a></td>
-                                <td><button class="btn btn-danger" style ="background-color:#eb095c;">Declined</button></td>
-                                @endif
                         </tr>
                         @empty
                         <td>No appointments Today</td>
@@ -130,10 +121,9 @@
                         
                       </tbody>
                     </table>
-                    <div class="d-flex justify-content-center">
-            {!! $bookings->onEachSide(5)->links() !!}
-            </div>
-                   
+                    <!-- <div class="d-flex justify-content-center">
+                    {!! $bookings->onEachSide(5)->links() !!}
+                    </div> -->
                 </div>
             </div>
         </div>

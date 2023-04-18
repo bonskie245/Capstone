@@ -30,19 +30,20 @@
   </div>
 
   <div class="row justify-content-center">
-  		<div class="col-lg-10">
+  		<div class="col-lg-8">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     {{Session::get('message')}}
                 </div>
             @endif
+            <div class="card border-dark mb-3">
   			<div class="card-header">
   				<h3>Add Department</h3>
   			</div>
   			<div class="card-body">
   				<form class="forms-sample" action="{{route('department.store')}}" method="POST" enctype="multipart/form-data">@csrf
   					<div class="row">
-  						<div class="col-lg-6">
+  						<div class="col">
   							<label for="dept_name">Department name</label>
   							<input type="text" name="dept_name" class="form-control @error('dept_name') is-invalid @enderror" placeholder="First Name" value="{{old('dept_name')}}" required>
   								@error('dept_name') 
@@ -57,8 +58,9 @@
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
                         </div>
                   </div>
-  			</form>
+  			    </form>
 
+  			    </div>
   			</div>
   		</div>
   </div>

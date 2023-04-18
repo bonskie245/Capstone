@@ -24,7 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard/admin', function () {
     return view('dashboard');
 });
 
@@ -49,6 +49,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
   Route::get('/about-us', [App\Http\Controllers\FrontendController::class, 'aboutUs'])->name('about');
   Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('welcome');
 
+  
 /* Patient Route */
 Route::group(['middleware'=>['auth','patient']],function(){
     Route::get('/dashboard/user', [App\Http\Controllers\PatientDashboardController::class, 'index']);
@@ -65,31 +66,37 @@ Route::group(['middleware'=>['auth','patient']],function(){
 
     Route::Delete('booking/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'deleteBooking'])->name('booking.deleteBooking');
 
-    Route::get('booking/show/Edit/BookTime/{doctorId}/{id}/{date}',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');
+    // Route::get('booking/show/Edit/BookTime/{doctorId}/{id}/{date}',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');
+    
+    Route::get('booking/show/Edit/BookTime',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');
     Route::put('booking/show/Edit/editTime/{id}',[App\Http\Controllers\FrontendController::class, 'updateTime'])->name('booking.updateTime');
     Route::get('/medicalHistory/Prescription/{id}', [App\Http\Controllers\FrontendController::class, 'showPrescription'])->name('show.prescription');
-    
+    // Route::get('users/create/{date}/{id}', [App\Http\Controllers\PatientDashboardController::class, 'getTimeSlot'])->name('booking.timeslot');
     //Patients Dashboad
   
 });
 
 Route::get('/new-appointment/{doctorID}/{date}', [App\Http\Controllers\FrontendController::class, 'show'])->name('create.appointment');
+Route::get('/sales/report',[App\Http\Controllers\PrescriptionController::class, 'chargeReport'])->name('charge.index');
 
-    
+Route::get('medicine/file-import-export', [App\Http\Controllers\medicineController::class, 'fileImportExport'])->name('import.index');
+Route::post('file-import', [App\Http\Controllers\medicineController::class, 'fileImport'])->name('file-import');    
 
 
 
 /* Admin Route */
 Route::group(['middleware'=>['auth','admin']],function(){
     Route::resource('doctor',DoctorController::class);
-    Route::get('/patients', [App\Http\Controllers\PatientlistController::class, 'index'])->name('patient');
-    Route::get('/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
-    Route::get('/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
-    Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
+    Route::get('/dashboard/admin/patients', [App\Http\Controllers\PatientlistController::class, 'index'])->name('patient');
+    Route::get('/dashboard/admin/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
+    Route::get('/dashboard/admin/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
+    Route::get('/dashboard/admin/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
     Route::resource('department', 'App\Http\Controllers\DepartmentController');
     Route::resource('patient', 'App\Http\Controllers\PatientController');
     Route::resource('receptionist', 'App\Http\Controllers\ReceptionistController');
     Route::resource('medicine', 'App\Http\Controllers\medicineController');
+    Route::get('/dashboard/admin/aboutUS', [App\Http\Controllers\DashboardController::class, 'aboutUS'])->name('about.index');
+    Route::post('/dashboard/admin/aboutUS/store', [App\Http\Controllers\DashboardController::class, 'aboutSubmit'])->name('about.store');
 });
 
 
@@ -124,10 +131,10 @@ Route::group(['middleware'=>['auth','doctor']],function(){
     Route::get('/status/visited/not/{id}', [App\Http\Controllers\PatientlistController::class, 'notVisited'])->name('notVisited.status');
     Route::get('patient-today',[App\Http\Controllers\PrescriptionController::class, 'index'])->name('patients.today');
     Route::resource('patient', PatientController::class);
-    Route::get('/patient/medical/{id}',[App\Http\Controllers\PrescriptionController::class, 'showHistory'])->name('medical.show');
-    Route::get('/patient/medical-history/{id}',[App\Http\Controllers\PatientController::class, 'showHistory'])->name('patient.showHistory');
+    Route::get('/patients/medical/history/{id}',[App\Http\Controllers\PrescriptionController::class, 'showHistory'])->name('medical.show');
+    Route::get('/patients/medical/history/show/{id}',[App\Http\Controllers\PatientController::class, 'showHistory'])->name('patient.showHistory');
     Route::resource('walkin', WalkInAppController::class);
-    Route::get('patient/walk-in/create/{id}',[App\Http\Controllers\WalkInAppController::class, 'create'])->name('walkin.create');
-    Route::get('patient/medical-history/prescription/{id}/{date}', [App\Http\Controllers\PatientController::class, 'showPrescription'])->name('patient.prescription');
-    Route::get('patient/walk-in/prescription/create/{id}/{date}/{docID}', [App\Http\Controllers\WalkInAppController::class, 'createPrescription'])->name('patient.presCreate');
+    Route::get('patients/walk-in/create/{id}',[App\Http\Controllers\WalkInAppController::class, 'create'])->name('walkin.create');
+    Route::get('patients/medical/history/prescription/{id}/{date}', [App\Http\Controllers\PatientController::class, 'showPrescription'])->name('patient.prescription');
+    Route::get('patients/walk-in/prescription/create/{id}/{date}/{docID}', [App\Http\Controllers\WalkInAppController::class, 'createPrescription'])->name('patient.presCreate');
 });

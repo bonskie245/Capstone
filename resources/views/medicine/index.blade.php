@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('content')
+<div class="container:">
         <div class="page-header">
             <div class="row align-items-end">
                 <div class="col-lg-8">
@@ -34,50 +35,51 @@
                     <div class="col-md-12">
                         <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                             @if(Session::has('message'))
-                                <div class="alert alert-success">
-                                 {{Session::get('message')}}
-                                </div>
+                            <script>
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: '{{Session::get('message')}}',
+                                        icon: 'success',
+                                        confirmButtonText: 'Okay  '
+                                    })
+                            </script>
                             @endif
                             <div class="card-header"><h3>Medicine</h3>
-                                <a href="{{route('medicine.create')}}" style="margin-left: 725px;" class="btn btn-primary">Add Medicine</a>
+                                <a href="{{route('medicine.create')}}" style=" float: right; margin-left: 65%;" class="btn btn-primary">Add Medicine</a>
+                                <a href="{{route('import.index')}}" style=" float: right; margin-left: 1%; " class="btn btn-success">Import File</a>
                             </div>
                               <div class="card-body">
-                                 <table id="data_table" class="table table-bordered table-hover">
+                                 <table id="data_tables" class="table table-hover" style="width:100%">
                                    <thead>
                                     <tr>
                                         <th class="nosort">Medicine ID</th>
-                                        <th class="nosort">Medicine Name</th>
+                                        <th>Medicine Name</th>
                                         <th class="nosort">Medicine Dosage</th>
                                         <th class="nosort">Medicine type</th>
+                                      
                                         <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th> 
-                                        <th class="nosort">&nbsp;</th> 
+                                        <th scope="col">Action</th>
                                      </tr>
                                  </thead>
                              <tbody>
                                 @if(count($medicines)>0)
                                 @foreach($medicines as $medicine)
                             <tr>
-                                <td>{{$medicine->id}}</td>
-                                <td>{{$medicine->medicine_name}}</td>
-                                <td>{{$medicine->medicine_dosage}}</td>
-                                <td>{{$medicine->medicine_type}}</td>
-                                <td>
+                                <td scope="row">{{$medicine->id}}</td>
+                                <td scope="row">{{$medicine->medicine_name}}</td>
+                                <td scope="row">{{$medicine->medicine_dosage}}</td>
+                                <td scope="row">{{$medicine->medicine_type}}</td>
+                                <td scope="row"></td>
+                                <td scope="row">
                                     <div class="table-actions" style="margin: right 20px;">
-                                        <a href="{{route('medicine.edit',[$medicine->id])}}"><i class="ik ik-edit-2" style="color:green">Edit</i></a>
-                                        
+                                    <a href="{{route('medicine.edit',[$medicine->id])}}"><button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button></a>
+                                    <a href="#" data-toggle="modal" data-target="#deleteModal{{$medicine->id}}"><button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button> </a>
                                     </div>
                                 </td>
-                                <td><form action="{{route('medicine.destroy',[$medicine->id])}}" method="post">@csrf 
-                                            @method('DELETE') 
-                                            <button type="submit" style="padding: 0;border: none;background: none; color:red;"><i class="ik  ik-trash">Delete</i></button>
-                                        </form></td>
-                                <td></td>
-                                <td></td>
                             </tr>
-
+                            @include('medicine.modelDelete')
                             @endforeach
+                           
                             @else
                                 <td>No Medicine to display</td>
                             @endif
@@ -88,4 +90,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

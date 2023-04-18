@@ -10,7 +10,7 @@
     <body>
         <a href="{{route('myPrescription')}}" class="btn btn-primary hidden-back">Back</a>
         <div class="container" style="position: relative;">
-        <div class="ticket">
+            <div class="ticket">
             <!-- <button id="btnPrint" class="hidden-print" >Print</button> -->
             <h3 class="centered">Dr. {{$prescription1->doctor->user->user_fName}} {{$prescription1->doctor->user->user_lName}}, {{$prescription1->doctor->doctor_title}}</h3>
                   <h4 class="centered">{{$prescription1->doctor->doctor_department}}

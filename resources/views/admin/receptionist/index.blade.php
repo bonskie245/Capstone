@@ -34,32 +34,32 @@
                     <div class="col-md-12">
                     <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                             @if(Session::has('message'))
-                                <div class="alert alert-success">
-                                 {{Session::get('message')}}
-                                </div>
+                            <script>
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: '{{Session::get('message')}}',
+                                        icon: 'success',
+                                        confirmButtonText: 'Okay  '
+                                    })
+                            </script>
                             @endif
                             <div class="card-header"><h3>Staff Management</h3>
-                                <a href="{{route('receptionist.create')}}" style="margin-left: 750px;" class="btn btn-primary">Add Staff</a>
+                                <a href="{{route('receptionist.create')}}" style=" float: right; margin-left: 75%;" class="btn btn-primary">Add Staff</a>
                             </div>
                               <div class="card-body">
-                              <table id="data_table" class="table table-bordered table-hover" style="font-size: 15px;">
+                              <table id="data_tables" class="table table-hover" style="font-size: 15px; width: 100%">
                                    <thead>
                                     <tr>
-                                        
-                                        
                                         <th class="nosort">Avatar</th>
                                         <th>Lastname</th>
                                         <th class="nosort">Firstname</th>
                                         <th class="nosort">Email</th>
-                                        <th class="nosort">PhoneNumber</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
+                                        <th>PhoneNumber</th>
+                                        <th class="nosort">Action</th>
                                      </tr>
                                  </thead>
                              <tbody>
-                                @if(count($users)>0)
+                            
                                 @foreach($users as $user)
                             <tr>
                                 @if(!$user->user_image)
@@ -71,26 +71,19 @@
                                 <td>{{$user->user_fName}}</td>        
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->user_phoneNum}}</td>
-                                <td>{{$user->user_department}}</td>
                                 <td>
                                     <div class="table-actions">
-                                        <a href="#" data-toggle="modal" data-target="#exampleModal{{$user->id}}" style="color:blue"> 
-                                            <i class="ik ik-eye"></i>
-                                        </a>
-                                        <a href="{{route('receptionist.edit',[$user->id])}}"><i class="ik ik-edit-2" style="color:green"></i></a>
-                                        <a href="{{route('receptionist.show',[$user->id])}}"><i class="ik ik-trash-2" style="color:red"></i></a>
+                                        <a href="#" data-toggle="modal" data-target="#exampleModal{{$user->id}}"><button type="button" class="btn btn-primary"><i class="far fa-eye"></i></button> </a>
+                                        <a href="{{route('receptionist.edit',[$user->id])}}"><button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button></a>
+                                        <a href="#" data-toggle="modal" data-target="#deleteModal{{$user->id}}"> <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button> </a> 
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
                             </tr>
 
                              <!-- View Modal -->
                             @include('admin.receptionist.model')
+                            @include('admin.receptionist.modelDelete')
                             @endforeach
-                            @else
-                                <td>No user to display</td>
-                            @endif
                            
                         </tbody>
                     </table>

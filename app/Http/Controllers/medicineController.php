@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\medicine;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MedicineImport;
 
 class medicineController extends Controller
 {
@@ -14,7 +16,7 @@ class medicineController extends Controller
      */
     public function index()
     {
-        $medicines = Medicine::paginate(10);;
+        $medicines = Medicine::all();
         return view('medicine.index', compact('medicines'));
     }
 
@@ -38,9 +40,14 @@ class medicineController extends Controller
     {
         
         $data = $request->all();
+
+        dd($request->all());
+       $medicineDosage = $data['medicine_dosage'].''. $data['medicine_unit'];
+
+        
         medicine::create([
             'medicine_name' => $data['medicine_name'],
-            'medicine_dosage' => $data['medicine_dosage'],
+            'medicine_dosage' => $medicineDosage,
             'medicine_type' => $data['medicine_type']
         ]);
 
@@ -104,5 +111,22 @@ class medicineController extends Controller
         $medicine->delete();
 
         return redirect()->route('medicine.index')->with('message','Medicine Deleted Successfully'); 
+    }
+
+    public function fileImportExport()
+    {
+       return view('medicine.import');
+    }
+   
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function fileImport(Request $request) 
+    {
+        
+        Excel::import(new MedicineImport, $request->file);
+
+
+        return redirect()->route('medicine.index')->with('message','Medicine Imported Successfully');
     }
 }

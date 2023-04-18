@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Urgent Care Clinic | Log in </title>
-
+  
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -17,8 +17,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-     @if (session('confirmation'))
+  @if (session('confirmation'))
         <div class="alert alert-info" role="alert">
             {!! session('confirmation') !!}
         </div>
@@ -29,6 +28,8 @@
             {!! $errors->first('confirmation') !!}
         </div>
     @endif
+  <div class="card card-outline card-primary">
+    
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic</b></a>
     </div>

@@ -17,9 +17,13 @@
                 </div>
             </div>
             <div class="container">
-              <div class="card">
+              <div class="card" style="width: 75%">
               <div class="card-header" style="text-align: center;"><h1>Valencia City, Bukidnon <br> Philippines</h1></div>
-                <div class="card-body">
+                <div class="card-body" style="color: black;">
+                @if(isset($about))
+                {!!$about->description!!}
+                
+                @else
                         <h1>Mission & Vision</h1>
                         <br>
                         <h2>The UCC WAY</h2>
@@ -40,10 +44,7 @@
                         <p>	&emsp;• To provide health care services in a responsible manner which contribute to the physical. psychological, social & spirital well being of the patients 
                           & <br> &emsp;&emsp;community which it serves.</p>
                         <p>	&emsp;• To provide assistance to the whole person in a christian spirit of equality & interfaith serving all regardless of age, color, creed or gender.</p>
-
-
-
-
+                    @endif
                 </div>
             </div>
             </div>
@@ -61,23 +62,22 @@
             </div>
 <br>
 
-<div class="container">
+<div class="flex-container">
 <div class="row" style="margin: auto;">
 @foreach($doctors as $doctor)
-  <div class="column">
-    <div class="card">
-
+<div class="col-6">
+    <div class="card" style="height: 100%; width 50%">
     @if(!$doctor->user->user_image)
     <center>
-        <img src="{{asset("/images/mdavatar.png")}}"  style="width: 250px; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
+        <img src="{{asset("/images/mdavatar.png")}}"  style="width: 30%; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
    </center>
       @else
       <center>
-      <img src="{{asset('images')}}/{{$doctor->user->user_image}}" style="width: 250px; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
+      <img src="{{asset('images')}}/{{$doctor->user->user_image}}" style="width: 30%; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">
       </center>
       @endif
       <div class="container">
-        <h2>Dr. {{$doctor->user->user_fName}} {{$doctor->user->user_lName}}, {{$doctor->doctor_title}} {{\Carbon\Carbon::parse($doctor->user_birthdate)->age;}}</h2>
+        <h2>Dr. {{$doctor->user->user_fName}} {{$doctor->user->user_lName}}, {{$doctor->doctor_title}}</h2>
         <p class="title">{{$doctor->doctor_department}}</p>
         <p><i class="fas fa-envelope mr-3"></i>{{$doctor->user->email}}</p>
         <p><i class="fas fa-phone mr-3"></i>{{$doctor->user->user_phoneNum}}</p>
@@ -88,6 +88,9 @@
 @endforeach
 </div>
 
+<style>
+    .flex-container{display: flex;justify-content: space-around;background:#fff;}
+</style>
 <!-- 
   <div class="column">
     <div class="card">

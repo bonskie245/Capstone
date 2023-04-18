@@ -8,7 +8,11 @@
                     </button>
                   </div>
                   <div class="modal-body" style="text-align: justify;">
-                    <p style="text-align: center;"><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" alt="" width="200`"></p>
+                  @if(!$user->user_image)
+                    <p style="text-align: center;"><img src="{{asset('images/user.png')}}" class="table-user-thumb" style="width: 150px; height: 100px; border-radius: 50%;" alt=""></p>
+                  @else
+                    <p style="text-align: center;"><img src="{{asset('profiles')}}/{{$user->user_image}}" class="table-user-thumb" style="width: 150px; height: 100px; border-radius: 50%;" alt=""></p>
+                  @endif
                     <p class="badge badge-pill badge-dark">Role:{{$user->role->name}}</p>
                     <p><strong>Firstname:</strong> {{$user->user_fName}}</p>
                     <p><strong>Lastname:</strong> {{$user->user_lName}}</p>

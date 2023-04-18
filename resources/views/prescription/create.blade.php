@@ -30,109 +30,124 @@
         </div>
 
 
+        @if(Session::has('message'))
+                        <script>
+                                    Swal.fire({
+                                        title: 'Success',
+                                        text: '{{Session::get('message')}}',
+                                        icon: 'success',
+                                        confirmButtonText: 'Okay  '
+                                    })
+                            </script>
+        @endif
 
     <div class="card">
     @foreach($bookings->user as $user)
         <div class="card-header"><h3>Prescription for {{$user->user_fName}} {{$user->user_lName}}</h3>
         </div>
-        @endforeach
-        @if(Session::has('message'))
-            <div class="alert bg-success alert-success text-white" role="alert">
-                {{Session::get('message')}}
-            </div>
-        @endif
+        @endforeach 
         @foreach($errors->all() as $error)
             <div class="alert alert-danger">
-                {{$error}}
-                
+                {{$error}} 
             </div>           
-            @endforeach
+        @endforeach
         <div class="card-body">
             <p><strong>Date:</strong> {{$bookings->app_date}} </p>
+            
             <p><strong>Age:</strong> {{\Carbon\Carbon::parse($user->user_birthdate)->age}}</p>
             <p><strong>Address:</strong> {{$user->user_address}} </p>
-
+                                    
         </div>
       
         <div class="card-body">
         <form Action="{{route('prescription.store')}}" method="post">@csrf
-            <div class="form-group">
-               
-                    <h5>Diagnosis</h5>
-                    <input type="text" name="pres_findings" class="form-control">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                    <!-- Check point april 16 -->
+                        <h5>Diagnosis</h5>
+                        <input type="text" name="pres_findings" placeholder="Diagnosis" class="form-control" required>
+                        
+                    </div>
                 </div>
-              
+                <div class="col">
+                    <div class="form-group">
+                        <h5>Charge</h5>
+                        <input type="number" name="charge" placeholder="Charged" class="form-control" required>
+                    </div>
+                </div>      
+            </div>
+        <h5>Medicine</h5>
+    <div class="form-group"> 
+        <table class="table table-striped" id="dynamicAddRemove" style="width: 100%;">
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Frequency</th>
+                    <th>Duration</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td><input type="text" autocomplete="off" id="medicine_name" name="medicine_name[]" placeholder="Input Medication" class="form-control" list="medicine" required/></td>
+                    <td><input type="text" autocomplete="off"name="medicine_frequency[]" placeholder="Indicate Frequency" class="form-control" list="frequency" required></td>
+                    <td><input type="text" autocomplete="off"name="medicine_duration[]" placeholder="Indicate Duration" class="form-control" list="duration" required></td>
+                    <td><button type="button" name="add" id="add" class="btn btn-outline-primary">Add</button></td>
+                </tr>
+                <input type="hidden" name="user_id" value="{{$bookings->user_id}}">
+                <input type="hidden" name="doctor_id" value="{{$bookings->doctor_id}}">
+                <input type="hidden" name="app_date" value="{{$bookings->app_date}}">
+                <input type="hidden" name="book_id" value="{{$bookings->id}}">
+        </table>
+    </div>  
+
+        <!-- <td><input type="text" name="addmore[0][medicine_strength]" placeholder="Indicate Medicine Strength" class="form-control"></td>
+                    <td><input type="text" name="addmore[0][medicine_amount]" placeholder="Indicate Amount EG.(1 TAB, 1 CAP)" class="form-control"></td>
+    <td><input type="text" id="medicine_name" name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control"/></td>
+                    <td id="medicine_syrup"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="route"/></td>
+                    <td id="medicine_tablet"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="frequency"/></td>
+                    <td id="medicine_capsule"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="wewew"/></td> -->
+        <datalist id="wewew">
+            @foreach($bookings->user as $user)
+            <option value="{{$user->user_fName}}">{{$user->user_fName}}</option>
+            @endforeach
+        </datalist>
+        <datalist id="medicine" style="font-size: 20px;">
+            @foreach(App\Models\medicine::All() as $medicine)
+                        <option value="{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}" >{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}</option>
+            @endforeach
+        </datalist>
         
-                    <h5>Medicine</h5>
-                <div class="form-group"> 
-                    <table class="table table-striped" id="dynamicAddRemove">
-                            <tr>
-                                <th>Medicine Name</th>
-                                <th>Frequency</th>
-                                <th>Duration</th>
-                                <th>Action</th>
-                            </tr>
-                            <tr>
-                                <td><input type="text" autocomplete="off" id="medicine_name" name="medicine_name[]" placeholder="Input Medication" class="form-control" list="medicine"/></td>
-                                <td><input type="text" autocomplete="off"name="medicine_frequency[]" placeholder="Indicate Frequency" class="form-control" list="frequency"></td>
-                                <td><input type="text" autocomplete="off"name="medicine_duration[]" placeholder="Indicate Duration" class="form-control" list="duration"></td>
-                                <td><button type="button" name="add" id="add" class="btn btn-outline-primary">Add</button></td>
-                            </tr>
-                            <input type="hidden" name="user_id" value="{{$bookings->user_id}}">
-                            <input type="hidden" name="doctor_id" value="{{$bookings->doctor_id}}">
-                            <input type="hidden" name="app_date" value="{{$bookings->app_date}}">
-                    </table>
-                </div>  
 
-                 <!-- <td><input type="text" name="addmore[0][medicine_strength]" placeholder="Indicate Medicine Strength" class="form-control"></td>
-                                <td><input type="text" name="addmore[0][medicine_amount]" placeholder="Indicate Amount EG.(1 TAB, 1 CAP)" class="form-control"></td>
-                <td><input type="text" id="medicine_name" name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control"/></td>
-                                <td id="medicine_syrup"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="route"/></td>
-                                <td id="medicine_tablet"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="frequency"/></td>
-                                <td id="medicine_capsule"><input type="text"  name="addmore[0][medicine_name]" placeholder="Input Medication" class="form-control" list="wewew"/></td> -->
-                    <datalist id="wewew">
-                        @foreach($bookings->user as $user)
-                        <option value="{{$user->user_fName}}">{{$user->user_fName}}</option>
-                        @endforeach
-                    </datalist>
-                    <datalist id="medicine" style="font-size: 20px;">
-                        @foreach(App\Models\medicine::All() as $medicine)
-                                    <option value="{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}" >{{$medicine->medicine_name}} / {{$medicine->medicine_dosage}} / {{$medicine->medicine_type}}</option>
-                        @endforeach
-                    </datalist>
-                   
+        <datalist id="frequency">
+                <option value="Once a Day(O.D)">Once a Day(O.D)</option>
+                <option value="Twice a Day(B.I.D)">Twice a Day(B.I.D)</option>
+                <option value="Thrice a Day(T.I.D)">Thrice a Day(T.I.D)</option>
+                <option value="4 times a Day(Q.I.D)">4 times a Day(Q.I.D)</option>
+                <option value="every 4 hours">every 4 hours</option>
+                <option value="every 6 hours">every 6 hours</option>
+                <option value="as needed">as needed</option>
+                
+        </datalist>
 
-                    <datalist id="frequency">
-                            <option value="Once a Day(O.D)">Once a Day(O.D)</option>
-                            <option value="Twice a Day(B.I.D)">Twice a Day(B.I.D)</option>
-                            <option value="Thrice a Day(T.I.D)">Thrice a Day(T.I.D)</option>
-                            <option value="4 times a Day(Q.I.D)">4 times a Day(Q.I.D)</option>
-                            <option value="every 4 hours">every 4 hours</option>
-                            <option value="every 6 hours">every 6 hours</option>
-                            <option value="as needed">as needed</option>
-                            
-                    </datalist>
+        <datalist id="duration">
+                <option value="1 Day">1 Day</option>
+                <option value="2 Days">2 Days</option>
+                <option value="3 Days">3 Days</option>
+                <option value="4 Days">4 Days</option>
+                <option value="5 Days">5 Days</option>
+                <option value="6 Days">6 Days</option>
+                <option value="1 Week">1 Week</option>
+                <option value="2 Weeks">2 Weeks</option>
+                <option value="3 Weeks">3 Weeks</option>
+                <option value="1 Month">1 Month</option>
+                <option value="2 Months">2 Months</option>
+                <option value="3 Months">3 Months</option>
+                <option value="4 Months">4 Months</option>
+                <option value="5 Months">5 Months</option>
+                <option value="6 Months">6 Months</option>
+                <option value="Until symptoms gone">Until symptoms gone</option>
+                <option value="Maintenance">Maintenance</option>
 
-                    <datalist id="duration">
-                            <option value="1 Day">1 Day</option>
-                            <option value="2 Days">2 Days</option>
-                            <option value="3 Days">3 Days</option>
-                            <option value="4 Days">4 Days</option>
-                            <option value="5 Days">5 Days</option>
-                            <option value="6 Days">6 Days</option>
-                            <option value="1 Week">1 Week</option>
-                            <option value="2 Weeks">2 Weeks</option>
-                            <option value="3 Weeks">3 Weeks</option>
-                            <option value="1 Month">1 Month</option>
-                            <option value="2 Months">2 Months</option>
-                            <option value="3 Months">3 Months</option>
-                            <option value="4 Months">4 Months</option>
-                            <option value="5 Months">5 Months</option>
-                            <option value="6 Months">6 Months</option>
-                            <option value="Until symptoms gone">Until symptoms gone</option>
-                            <option value="Maintenance">Maintenance</option>
-
-                    </datalist>
+        </datalist>
 
                 <!-- <div class="form-group">
                     <label>Grams</label>

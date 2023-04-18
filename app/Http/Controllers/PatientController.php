@@ -24,7 +24,7 @@ class PatientController extends Controller
         $users  = User::where('role_id','!=',2)
         ->where('role_id','!=',3)
         ->where('role_id','!=',1)
-        ->paginate(10);
+        ->get();
         return view('patient.index', compact('users'));
     }
 
@@ -122,6 +122,7 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
+        
         $user = User::find($id);
         $userDelete = $user->delete();
         if($userDelete){

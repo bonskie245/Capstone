@@ -28,9 +28,9 @@
                         </nav>
                     </div>
             </div>
-        </div>
-        
-    <div class="row justify-content-center">
+</div>
+    <div class="row">
+      
         <div class="col-md-12">
             <div class="card">
               @if(Session::has('message'))
@@ -41,7 +41,7 @@
                
               <div class="card-header" style="font-size: 20px;"><strong>Total Patients: ({{$patients->count()}})</div></strong>
                 <div class="card-body">
-                   <table id="data_table"class="table table-bordered table-hover" style="font-size: 15px;">
+                   <table id="data_tables" class="table table-hover" style="font-size: 15px; width: 100%">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -51,14 +51,11 @@
                           <th scope="col">Phone Number</th>
                           <th scope="col">Address</th>
                           <th scope="col">Action</th>
-                          <th class="nosort">&nbsp;</th>
-                          <th class="nosort">&nbsp;</th>
-                          
-                          
+                          <!-- <th class="nosort">&nbsp;</th>
+                          <th class="nosort">&nbsp;</th>                   -->
                         </tr>
                       </thead>
-                      <tbody>
-                      
+                      <tbody>               
                         @foreach($patients as $key => $patient)
                           <tr>
                             <td>{{$key+1}}</td>
@@ -72,11 +69,9 @@
                             <td>{{$patient->user_phoneNum}}</td>
                             <td>{{$patient->user_address}}</td>
                             <td>
-                              <div class="table-actions">
-                            <a href="{{route('medical.show',[$patient->id])}}" style="color: white;"class ="btn btn-primary">View history</a>
-                                    </div>
-                                  </td>
-                                  <td></td><td></td>
+                            <a href="{{route('medical.show',[$patient->id])}}" style="color: white;"class ="btn btn-primary">View history</a> 
+                            </td>
+                            <!-- <td></td><td></td> -->
                             </tr>
                         @endforeach
                         

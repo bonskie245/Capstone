@@ -36,6 +36,7 @@
                     {{Session::get('message')}}
                 </div>
             @endif
+            <div class="card border-dark mb-3">
             <div class="card">
   			<div class="card-header">
   				<h2>Add Medicine</h2>
@@ -52,20 +53,41 @@
                                     </span>
                                 @enderror
                                 <br>
-                                <label for="medicine_dosage">Medicine Dosage</label>
-  							<input type="text" name="medicine_dosage" class="form-control @error('medicine_dosage') is-invalid @enderror" placeholder="First Name" value="{{old('dept_name')}}" required>
-  								@error('medicine_dosage') 
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="medicine_dosage">Medicine Dosage</label>
+                                        <input type="number" name="medicine_dosage" class="form-control @error('medicine_dosage') is-invalid @enderror" placeholder="Enter Dosage(Numeric)" autocomplete="off" min="1" required>
+                                        @error('medicine_dosage') 
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col">
+                                        <label for="medicine_unit">Medicine Dosage</label>
+                                        <select name="medicine_unit" class="form-control @error('medicine_dosage') is-invalid @enderror" required>
+                                            <option value="">Select Unit</option>
+                                            <option value="Kg">kilogram</option>
+                                            <option value="g">gram</option>
+                                            <option value="mg">milligram</option>
+                                            <option value="mcg">microgram</option>
+                                            <option value="L">litre</option>
+                                            <option value="ml">millilitre</option>
+                                            <option value="cc">cubic centimetre</option>
+                                            <option value="mol">mole</option>
+                                            <option value="mmol">millimole</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <label for="medicine_type">Medicine Type</label>
-  							<select name="medicine_type" class="form-control @error('medicine_type') is-invalid @enderror" placeholder="First Name" value="{{old('dept_name')}}" required>
+  							<select name="medicine_type" class="form-control @error('medicine_type') is-invalid @enderror" placeholder="First Name" value="" required>
                               <option value="">Please select Medicine type</option>
                                    <option value="Capsule">Capsule</option>
                                    <option value="Tablet">Tablet</option>
                                    <option value="Liquid">Liquid</option>
                                    <option value="Inhaler">Inhaler</option>
+                                   <option value="Ointment">Ointment</option>
+                                   <option value="Cream">Cream</option>
                             </select>
   								@error('medicine_type') 
                                     <span class="invalid-feedback" role="alert">
@@ -80,9 +102,11 @@
   					 		<a href="{{route('medicine.index')}}" class="btn btn-danger mr-2">Cancel</a>
                         </div>
                   </div>
-  			</form>
+  			
+                </form>
               </div>
   			</div>
+            </div>
   		</div>
   </div>
 @endsection 

@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
 <div class="container">
     <div class="main-body">   
           <div class="row gutters-sm">
@@ -12,7 +13,7 @@
                     @else
                     <img src="{{asset('profiles')}}/{{auth()->user()->user_image}}" alt="Admin" class="rounded-circle" width="150" height="150">
                     @endif
-                    <div class="mt-3">
+                    <div class="mt-3">  
                       <h4>{{auth()->user()->user_fName}} {{auth()->user()->user_lName}}</h4>
                       <p class="text-secondary mb-1">{{auth()->user()->user_address}}</p>
                       <p class="text-muted font-size-sm">{{auth()->user()->user_phoneNum}}</p>
@@ -85,7 +86,7 @@
                                     <div class="card-body todo-task">
                                         <div class="dd" data-plugin="nestable">
                                             <ol class="dd-list">
-                                                @forelse(App\Models\Booking::where('user_id', auth()->user()->id)->latest()->paginate(3) as $booking)
+                                                @forelse(App\Models\Booking::where('user_id', auth()->user()->id)->where('book_status', '!=', '6')->latest()->paginate(3) as $booking)
                                                 <li class="dd-item" data-id="1">
                                                     <div class="dd-handle">
                                                         <h6>Appointment Date: {{$booking->app_date}}</h6>
@@ -104,6 +105,9 @@
                                                         @endif
                                                         @if($booking->book_status==4)
                                                         <h6>Status: <span class="badge badge-pill badge-danger mb-1">Appointment Declined</span></h6>
+                                                        @endif
+                                                        @if($booking->book_status==5)
+                                                        <h6>Status: <span class="badge badge-pill badge-danger mb-1">Appointment Cancelled</span></h6>
                                                         @endif
                                                     </div>
                                                 </li>
@@ -166,6 +170,7 @@
 
         </div>
     </div>
+</div>
 
 <style>
     body{
@@ -220,5 +225,6 @@
 .shadow-none {
     box-shadow: none!important;
 }
+
     </style>
 @endsection
