@@ -31,13 +31,7 @@
   </div>
     
   <div class="row justify-content-center">
-  		<div class="col-lg-10">
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{Session::get('message')}}
-                </div>
-            @endif
-            
+  		<div class="col-lg-10">        
   			<div class="card-header">
   				<h3>Add Walk-In Patient</h3>
   			</div>

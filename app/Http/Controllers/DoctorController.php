@@ -16,7 +16,7 @@ class DoctorController extends Controller
      $users  = User::where('role_id','!=',4)
                     ->where('role_id','!=',3)
                     ->where('role_id','!=',1)
-                    ->paginate(10);
+                    ->get();
          return view('admin.doctor.index', compact('users'));
     }
 
@@ -62,7 +62,7 @@ class DoctorController extends Controller
                 'user_id'=>$user->id,
                 'doctor_department'=>$user->user_department,
                 'doctor_title' => $request->doctor_title,
-                'description' => $request->medical_description
+                'description' => $request->description
             ]);
         }
         return redirect()->back()->with('message','Doctor Added successfully');
@@ -92,8 +92,9 @@ class DoctorController extends Controller
     public function edit($id)
     {   
         $users = User::find($id);
-        return view('admin.doctor.edit',compact('users'));
-
+        $description = Doctor::where('user_id', $id)->first();
+       
+        return view('admin.doctor.edit',compact('users','description'));
     }
 
     /**
@@ -105,13 +106,17 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $this->validateUpdate($request,$id);
         $data = $request->all();
         $user = User::find($id);
         $imageName = $user->user_image;
         $userPassword = $user->password;
         
-        $doctor = Doctor::where('user_id', $user->id)->update(['doctor_department' => $data['user_department']]);
+        $doctor = Doctor::where('user_id', $user->id)->update([
+            'doctor_department' => $data['user_department'],
+            'description' => $data['description']
+        ]);
         
         if($request->hasFile('user_image')) {
             $imageName = (new User)->userAvatar($request);

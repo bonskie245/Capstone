@@ -167,8 +167,9 @@
 						<div class="col">
 							<div class="form-group">
 								<label>Description</label>
-								<textarea class="form-control" id="exampleTextarea1" rows="4" name="medical_description" required>
-								</textarea>
+                                <textarea class="form-control" id="summernote" name="description" rows="20" required></textarea>
+								<!-- <textarea class="form-control" id="exampleTextarea1" rows="4" name="medical_description" required>
+								</textarea> -->
 							</div>
 						</div>
 					</div>

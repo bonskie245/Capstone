@@ -152,11 +152,13 @@
                         <div class ="card">
                             <div class="card-header"><h2>Legend:</h2></div>
                                 <div class="card-body">
-                                <div class='box grey'> = Pending</div>
-                                <div class='box green'> = Accepted</div>
-                                <div class='box blue'> = Visited</div>
-                                <div class='box pink'> = Not Visited</div>
-                                <div class='box red'> = Declined</div>
+                                    <div class='box grey'> = Pending</div>
+                                    <div class='box green'> = Accepted</div>
+                                    <div class='box blue'> = Visited</div>
+                                    <div class='box pink'> = Not Visited</div>
+                                    <div class='box red'> = Declined</div>
+                                    <div class='box rose'> = Cancelled</div>
+                                    <div class='box darkblue'> = Finished Appointment</div>
                                 <br><br>
                                 <a href="{{route('patient.today')}}" class="btn btn-primary">Booking Data</a>
                                 <!-- <a href="{{route('all.appointments')}}" class="btn btn-primary" >All Appointments</a> -->
@@ -295,7 +297,12 @@
             .box.green:before{
             background-color:#12f50a;
             }
-          
+            .box.rose:before{
+            background-color:#DD3E3E;
+            }
+            .box.darkblue:before{
+                background-color: #0000FF;
+            }
         </style>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -324,21 +331,30 @@
            <script>
                 $(document).ready(function(){
                     var bookings = @json($events);
-                    console.log(bookings)
-                            $("#calendar").fullCalendar({
-                                header: {
-                                    'left': 'prev,next today', 
-                                    'center': 'title',
-                                    'right': 'month, agendaWeek, agendaDay, listMonth'
-                                },
-                            events: bookings,
-                            selectable: true,
-                            selectHelper: true,
-                            select: function(start, end, allDays){
-                                console.log(start)
-                            }
-                            })
-                    });
+                    $("#calendar").fullCalendar({
+                        header: {
+                            'left': 'prev,next today', 
+                            'center': 'title',
+                            'right': 'month, agendaWeek, agendaDay, listDay'
+                        },
+                        businessHours: {
+                        // days of week. an array of zero-based day of week integers (0=Sunday)
+                        dow: [ 1, 2, 3, 4,5,6 ], // Monday - Thursday
+
+                        start: '08:00', // a start time (10am in this example)
+                        end: '17:00', // an end time (6pm in this example)
+                        },
+                    nowIndicator: true,
+                    now: moment(),
+                    events: bookings,
+                    selectable: true,
+                    selectHelper: true,
+                    aspectRatio: 2,            
+                    select: function(start, end, allDays){
+                        console.log(start)
+                    }
+                    })
+            });
             </script>
             <!-- end full calendar -->
 

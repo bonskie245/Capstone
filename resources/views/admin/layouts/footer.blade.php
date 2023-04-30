@@ -132,8 +132,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+        <script src="https://rawgit.com/someatoms/jsPDF-AutoTable/master/dist/jspdf.plugin.autotable.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!-- Data TAbles  April 4, 23-->
         <script>
             $(document).ready(function () {
@@ -192,14 +195,47 @@
         </script>
         <!-- Date Picker -->
         <script>
-              $(document).ready(function(){
-                            $("#datepicker").datetimepicker({
-                            format: 'YYYY-MM-DD',
-                            minDate:new Date(),
-                            disabledWeekDays:[0]
-                            })
+             // Datepicker
+            $(document).ready(function(){
+                $("#datepicker").datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    showButtonPanel: true,
+                    altField: "#alternate",
+                    altFormat: "mm-dd-yy",
+                    minDate: new Date(),
+                    beforeShowDay: function(date)
+                    {
+                        return [date.getDay() != 0, ''];
+                    }, 
                 });
+             });
+            //  End Datepicker
         </script>
+        @if(isset($events))
+        <script>
+             $(document).ready(function(){
+                        var bookings = @json($events);
+                    $("#calendars").fullCalendar({
+                        header: {
+                            'left': 'prev, next today', 
+                            'center': 'title',
+                            'right': 'month, listWeek'
+                        },
+                        businessHours: {
+                        // days of week. an array of zero-based day of week integers (0=Sunday)
+                        dow: [ 1, 2, 3, 4,5,6 ], // Monday - Thursday
+                        start: '08:00', // a start time (10am in this example)
+                        end: '17:00', // an end time (6pm in this example)
+                    },
+                    nowIndicator: true,
+                    now: moment(),
+                    events: bookings,
+                    defaultView: 'listWeek',
+                    height: 500,
+                    })  
+                    });  
+        </script>
+        @endif
 
         <script>
                 $(document).ready(function(){
@@ -218,89 +254,120 @@
         <!-- END Date Picker -->
                 
            <!-- Time Picker -->
-                <script>
-                        $(document).ready(function(){
-                            $('#time_start').timepicker({
-                                timeFormat : 'hh:mm a',
-                                interval : 30,
-                                maxTime : '5:00 PM',
-                                startTime : '08:00 AM',
-                                dynamic : false,
-                                dropdown : true,
-                                scrollbar : true
-                            });
-                         
-                        $('#time_end').timepicker({
-                            timeFormat : 'hh:mm a',
-                                interval : 30,
-                                maxTime : '5:00 PM',
-                                startTime : '08:00 AM',
-                                dynamic : false,
-                                dropdown : true,
-                                scrollbar : true
-                        });
-                         });
-                        //  END Time Picker
-                        
-                        
-            </script>
+    <script>
+            $(document).ready(function(){
+                $('#time_start').timepicker({
+                    timeFormat : 'hh:mm a',
+                    interval : 5,
+                    maxTime : '5:00 PM',
+                    startTime : '08:00 AM',
+                    dynamic : false,
+                    dropdown : true,
+                    scrollbar : true
+                });
+                
+            $('#time_end').timepicker({
+                timeFormat : 'hh:mm a',
+                    interval : 5,
+                    maxTime : '5:00 PM',
+                    startTime : '08:00 AM',
+                    dynamic : false,
+                    dropdown : true,
+                    scrollbar : true
+            });
+            });
+            //  END Time Picker
+
+            $(document).ready(function(){
+                $("#medicine_name").select2({
+                placeholder: 'Select Medicine Name',
+                });
+                $("#medicine_frequency").select2({
+                placeholder: 'Select Frequency',
+                });
+                $("#medicine_duration").select2({
+                placeholder: 'Select Duration',
+                });
+                $("#book_reason").select2({
+                placeholder: 'Select',
+                allowClear:true,
+                });
+            });
+    </script>
           
-
-              
-           <!-- Print PDF -->
-           <!-- <script>
-            function createPDF() 
+        @if(isset($dates))
+        <script>
+        $(document).ready(function(){
+            $.ajaxSetup(
             {
-                var pdf = new jspdf('l', 'px', 'a4');
-                // source can be HTML-formatted string, or a reference
-                // to an actual DOM element from which the text will be scraped.
-                source = $('#tab')[0];
-                pdf.canvas.height = 72 * 11.69;
-                pdf.canvas.width = 72 * 8.27;
-
-
-                pdf.setFontSize(22);
-                
-               
-                pdf.text(22, 22, 'Appointment History');
-                
-
-                // we support special element handlers. Register them with jQuery-style 
-                // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-                // There is no support for any other type of selectors 
-                // (class, of compound) at this time.
-                specialElementHandlers = {
-                // element with id of "bypass" - jQuery style selector
-                    '#bypassme': function (element, renderer) 
+                    headers: 
                     {
-                            // true = "handled elsewhere, bypass text extraction"
-                            return true
-                        }
-                    };
-                    margins = {
-                        top: 80,
-                        bottom: 60,
-                        left: 40,
-                        width: 522
-                    };
-                    // all coords and widths are in jsPDF instance's declared units
-                    // 'inches' in this case
-                    pdf.fromHTML(
-                    source, // HTML string or DOM elem ref.
-                    margins.left, // x coord
-                    margins.top, { // y coord
-                        'width': margins.width, // max width of content on PDF
-                        'elementHandlers': specialElementHandlers
-                    },
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
 
-                    function (dispose) {
-                        // dispose: object with X, Y of the last line add to the PDF 
-                        //          this allow the insertion of new lines after html
-                        pdf.save('AppointmentHistory.pdf');
-                    }, margins);
-                }
-            </script> -->
-           <!-- End Print PDF -->
+            var dates= @json($dates);
+                    // Select Doctor
+            
+        
+        $("#Id").click(function()
+        {                     
+            // end datepicker
+        });
+            //Others
+        function yesnoCheck(that)
+        {
+            if (that.value == "other") {
+                document.getElementById("ifYes").style.display = "block";
+            } else {
+                document.getElementById("ifYes").style.display = "none";
+            }
+        }
+        // end others
+
+        // CheckBox
+        var expanded = false;
+
+            function showCheckboxes() {
+            var checkboxes = document.getElementById("checkboxes");
+            if (!expanded) {
+                checkboxes.style.display = "block";
+                expanded = true;
+            } else {
+                checkboxes.style.display = "none";
+                expanded = false;
+            }
+            }
+        // End CheckBox
+        </script>  
+        @endif          
+
+        <script>
+             $(function()
+            {
+                    $("#close").on('click', function() 
+                    {
+                        $('#myModal').modal('hide');
+                        window.location.reload();
+                    });
+
+                    $("#closeX").on('click', function() 
+                    {
+                        $('#myModal').modal('hide');
+                        window.location.reload();
+                    });
+            
+            });
+        // <!-- Last Checkpoint March 29, 2023 For Update Time -->
+        $(function()
+        {
+            $("#yes").on('click', function()
+            {
+                $('#doctor').toggle();
+                $('#option').hide();
+            }); 
+        });
+        </script>
            <script>
                     function createPDF() {
                     var sTable = document.getElementById('tab').innerHTML;
@@ -312,7 +379,7 @@
                     style = style + "</style>";
 
                     // CREATE A WINDOW OBJECT.
-                    var win = window.open('', '', 'height=700,width=700');
+                    var win = window.open('', '', 'height=100%,width=700');
 
                     win.document.write('<html><head>');
                     win.document.write('<title>Appointment History</title>');   // <title> FOR PDF HEADER.
@@ -328,7 +395,40 @@
                     win.print();    // PRINT THE CONTENTS.
                 }
             </script>
-                
+            
+            <script>
+                function exportTableToPDF() {
+                 // Get the table element
+                var table = document.getElementById("data_tables");
+
+                // Open the print dialog box
+                var printWindow = window.open('', '', 'height=500,width=700');
+                printWindow.document.write('<html><head><title>Appointment History</title>');
+                printWindow.document.write('<style type="text/css">');
+                printWindow.document.write('@media print {');
+                printWindow.document.write('  body {');
+                printWindow.document.write('    size: A4 landscape;');
+                printWindow.document.write('    margin: 0;');
+                printWindow.document.write('  }');
+                printWindow.document.write('  table {');
+                printWindow.document.write('    border-collapse: collapse;');
+                printWindow.document.write('    font-size: 12pt;');
+                printWindow.document.write('    width: 100%;');
+                printWindow.document.write('  }');
+                printWindow.document.write('  th, td {');
+                printWindow.document.write('    border: 1px solid black;');
+                printWindow.document.write('    padding: 8px;');
+                printWindow.document.write('  }');
+                printWindow.document.write('}');
+                printWindow.document.write('</style>');
+
+                printWindow.document.write('</head><body>');
+                printWindow.document.write(table.outerHTML);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+                }
+            </script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>            
         
         <script>

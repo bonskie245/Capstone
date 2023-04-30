@@ -15,19 +15,20 @@
                                     <a href="{{url('dashboard/users')}}"><i class="ik ik-user-plus"></i><span>My Profile</span></a>
                                 </div>
                                     <div class="nav-lavel">Appointment</div>
-                                    <div class="nav-item">
+                                    <!-- <div class="nav-item">
                                         <a href="{{route('users.create')}}"><i class="ik ik-calendar"></i><span>Book an Appointment</span></a>
+                                    </div> -->
+                                    <div class="nav-item">
+                                        <a href="{{route('calendar.index')}}"><i class="ik ik-calendar"></i><span>Book an Appointment</span></a>
                                     </div>
                                     <div class="nav-item">
-                                        <a href="{{route('my.booking')}}"><i class="fa fa-book"></i><span>My Booking ({{App\Models\Booking::where('book_status', 0)->where('user_id', auth()->user()->id)->count()}}) </span></a>
+                                        <a href="{{route('my.booking')}}"><i class="fa fa-book"></i><span>My Booking ({{App\Models\Booking::where('book_status', 0)->where('app_date','>=', date('Y-m-d'))->where('user_id', auth()->user()->id)->count()}}) </span></a>
                                     </div>
                                     <div class="nav-item">
                                         <a href="{{route('myPrescription')}}"><i class="ik ik-clipboard"></i><span>My History</span></a>
                                     </div>
                                     <br>
-                                    <br>
-
-                                   
+                                    <br>       
                                     <div class="nav-item" style="position: absolute; width: 50%; bottom: 10px;">
                                     <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
                                                      href="{{ route('logout') }}"><i class="ik ik-power"></i><span>Log Out</span></a>

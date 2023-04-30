@@ -102,26 +102,20 @@
                             <td>{{$user->user_phoneNum}}</td>
                             @endforeach
                             <td>{{$booking->app_date}}</td>
-                            @foreach($booking->appointment as $appointment)
-                            <td>{{date('h:i A', strtotime($appointment->time_start))}} - {{date('h:i A', strtotime($appointment->time_end))}}</td>
-                            @endforeach
+                            <td>{{date('h:i A', strtotime($booking->time_start))}} - {{date('h:i A', strtotime($booking->time_end))}}</td>
+
                           <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td> 
                           <td>
-                                @if(!App\Models\Prescription::where('app_date',date('Y-m-d'))->where('doctor_id',$doctorID->id)->where('user_id',$booking->user_id)->exists())
-                                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$booking->user_id}}">
-                                  Write Prescription
-                                </button> -->
-                                    <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->user_id,$booking->app_date,$booking->doctor_id])}}" style="color:white">Write Prescription</a></button>                             
-                                @else
-                                <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a>
-                                @endif
+
+                                <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->id,$booking->app_date,$booking->doctor_id])}}" style="color:white">Write Prescription</a></button>                             
+                                <!-- <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a> -->
+
                           </td>
                         </tr>
                         @empty
                         <td>No appointments Today</td>
                         @endforelse
                       </tbody>
-                      {{$bookings->links()}}
                     </table>
                 </div>
             </div>

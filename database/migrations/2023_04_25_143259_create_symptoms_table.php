@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookingsTable extends Migration
+class CreateSymptomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateBookingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('symptoms', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('doctor_id');
-            $table->integer('book_status')->default(0); 
-            $table->date('app_date');
-            $table->time('time_start')->nullable();
-            $table->time('time_end')->nullable(); 
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('symptoms');
     }
 }

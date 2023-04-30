@@ -73,9 +73,8 @@
                                             <td>{{date('F j, Y', strtotime($prescription->app_date))}}</td>
                                             <td>Dr. {{$prescription->doctor->user->user_fName}} {{$prescription->doctor->user->user_lName}}</td>
                                                 <td>{{$prescription->pres_findings}}</td>
-                                            <td><a href="{{route('prescription.show',[$prescription->user_id,$prescription->app_date])}}"><button class="btn btn-secondary" style="font-size: 12px;">View Prescription</button></a></td>
+                                            <td><a href="{{route('prescription.show',[$prescription->id,$prescription->app_date])}}"><button class="btn btn-secondary" style="font-size: 12px;">View Prescription</button></a></td>
                                             </tr>
-                    
                                     @endforeach
                                     </tbody>
                                 </table>

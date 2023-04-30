@@ -22,8 +22,8 @@
                          <div class="footer-thumb">
                               <div class="opening-hours">
                                    <h4 class="wow fadeInUp" data-wow-delay="0.4s">Opening Hours</h4>
-                                   <p>Monday - Friday <span>08:00 AM - 5:00 PM</span></p>
-                                   <p>Saturday <span>08:00 AM - 12:00 PM</span></p>
+                                   <p>Monday - Saturday <span>08:00 AM - 5:00 PM</span></p>
+                                   <!-- <p>Saturday <span>08:00 AM - 12:00 PM</span></p> -->
                                    <p>Sunday <span>Closed</span></p>
                               </div> 
 

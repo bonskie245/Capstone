@@ -23,7 +23,7 @@ class DashboardController extends Controller
         }
             $data = User::select('id', 'created_at')->where('role_id', '4')->get()->groupBy(function($data)
             {
-                return Carbon::parse($data->created_at)->format('M');
+                return Carbon::parse($data->created_at)->format('M Y');
             });
 
             $months = [];
@@ -34,7 +34,7 @@ class DashboardController extends Controller
             }
 
             $booking = Booking::select('id', 'app_date')->get()->groupBy(function($booking){
-                return Carbon::parse($booking->app_date)->format('M');
+                return Carbon::parse($booking->app_date)->format('M Y');
             });
             
             

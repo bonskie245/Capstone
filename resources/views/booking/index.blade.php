@@ -78,10 +78,8 @@
                           @endif
                           
                           <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
-                            @foreach($booking->appointment as $book)
-                              <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                              <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                            @endforeach
+                            <td>{{date('h:i a', strtotime($booking->time_start))}} - {{date('h:i a', strtotime($booking->time_end))}}</td>
+                            <td>{{date('F j - Y,', strtotime($booking->app_date))}}</td>
                           <td> 
                                 @if($booking->book_status==0)
                                <span class="badge badge-pill badge-secondary mb-1">Pending</span>
@@ -100,24 +98,22 @@
                                 @endif
                           </td>
                           <td>
-                          <div class="table-actions">
                             @if($booking->book_status==0)
-                                      <a href="{{route('booking.showDoctor',[$booking->id])}}"><i class="fa fa-edit" style="color:green">Change Time</i></a>
+                                <a href="{{route('booking.showEditDoctor',[$booking->id])}}">
+                                  <i class="btn btn-success" style="color:white; width: 40%;">Reschedule</i>
+                                </a>
+                                <a href="#" data-toggle="modal" data-target="#deleteModal{{$booking->id}}"> 
+                                  <i class="btn btn-danger" style="color:white">Cancel Booking</i>
+                                  </a>     
                                       <!-- <button type="button" id="no" class="btn btn-success">No, Change Time only</button> -->
                               
                                       <!-- <a href="#" data-toggle="modal" data-target="#myModal{{$booking->id}}" id="editBook" style="color:blue"> 
                                             <i class="ik ik-trash-2" style="color:green">Cancel Booking</i>
                                         </a> -->
                             @endif
-                            @if($booking->book_status!=2)
-                                      <a href="#" data-toggle="modal" data-target="#deleteModal{{$booking->id}}"> 
-                                            <i class="ik ik-trash-2" style="color:red">Cancel Booking</i>
-                                        </a>                    
-                            @endif
                             <input type="hidden" name="booking_id" value="{{$booking->id}}">
                             <input type="hidden" name="app_id" value="{{$booking->app_id}}">
-                            <input type="hidden" id="doctorId" name="doctorId" value="{{$booking->doctor_id}}">
-                            </div>        
+                            <input type="hidden" id="doctorId" name="doctorId" value="{{$booking->doctor_id}}">       
                         </td>
                         </tr>
                         @include('booking.editModal')
@@ -154,10 +150,8 @@
                           @endif
                           
                           <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
-                            @foreach($booking->appointment as $book)
-                              <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                              <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                            @endforeach
+                            <td></td>
+                            <td></td>
                           <td>
                                 @if($booking->book_status==0)
                                <span class="badge badge-pill badge-secondary mb-1">Pending</span>
@@ -181,15 +175,18 @@
                                       <a href="{{route('booking.showDoctor',[$booking->id])}}" style="font-size: 10px;"><i class="fa fa-edit" style="color:green">Edit Booking</i></a>
                             @endif
                             @if($booking->book_status!=2)
-                                      <!-- <form action="{{route('booking.deleteBooking',[$booking->id])}}" method="POST">@csrf
-                                      @method('DELETE') -->
-                                      <a href="{{route('booking.delete',[$booking->id])}}" style="font-size: 10px;"><i class="fa fa-trash" style="color:red">Cancel Booking</i></a>
-                                      <!-- </form> -->
+                                        <a href="#" data-toggle="modal" data-target="#deleteModal{{$booking->id}}"> 
+                                          <i class="btn btn-danger" style="color:white">Cancel Booking</i>
+                                        </a>    
                             @endif
                             </div>
-                           
+                            <input type="hidden" name="booking_id" value="{{$booking->id}}">
+                            <input type="hidden" name="app_id" value="{{$booking->app_id}}">
+                            <input type="hidden" id="doctorId" name="doctorId" value="{{$booking->doctor_id}}">
                         </td>
                         </tr>
+                        @include('booking.editModal')
+                        @include('booking.deleteModal')
                         @endforeach
                       </tbody>
                     </table>
@@ -221,10 +218,8 @@
                                 @endif
                                 
                                 <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
-                                  @foreach($booking->appointment as $book)
-                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                  @endforeach
+                                  <td>{{$booking->time_start}} - {{$booking->time_end}}</td>
+                                  <td>{{$booking->app_date}}</td>
                                 <td>
                                     
                                       @if($booking->book_status==0)
@@ -256,9 +251,13 @@
                                             <!-- </form> -->
                                   @endif
                                   </div>
+                                  <input type="hidden" name="booking_id" value="{{$booking->id}}">
+                                  <input type="hidden" name="app_id" value="{{$booking->app_id}}">
+                                  <input type="hidden" id="doctorId" name="doctorId" value="{{$booking->doctor_id}}">
                               </td>
                               </tr>
-                             
+                              @include('booking.editModal')
+                              @include('booking.deleteModal')
                               @endforeach
                             </tbody>
                           </table>
@@ -291,10 +290,8 @@
                                 @endif
                                 
                                 <td >Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
-                                  @foreach($booking->appointment as $book)
-                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                  @endforeach
+                                  <td></td>
+                                  <td></td>
                                 <td>
                                       @if($booking->book_status==0)
                                       <span class="badge badge-pill badge-secondary mb-1">Pending</span>
@@ -323,8 +320,12 @@
                                   @endif
                                   </div>                          
                               </td> -->
+                              <input type="hidden" name="booking_id" value="{{$booking->id}}">
+                              <input type="hidden" name="app_id" value="{{$booking->app_id}}">
+                              <input type="hidden" id="doctorId" name="doctorId" value="{{$booking->doctor_id}}">
                               </tr>
-                             
+                              @include('booking.editModal')
+                              @include('booking.deleteModal')
                               @endforeach
                             </tbody>
                           </table>                  

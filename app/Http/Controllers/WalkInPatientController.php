@@ -8,7 +8,8 @@ use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Booking;
 use App\Models\WalkIn_Patient;
-
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class WalkInPatientController extends Controller
 {
@@ -45,30 +46,76 @@ class WalkInPatientController extends Controller
      */
     public function store(Request $request)
     {
-        date_default_timezone_set('Asia/Manila');
+       $data = $request->all();
+       date_default_timezone_set('Asia/Manila');
        // $request->validate(['time'=>'required']);
-        
-        $check = $this->checkBookingTimeInterval($request->doctorId,$request->user_id, $request->app_date);
-        
-        if($check){
-            return redirect()->back()->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
-        }
+       
+       if(in_array("Open wounds", $data['book_reason']))
+       {
+           $duration = 60 * 60;
+       }
+       else{
+           $count = count(array_filter($data['book_reason'])) * 5;
+           $duration = $count * 60;
+       }
+       
+       
+       $data['book_reason']= implode(',',array_filter($request->book_reason));
 
+       $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
+
+       $start_time  = strtotime ($starttime);
+       $end_time = $start_time + $duration;
+
+       
+           if($end_time > strtotime('17:00:00'))
+           {
+               return redirect()->back()->with('errmessage','The duration of your Appointment exceds 5:00 pm');
+           }
+       
+       // Final Time
+       $start = date("H:i", $start_time);      
+       $end = date("H:i", $end_time);      
+      
+
+       $this->validate($request,[
+           'time_start'=>'required',
+           'book_reason' => 'required'
+       ],
+       [
+           'time_start.required' => 'Appointment Time is required',
+           'book_reason.required' => 'Reason is required'
+       ]);
+       
+       $date = $request->app_date;
+       $newDate = \Carbon\Carbon::createFromFormat('m-d-Y', $date)
+       ->format('Y-m-d');
+       $doctorId = $request->doctor_id;
+       
+       $check = Booking::where('app_date', $newDate)
+                       ->where('time_start', '<=', $start)
+                       ->where('doctor_id', $doctorId)
+                       ->where('time_end', '>', $start)
+                       ->where('book_status','!=' , '5')
+                       ->exists();
+       if($check)
+       {
+           return redirect()->back()->with('errmessage','You or someone has already booked in this time Frame');
+       }
+       
         /*Create Booking*/
         $booking = Booking::create([
-                'app_id'=> $request->app_id,
                 'user_id'=>$request->user_id,
-                'doctor_id' => $request->doctorId,
-                'app_date' => $request->app_date,
-                'book_status'=> 0
+                'doctor_id' => $doctorId,
+                'app_date' => $newDate,
+                'book_status'=> 0,
+                'book_reason' => $data['book_reason'],
+                'time_start' => $start,
+                'time_end' =>$end,
         ]);
 
-        if($booking){
-            Appointment::where('id',$request->app_id)
-                        ->update(['app_status' => 1]);
-        }
 
-        return redirect()->back()->with('message','Your appointment is Booked Succesfully');
+        return redirect()->route('patient')->with('message','Your appointment is Booked Succesfully');
     }
 
      /**
@@ -131,38 +178,107 @@ class WalkInPatientController extends Controller
         return redirect()->route('walkIn.index')->with('message','Patient Deleted');
     }
 
-    public function appointment($id)
+    public function appointment($id, Request $request)
     {
          date_default_timezone_set('Asia/Manila');
         
          $users = User::find($id);
 
-        if(request('app_date'))
-        {
-            $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
-            $date = request('app_date');
-            return view('admin.walkInAppointment.appointment',compact('doctors','date','users'));
+         if($request->date){
+            $doctors= $this->findDoctorsBasedOnDate(request('date'),request('doctorId'));
+            return response()->json($doctors);
+            // return view('bookapp',compact('doctors','date'));
         }
-          $date = date('Y-m-d');
-          $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
-          return view('admin.walkInAppointment.appointment',compact('doctors','date','users'));
+
+        if($request->doctorId)
+        {
+            // $doctors = Appointment::where('doctor_id', $request->doctorId)->where('app_date', '>=', date('Y-m-d'))->groupBy('app_date')->distinct()->get();
+            $doctors = Appointment::where('doctor_id', $request->doctorId)->where('app_date', '>=', date('Y-m-d'))->where('app_status', 0)->get();
+              
+            return response()->json($doctors);
+        }
+        
+        $date = date('Y-m-d');
+        // $doctors = Appointment::select('*')->where('app_date',date('Y-m-d'))->groupBy('doctor_id')->orderBy('time_start')->get();
+        
+        $doctors = Doctor::all();
+        $dates = array();
+        
+        $availableDate = Appointment::groupBy('app_date')->distinct()->get();
+        
+        foreach($availableDate as $date){
+            
+            $dates [] = [
+                'app_date' =>  $date->app_date,
+                'doctor_id' => $date->doctor_id
+            ];
+        }
+
+          return view('admin.walkInAppointment.appointment',compact('doctors','date','dates','users'));
     }
     
-    public function findDoctorsBasedOnDate($date)
+    public function findDoctorsBasedOnDate($date, $id)
     {
-        $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
+        // $doctors = Appointment::where('app_date', $date)->groupBy('doctor_id')->get();
+        $doctors = Appointment::where('app_date', $date)->where('doctor_id', $id)->where('app_status', 0)->get();
         return $doctors;
     }
 
-    public function showTime($doctorId,$date,$id)
+    public function showTime($doctorId,$id)
     {
-        $appointments = Appointment::where('doctor_id',$doctorId)->where('app_date',$date)->where('app_status',0)->orderBy('time_start')->get();
-
         $users = User::find($id);
         $doctor = Doctor::where('id',$doctorId)->first();
         $doctor_id = $doctorId;
+        
+        $events = array();
+        $bookings = Booking::get();
+        
 
-        return view('admin.walkInAppointment.showTime',compact('date','doctor','doctor_id','appointments','users'));
+        $eventColor = null; 
+
+        foreach($bookings as $booking)
+        {
+                if($booking->book_status == 0){
+                    $eventColor =  '#727573';
+                }
+                elseif($booking->book_status == 1){
+                    $eventColor =  '#12f50a';
+                }
+                elseif($booking->book_status == 2){
+                    $eventColor =  '#47ceff';
+                }
+                elseif($booking->book_status == 3){
+                    $eventColor =  '#eb095c';
+                }
+                elseif($booking->book_status == 4){
+                    $eventColor =  '#b51307';
+                }
+                elseif($booking->book_status == 5){
+                    $eventColor =  '#DD3E3E';
+                }
+                else{
+                    $eventColor = '#0000FF';
+                }
+
+                foreach($booking->user as $user)
+                {
+                    $name = $user->user_fName. ' '. $user->user_lName;  
+                }
+                        
+                $doctorname = $booking->doctor->user->user_fName. ' '. $booking->doctor->user->user_lName;
+                
+                    $start = $booking->app_date. ' '. $booking->time_start;
+                    $end = $booking->app_date. ' '. $booking->time_end;
+
+                $events[] = [
+                    'title' => $name . ' Booking' . ' with Dr. '. $doctorname ,
+                    'start' => Carbon::parse($start)->toDateTimeString(),
+                    'end' => Carbon::parse($end)->toDateTimeString(),
+                    'color' => $eventColor
+                 ];       
+        }
+
+        return view('admin.walkInAppointment.showTime',compact('doctor','doctor_id','users'),['events' => $events]);
     }
 
     public function checkBookingTimeInterval($doctorId,$userid,$date)
@@ -171,7 +287,11 @@ class WalkInPatientController extends Controller
         ->where('user_id',$userid)
         ->where('doctor_id',$doctorId)
         ->whereDate('app_date', $date)
+        ->where('book_status', '!=', 5)
         ->exists();
     }
+   
+
+
 
 }

@@ -19,21 +19,19 @@ class PrescriptionController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         $doctorID = Doctor::where('user_id', auth()->user()->id)->first();
-        $bookings = Booking::where('app_date','>=', date('Y-m-d'))->where('book_status', 2)->where('doctor_id', $doctorID->id)->paginate(5);
+        $bookings = Booking::where('app_date','>=', date('Y-m-d'))->where('book_status', 2)->where('doctor_id', $doctorID->id)->get();
 
         return view('prescription.index', compact('bookings', 'doctorID'));
     }
 
     public function create($id, $date,$doctorID)
     {
-        $bookings = Booking::where('user_id', $id)->where('app_date', $date)->where('doctor_id', $doctorID)->first();
+        $bookings = Booking::where('id', $id)->where('app_date', $date)->where('doctor_id', $doctorID)->first();
         return view('prescription.create', compact('bookings'));
     }
 
     public function store(Request $request)
     {
-        
-
         $prescription = Prescription::create([
             'pres_findings' => $request->pres_findings,
                 'user_id' => $request->user_id,
@@ -58,14 +56,13 @@ class PrescriptionController extends Controller
 
         $booking = Booking::find($request->book_id);
         $booking->book_status = 6;
-        $booking->save(); 
-                
+        $booking->save();            
         return redirect()->route('patients.today')->with('message','Prescription Created');
     }
     
-    public function show($userID, $date)
+    public function show($presID, $date)
     {
-        $prescription1 = Prescription::where('user_id', $userID)->where('app_date', $date)->first();
+        $prescription1 = Prescription::where('id', $presID)->first();
         $prescriptions = PrescriptionMedicines::where('prescription_id', $prescription1->id)->get();
        return view('prescription.showPrescription2',compact('prescriptions', 'prescription1'));
     }
@@ -110,7 +107,7 @@ class PrescriptionController extends Controller
                 DB::raw("DATE_FORMAT(created_at,'%Y') as months"),
                 DB::raw('sum(charge)as charge')
             ])->whereYear(DB::raw('date(created_at)'),'=', $request['years'])
-                ->orderBy('created_at', 'asc')
+                ->orderBy('created_at', 'desc')
                 ->groupBy('months')
                 ->get();
                 return view('patientlist.salesReport', compact('data','date'));
@@ -120,11 +117,9 @@ class PrescriptionController extends Controller
                 DB::raw("DATE_FORMAT(created_at,'%M %Y') as months"),
                 DB::raw('sum(charge)as charge')
             ])->where(DB::raw('date(created_at)'),'>=', \Carbon\Carbon::now()->subMonths(12))
-                ->orderBy('created_at', 'asc')
+                ->orderBy('created_at', 'desc')
                 ->groupBy('months')
                 ->get();         
-        
-
         
         return view('patientlist.salesReport', compact('data','date'));
     }

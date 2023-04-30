@@ -12,6 +12,8 @@ use App\Models\Prescription;
 use App\Models\Doctor;
 use App\Models\PrescriptionMedicines;
 use App\Models\About;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class FrontendController extends Controller
 {
@@ -50,74 +52,86 @@ class FrontendController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-                date_default_timezone_set('Asia/Manila');
-                // $request->validate(['time'=>'required']);
-               
-                $data = $request->all();
+        date_default_timezone_set('Asia/Manila');
+        // $request->validate(['time'=>'required']);
+        
+        $data = $request->all();
 
-                
-                $data['book_reason']= implode(',',array_filter($request->book_reason));
+        if(in_array("Open wounds", $data['book_reason']))
+        {
+            $duration = 60 * 60;
+        }
+        else{
+            $count = count(array_filter($data['book_reason'])) * 5;
+            $duration = $count * 60;
+        }
+        
+        
+        $data['book_reason']= implode(',',array_filter($request->book_reason));
 
-                
-                $this->validate($request,[
-                    'app_id'=>'required',
-                    'book_reason' => 'required'
-                ],
-                [
-                    'app_id.required' => 'Appointment Time is required',
-                    'book_reason.required' => 'Reason is required'
-                ]);
+        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
 
-           
+        $start_time  = strtotime ($starttime);
+        $end_time = $start_time + $duration;
 
+        
+            if($end_time > strtotime('17:00:00'))
+            {
+                return redirect()->back()->with('errmessage','The duration of your Appointment exceds 5:00 pm');
+            }
+        
+        // Final Time
+        $start = date("H:i", $start_time);      
+        $end = date("H:i", $end_time);      
+       
+
+        $this->validate($request,[
+            'time_start'=>'required',
+            'book_reason' => 'required'
+        ],
+        [
+            'time_start.required' => 'Appointment Time is required',
+            'book_reason.required' => 'Reason is required'
+        ]);
+        
         $date = $request->app_date;
         $newDate = \Carbon\Carbon::createFromFormat('m-d-Y', $date)
         ->format('Y-m-d');
-
-        $doctorId = Appointment::where('id', $request->app_id)->pluck('doctor_id')->first();
-        $appointments = Appointment::where('id', $request->app_id)->first();
-       
-        $check = $this->checkBookingTimeInterval($doctorId, $newDate);
+        $doctorId = $request->doctor_id;
         
-        if($check){
-            return redirect()->route('my.booking')->with('errmessage','You already made an Appointment for today. Please wait tomorrow to make next appointment');
+        $check = Booking::where('app_date', $newDate)
+                        ->where('time_start', '<=', $start)
+                        ->where('doctor_id', $doctorId)
+                        ->where('time_end', '>', $start)
+                        ->where('book_status','!=' , '5')
+                        ->exists();
+
+        $check2 = Booking::where('app_date', $newDate)
+                        ->where('time_start', '<=', $start)
+                        ->where('user_id', auth()->user()->id)
+                        ->where('time_end', '>', $start)
+                        ->where('book_status','!=' , '5')
+                        ->exists();
+        if($check)
+        {
+            return redirect()->back()->with('errmessage','You or someone has already booked in this time Frame');
+        }
+        elseif($check2)
+        {
+            return redirect()->back()->with('errmessage','You or someone has already booked in this time Frame');
         }
         
-
         /*Create Booking*/
         $booking = Booking::create([
-                'app_id'=> $request->app_id,
                 'user_id'=>auth()->user()->id,
-                'doctor_id' => $appointments->doctor_id,
+                'doctor_id' => $doctorId,
                 'app_date' => $newDate,
                 'book_status'=> 0,
-                'book_reason' => $data['book_reason']
+                'book_reason' => $data['book_reason'],
+                'time_start' => $start,
+                'time_end' =>$end,
         ]);
 
-        if($booking){
-            Appointment::where('id',$appointments->id)
-                        ->update(['app_status' => 1]);
-        }
-        
-        //send email notification
-        //     $doctorName = Doctor::where('id',$request->doctorId)->first();
-            
-        //     $mailData = [
-        //         'fName'=> $userID->user_fName, 
-        //         'lName'=> $userID->user_lName,
-        //         'time_start'=>$appointment->time_start,
-        //         'time_end'=>$appointment->time_end,
-        //         'app_date'=>$booking->app_date,
-        //         'doctor_fName' =>$doctorID->user->user_fName, 
-        //         'doctor_LName' =>$doctorID->user->user_lName, 
-        //             ];
-            
-        //    try{
-        //         \Mail::to(auth()->user()->email)->send(new AppointmentMail($mailData));
-
-        //    }catch(\Exception $e){
-
-        //     } 
         return redirect()->route('my.booking')->with('message','Your appointment is Booked Succesfully');
 
     }
@@ -134,12 +148,16 @@ class FrontendController extends Controller
     public function myBookings()
     {
         $bookingPending = Booking::where('user_id',auth()->user()->id)->where('book_status', '0')
+                    ->where('app_date', '>=', Date('Y-m-d'))
                     ->orderBy('created_at','desc')->paginate(10);
         $bookingConfirmed = Booking::where('user_id',auth()->user()->id)->where('book_status', '1')
+                    ->where('app_date', '>=', Date('Y-m-d')) 
                     ->orderBy('created_at','desc')->paginate(10);
-        $bookingDeclined = Booking::where('user_id',auth()->user()->id)->where('book_status', '4')
+        $bookingDeclined = Booking::where('user_id',auth()->user()->id)->where('book_status', '4')            
+                    ->where('app_date', '>=', Date('Y-m-d'))
                     ->orderBy('created_at','desc')->paginate(10);
         $bookingCancelled = Booking::where('user_id',auth()->user()->id)->where('book_status', '5')
+                    ->where('app_date', '>=', Date('Y-m-d'))                
                     ->orderBy('created_at','desc')->paginate(10);
         return view('booking.index',compact('bookingPending','bookingConfirmed','bookingDeclined','bookingCancelled'));
     }
@@ -175,37 +193,119 @@ class FrontendController extends Controller
     {
         date_default_timezone_set('Asia/Manila');
         
-        $booking = Booking::find($id);
-        $appID = $booking->app_id;
-        $doctorID = $booking->doctor_id;
         
-        if(request('date')){
-            $doctors= $this->findDoctorsBasedOnDate(request('date'),request('doctorId'));
-            return response()->json($doctors);
-            // $doctors= $this->findDoctorsBasedOnDate(request('app_date'));
-            // $date = request('app_date');
-            // return view('booking.showDoctor',compact('doctors','date','booking','appID','doctorID'));
-        }
+        $doctors = Doctor::find($id);
+        // Get The Booking Events array
+        $events = array();
+        $bookings = Booking::get();
+        
 
-        
-        $doctors = Doctor::all();
-        $daters = array();
-        
-        $availableDate = Appointment::groupBy('app_date')->distinct()->get();
-        
-        foreach($availableDate as $date){
-            
-            $daters [] = [
-                'app_date' =>  $date->app_date,
-                'doctor_id' => $date->doctor_id
-            ];
-            
-        }
+        $eventColor = null; 
 
-        $date = date('Y-m-d');
-        $doctors = Doctor::all();
+        foreach($bookings as $booking)
+        {
+                if($booking->book_status == 0){
+                    $eventColor =  '#727573';
+                }
+                elseif($booking->book_status == 1){
+                    $eventColor =  '#12f50a';
+                }
+                elseif($booking->book_status == 2){
+                    $eventColor =  '#47ceff';
+                }
+                elseif($booking->book_status == 3){
+                    $eventColor =  '#eb095c';
+                }
+                elseif($booking->book_status == 4){
+                    $eventColor =  '#b51307';
+                }
+                elseif($booking->book_status == 5){
+                    $eventColor =  '#DD3E3E';
+                }
+                else{
+                    $eventColor = '#0000FF';
+                }
+
+                foreach($booking->user as $user)
+                {
+                    $name = $user->user_fName. ' '. $user->user_lName;  
+                }
+                        
+                $doctorname = $booking->doctor->user->user_fName. ' '. $booking->doctor->user->user_lName;
+                
+                    $start = $booking->app_date. ' '. $booking->time_start;
+                    $end = $booking->app_date. ' '. $booking->time_end;
+
+                $events[] = [
+                    'title' => $name . ' Booking' . ' with Dr. '. $doctorname ,
+                    'start' => Carbon::parse($start)->toDateTimeString(),
+                    'end' => Carbon::parse($end)->toDateTimeString(),
+                    'color' => $eventColor
+                 ];       
+        }
+       
         //   $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
-          return view('booking.showDoctor',compact('doctors','daters','booking','appID','doctorID'));
+        return view('booking.showDoctor',compact('doctors'), ['events' => $events]);
+    }
+    public function showEditDoctor($id)
+    {
+        date_default_timezone_set('Asia/Manila');
+        
+        
+        $data = Booking::find($id);
+
+        $doctors = Doctor::find($data->doctor_id);
+        // Get The Booking Events array
+        $events = array();
+        $bookings = Booking::get();
+        
+
+        $eventColor = null; 
+
+        foreach($bookings as $booking)
+        {
+                if($booking->book_status == 0){
+                    $eventColor =  '#727573';
+                }
+                elseif($booking->book_status == 1){
+                    $eventColor =  '#12f50a';
+                }
+                elseif($booking->book_status == 2){
+                    $eventColor =  '#47ceff';
+                }
+                elseif($booking->book_status == 3){
+                    $eventColor =  '#eb095c';
+                }
+                elseif($booking->book_status == 4){
+                    $eventColor =  '#b51307';
+                }
+                elseif($booking->book_status == 5){
+                    $eventColor =  '#DD3E3E';
+                }
+                else{
+                    $eventColor = '#0000FF';
+                }
+
+                foreach($booking->user as $user)
+                {
+                    $name = $user->user_fName. ' '. $user->user_lName;  
+                }
+                        
+                $doctorname = $booking->doctor->user->user_fName. ' '. $booking->doctor->user->user_lName;
+                
+                    $start = $booking->app_date. ' '. $booking->time_start;
+                    $end = $booking->app_date. ' '. $booking->time_end;
+
+                $events[] = [
+                    'title' => $name . ' Booking' . ' with Dr. '. $doctorname ,
+                    'start' => Carbon::parse($start)->toDateTimeString(),
+                    'end' => Carbon::parse($end)->toDateTimeString(),
+                    'color' => $eventColor
+                 ];       
+        }
+       
+        //   $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
+        return view('booking.showEditDoctor',compact('doctors','data'), ['events' => $events]);
     }
 
     // public function showEditTime($doctorId,$id,$date)
@@ -247,25 +347,83 @@ class FrontendController extends Controller
 
     public function updateTime(Request $request, $id)
     {
+       
         $booking = Booking::find($id);
-        $appID = $request->appID;
 
+        $data = $request->all();
+
+        if(in_array("Open wounds", $data['book_reason']))
+        {
+            $duration = 60 * 60;
+        }
+        else{
+            $count = count(array_filter($data['book_reason'])) * 5;
+            $duration = $count * 60;
+        }
+        
+        $data['book_reason']= implode(',',array_filter($request->book_reason));
+
+        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
+
+        $start_time  = strtotime ($starttime);
+        $end_time = $start_time + $duration;
+
+        
+            if($end_time > strtotime('17:00:00'))
+            {
+                return redirect()->back()->with('errmessage','The duration of your Appointment exceds 5:00 pm');
+            }
+        
+        // Final Time
+        $start = date("H:i", $start_time);      
+        $end = date("H:i", $end_time);      
+       
+
+        $this->validate($request,[
+            'time_start'=>'required',
+            'book_reason' => 'required'
+        ],
+        [
+            'time_start.required' => 'Appointment Time is required',
+            'book_reason.required' => 'Reason is required'
+        ]);
+        
         $date = $request->app_date;
         $newDate = \Carbon\Carbon::createFromFormat('m-d-Y', $date)
         ->format('Y-m-d');
+        $doctorId = $request->doctor_id;
+        
+        $check = Booking::where('app_date', $newDate)
+                        ->where('time_start', '<=', $start)
+                        ->where('doctor_id', $doctorId)
+                        ->where('time_end', '>', $start)
+                        ->where('book_status','!=' , '5')
+                        ->where('id','!=', $booking->id)
+                        ->exists();
 
-        $bookingUpdate = $booking->update([
-                'app_id' => $request->app_id,
-                'doctor_id' => $request->doctorId,
-                'app_date' => $newDate
+        $check2 = Booking::where('app_date', $newDate)
+                        ->where('time_start', '<=', $start)
+                        ->where('user_id', auth()->user()->id)
+                        ->where('time_end', '>', $start)
+                        ->where('book_status','!=' , '5')
+                        ->where('id','!=', $booking->id)
+                        ->exists();
+            if($check)
+            {
+                return redirect()->back()->with('errmessage','This time frame is occupied');
+            }
+            elseif($check2)
+            {
+                return redirect()->back()->with('errmessage','This time frame is occupied');
+            }
+            
+        $booking->update([
+                'app_date' => $newDate,
+                'book_reason' => $data['book_reason'],
+                'time_start'=> $start,
+                'time_end'=> $end
         ]);
-
-        if($bookingUpdate){
-            Appointment::where('id',$appID)->update(['app_status' => '0']);
-            Appointment::where('id',$request->app_id)
-            ->update(['app_status' => 1]);
-        }
-        return redirect()->route('my.booking')->with('message','Appointment Updated');
+        return redirect()->route('my.booking')->with('message','Reschedule Success');
     }
 
 

@@ -8,11 +8,11 @@ use App\Models\User;
 use App\Models\Doctor;
 use App\Models\medicine;
 use App\Models\Department;
+use App\Models\About;
 use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
-  
     /**
      * Seed the application's database.
      *
@@ -58,13 +58,13 @@ class DatabaseSeeder extends Seeder
       ]);
       User::create([
         'id' => '3',
-        'user_fName' => 'Johnes',
-        'user_lName' => 'Butlay',
+        'user_fName' => 'Conchita',
+        'user_lName' => 'Bergado',
         'role_id' => '2',
         'user_address' => 'Valencia City',
-        'user_gender' => 'male',
+        'user_gender' => 'female',
         'user_phoneNum' => '090909',
-        'user_department' => 'General Surgeon',
+        'user_department' => 'Family-Medicine',
         'email' => 'doctor1@email.com',
         'password' => bcrypt('password'),
         'user_birthdate' => $birthdate,
@@ -73,13 +73,13 @@ class DatabaseSeeder extends Seeder
       ]);
       User::create([
         'id' => '4',
-        'user_fName' => 'Krisha',
-        'user_lName' => 'Balaba',
+        'user_fName' => 'Stephen',
+        'user_lName' => 'Bergado',
         'role_id' => '2',
         'user_address' => 'Valencia City',
-        'user_gender' => 'female',
-        'user_phoneNum' => '09464646',
-        'user_department' => 'Family-Medicine',
+        'user_gender' => 'male',
+        'user_phoneNum' => '09195235111',
+        'user_department' => 'General Surgeon',
         'email' => 'doctor2@email.com',
         'password' => bcrypt('password'),
         'user_birthdate' => $birthdate,
@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
         'role_id' => '4',
         'user_address' => 'Valencia City',
         'user_gender' => 'male',
-        'user_phoneNum' => '0999999',
+        'user_phoneNum' => '09195235111',
         'email' => 'user2@email.com',
         'password' => bcrypt('password'),
         'user_birthdate' => $birthdate,
@@ -114,20 +114,24 @@ class DatabaseSeeder extends Seeder
   ]);
       Doctor::create([
         'user_id' => '3',
-        'doctor_title' => 'MD',
-        'doctor_department' => 'General Surgeon',
+        'doctor_title' => 'M.D.',
+        'doctor_department' => 'Family-Medicine',
+        'description' => 'Fellow, Philippine Academy of Family Physician Practitioner, Newborn &amp; Childrens Diseases Practitioner, Occupational Medicine',
+        'license' => '059296'
       ]);
       Doctor::create([
         'user_id' => '4',
-        'doctor_title' => 'MD',
-        'doctor_department' => 'Family-Medicine',
+        'doctor_title' => 'M.D.',
+        'doctor_department' => 'General Surgeon',
+        'description' => '<p style="text-align: center;">Surgery, Fractures and Traumatic Injuries Fellow, Philippine Academy of Family Physician Practioner, Occupational</p>',
+        'license' => '056192'
       ]);
 
       Department::create([
         'dept_name' => 'Family-Medicine',
       ]);
       Department::create([
-        'dept_name' => 'General Surgery',
+        'dept_name' => 'General Surgeon',
       ]);
       Department::create([
         'dept_name' => 'Therapist',
@@ -181,6 +185,9 @@ class DatabaseSeeder extends Seeder
         'medicine_name' => 'FEVERGAN(PARACETAMOL)',
         'medicine_dosage' => '250mg / 5mL',
         'medicine_type' => 'Liquid'
+      ]);
+      About::create([
+        'description' => '<h1 style="text-align: center; ">Mission &amp; Vision</h1><h1 style=""><div style="text-align: center;"><br></div><div style="text-align: center;"><span style="color: inherit; font-family: inherit; font-size: 2.25rem;">The UCC Way</span></div></h1><p style="text-align: center; "><br></p><h2 style="text-align: left;">THE URGENT CARE CLINIC VISION:</h2><h4 style="text-align: left;">&nbsp; &nbsp; &nbsp;The Urgent care Clinic is commited to be a leading provider of preventive health care services by delivering high quality outcomes for clients and ensuring long term patient friendly relationship. </h4><h4 style="text-align: left; margin-left: 25px;">- We are caring, progressive, enjoying our work and use positive spirit to succeed.&nbsp; &nbsp;</h4><h4 style="text-align: left; margin-left: 25px;">- We take pride in our achievements and actively seek new ways of doing things better.<span style="color: inherit; font-family: inherit; font-size: 0.9rem;">&nbsp;</span></h4><h4 style="text-align: left; margin-left: 25px;">- We value Integrity credibility and respect for the individual &amp; family.</h4><h4 style="text-align: left; margin-left: 25px;">- We built constructive relationships to achieve positive outcomes for all.</h4><h4 style="text-align: left; margin-left: 25px;">- We believe that success comes through recognizing and encouraging the value of people and &nbsp;&nbsp;&nbsp;&nbsp;teams.</h4><h4 style="text-align: left;">We aim to grow &amp; improve our medical services while closely maintaing our patient care</h4><h2 style="text-align: left;">THE URGENT CARE CLINIC MISSION:</h2><h4 style="margin-left: 25px;">- To participate in the creation of a healther lives within the community.</h4><h4 style="margin-left: 25px;">- To provide health care services in a responsible manner which contribute to the physical. psychological, social &amp; spirital well being of the patients&nbsp; &amp; community which it serves.</h4><h4 style="text-align: left; margin-left: 25px;">- To provide assistance to the whole person in a christian spirit of equality &amp; interfaith serving all regardless of age, color, creed or gender.&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight: bolder;"><br></span></h4>'
       ]);
     }
 }

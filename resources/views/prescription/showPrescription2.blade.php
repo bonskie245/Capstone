@@ -15,24 +15,23 @@
     
         <a href="{{route('prescribed.patients')}}" class="btn btn-primary hidden-back">Back</a>
         <button id="btnPrint" class="hidden-print" >Print</button>
-        <div class="container">
-        
-            <div class="card" style="width: 150mm; height: 190mm; margin-bottom: 100%; align-content: center;" >
-                <div class="card-body">
-                    
+        <div class="container" style=" align-content: center;">
+            <div class="ticket" style="width: 150mm; height: 215mm; margin-bottom: 0;">
+                <!-- <div class="card-body"> -->
                     <h4 class="centered">Dr. {{$prescription1->doctor->user->user_fName}} {{$prescription1->doctor->user->user_lName}}, {{$prescription1->doctor->doctor_title}}</h4>
-                        <h5 class="centered">{{$prescription1->doctor->doctor_department}}
+                        <h5 class="centered">{!!$prescription1->doctor->description!!}
                         </h5  ></span>
                         <div class="second-header" style="font-size: 12px; margin-bottom:-25px;">
                             <strong><p>Urgent Care Clinic
                             <span style="float: right; margin-right: 30px;">Cellphone #: 09195235111</span>
                             <br>4019* P-16 Valero St.<span style="float: right; margin-right: 30px;">Telephone #: 828-3280</span> 
                             <br>Poblacion, Valencia City</p></strong>
-                        </div>     
-                    <p>_________________________________________________________________  Patient Name: {{$prescription1->user->user_fName}} {{$prescription1->user->user_lName}}<span style="float: right; margin-right: 30px;">Age: {{\Carbon\Carbon::parse($prescription1->user->user_birthdate)->age}} &emsp; Gender: {{$prescription1->user->user_gender}} </span></p> 
-                    <p>Address: {{$prescription1->user->user_address}} <span style="float: right; margin-right: 30px;">Date: {{$prescription1->app_date}} </span>
-                    _________________________________________________________________ </p>
-                    <p><span class="rx" style="font-size: 35px;">&#8478;  </span> Findings: {{$prescription1->pres_findings}}</p>
+                            <hr style=" width: 100%; background-color: black; height:1px;"/>  
+                            <p style="font-size: 15px;"> Patient Name: {{$prescription1->user->user_fName}} {{$prescription1->user->user_lName}}<span style="float: right; margin-right: 30px;">Age: {{\Carbon\Carbon::parse($prescription1->user->user_birthdate)->age}} &emsp; Gender: {{$prescription1->user->user_gender}} </span></p> 
+                            <p style="font-size: 15px;">Address: {{$prescription1->user->user_address}} <span style="float: right; margin-right: 30px;">Date: {{$prescription1->app_date}} </span></p>    
+                            <hr style=" width: 100%; background-color: black; height:1px;" />  
+                        </div>
+                    <p><span class="rx" style="font-size: 55px;">&#8478;  </span> Findings: {{$prescription1->pres_findings}}</p>
                     <div class="prescription-box" style="margin-left: 30px;">     
                         @foreach($prescriptions as $prescription)
                         <p class="pres-text"><span style="font-weight: bold;">Medication: </span>{{$prescription->medicine_name}}
@@ -40,30 +39,24 @@
                         <br><span style="font-weight: bold;">Duration:</span> {{$prescription->medicine_duration}}</p>             
                         @endforeach            
                         <br>
-                        <div class="bottom-right" style="position: absolute; top: 620px;width: 100%;justify-content: center;">                          
-                            <h6>M.D____________________<br>&nbsp; &emsp;PRC Lic No. </h6>
-                            <!-- <h4 style="margin-left: 80px;">PRC Lic No. 059296</h3> -->
-                            <br>
-                            <br>
+                        <div class="divFooter"> <h6>M.D_______________________<br> .
+                            PRC Lic No. {{$prescription1->doctor->license}} </h6>
                         </div>
-                    </div>    
+                    </div>             
                 </div>         
             </div>
         </div>
-       
-        
-        
-        <script src="script.js"></script>
     </body>
     
     <style>
           @page {
                 size: A6 portrait;
-                margin: none;
+                margin: 12.6px 19.2px 29.4px 8.4px;
+                /* margin-top: 4in; */
             }
       * {
-    font-family: 'Times New Roman';
-    }
+            font-family: 'Cambria';
+        }
 
     td,
     th,
@@ -85,6 +78,7 @@
     .pres-text{
     font-size: 12px;
     }
+    
     /* td.quantity,
     th.quantity {
         width: 40px;
@@ -108,15 +102,20 @@
     .ticket {
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding:2mm;
-    margin: 0 auto;
+    margin:none;
     width: 130mm;
-    height: 183mm;
+    height: 210mm;
     background: #FFF;
     }
 
     img {
         max-width: inherit;
         width: inherit;
+    }
+    @media screen {
+    div.divFooter {
+        display: none;
+    }
     }
 
     @media print {
@@ -132,8 +131,12 @@
         }
         @page {
                 size: A6 portrait;
-                margin: none;
+                margin: 0;
             }
+            div.divFooter {
+            position: fixed;
+            bottom: 5%;
+        }    
     }
     </style>
     <script>

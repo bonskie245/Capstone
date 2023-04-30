@@ -89,7 +89,7 @@
                                                 @forelse(App\Models\Booking::where('user_id', auth()->user()->id)->where('book_status', '!=', '6')->latest()->paginate(3) as $booking)
                                                 <li class="dd-item" data-id="1">
                                                     <div class="dd-handle">
-                                                        <h6>Appointment Date: {{$booking->app_date}}</h6>
+                                                        <h6>Appointment Date: {{date('F j, Y', strtotime($booking->app_date))}}</h6>
                                                         <h6>Doctor: Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}, {{$booking->doctor->doctor_title}}</h6>
                                                         @if($booking->book_status==0)
                                                         <h6>Status: <span class="badge badge-pill badge-secondary mb-1">Pending</span></h6>
@@ -143,7 +143,7 @@
                                                 @forelse(App\Models\Prescription::where('user_id', auth()->user()->id)->latest()->paginate(3) as $history)
                                                 <li class="dd-item" data-id="1">
                                                     <div class="dd-handle">
-                                                        <h6>Appointment Date: {{$history->app_date}}</h6>
+                                                        <h6>Appointment Date: {{date('F j, Y' , strtotime($history->app_date))}}</h6>
                                                         <h6>Doctor: {{$history->doctor->user->user_fName}} {{$history->doctor->user->user_lName}}, {{$history->doctor->doctor_title}}</h6>
                                                     </div>
                                                 </li>

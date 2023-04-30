@@ -62,7 +62,7 @@
                 <table id="data_tables" class="table" style="width: 100%; margin:auto; ">
                     <thead>
                         <tr>
-                        <th scope="col">Month</th>
+                        <th scope="col">Month / Year</th>
                         <th scope="col">Charge</th>
                         </tr>
                     </thead>
@@ -71,7 +71,7 @@
                     <tbody>
                         <tr>
                            <td>{{$data->months}}</td>
-                           <td>₱ {{number_format($data->charge), 2,',','.'}}</td>
+                           <td>₱ {{number_format($data->charge, 2)}}</td>
                         </tr>
                     </tbody>
                     @endforeach

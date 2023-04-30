@@ -61,7 +61,9 @@ Route::group(['middleware'=>['auth','patient']],function(){
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'store'])->name('profile.store');
     Route::post('/profile-pic', [App\Http\Controllers\ProfileController::class, 'profilePic'])->name('profile.pic');
     Route::get('/medicalHistory', [App\Http\Controllers\FrontendController::class, 'myPrescription'])->name('myPrescription');
-    Route::get('/book/show/edit/doctor/{id}',[App\Http\Controllers\FrontendController::class, 'showDoctor'])->name('booking.showDoctor');
+    Route::get('/book/create/doctor/{id}',[App\Http\Controllers\FrontendController::class, 'showDoctor'])->name('booking.showDoctor');
+    Route::get('/book/edit/doctor/{id}',[App\Http\Controllers\FrontendController::class, 'showEditDoctor'])->name('booking.showEditDoctor');
+    // Route::get('/book/show/edit/doctor/{id}',[App\Http\Controllers\FrontendController::class, 'showDoctor'])->name('booking.showDoctor');
     Route::get('/book/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'showDeleteBooking'])->name('booking.delete');
 
     Route::Delete('booking/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'deleteBooking'])->name('booking.deleteBooking');
@@ -73,6 +75,7 @@ Route::group(['middleware'=>['auth','patient']],function(){
     Route::get('/medicalHistory/Prescription/{id}', [App\Http\Controllers\FrontendController::class, 'showPrescription'])->name('show.prescription');
     // Route::get('users/create/{date}/{id}', [App\Http\Controllers\PatientDashboardController::class, 'getTimeSlot'])->name('booking.timeslot');
     //Patients Dashboad
+    Route::get('/booking/calendar',[App\Http\Controllers\UserCalendarController::class, 'index'])->name('calendar.index');
   
 });
 
@@ -87,22 +90,20 @@ Route::post('file-import', [App\Http\Controllers\medicineController::class, 'fil
 /* Admin Route */
 Route::group(['middleware'=>['auth','admin']],function(){
     Route::resource('doctor',DoctorController::class);
-    Route::get('/dashboard/admin/patients', [App\Http\Controllers\PatientlistController::class, 'index'])->name('patient');
-    Route::get('/dashboard/admin/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
-    Route::get('/dashboard/admin/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
-    Route::get('/dashboard/admin/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
     Route::resource('department', 'App\Http\Controllers\DepartmentController');
     Route::resource('patient', 'App\Http\Controllers\PatientController');
     Route::resource('receptionist', 'App\Http\Controllers\ReceptionistController');
     Route::resource('medicine', 'App\Http\Controllers\medicineController');
     Route::get('/dashboard/admin/aboutUS', [App\Http\Controllers\DashboardController::class, 'aboutUS'])->name('about.index');
     Route::post('/dashboard/admin/aboutUS/store', [App\Http\Controllers\DashboardController::class, 'aboutSubmit'])->name('about.store');
+    Route::get('/dashboard/admin/symptoms/create', [App\Http\Controllers\SymptomsController::class, 'create'])->name('symptoms.create');
+    Route::post('/dashboard/admin/symptoms/store', [App\Http\Controllers\SymptomsController::class, 'store'])->name('symptoms.store');
 });
 
 
 Route::resource('walkIn', 'App\Http\Controllers\WalkInPatientController');
 Route::get('/walkIn/Appointment/{id}', [App\Http\Controllers\WalkInPatientController::class, 'appointment'])->name('walkIn.appointment');
-Route::get('/walkIn/Appointment/{doctorId}/{date}/{id}', [App\Http\Controllers\WalkInPatientController::class, 'showTime'])->name('WalkIn.createApp');
+Route::get('/walkIn/Appointment/{doctorId}/{id}', [App\Http\Controllers\WalkInPatientController::class, 'showTime'])->name('WalkIn.createApp');
     // Route::get('/walkIn/createRecord', [App\Http\Controllers\WalkInPatientController::class, 'createRecord'])->name('walkIn.createRec');
    
 
@@ -115,26 +116,27 @@ Route::get('/walkIn/Appointment/{doctorId}/{date}/{id}', [App\Http\Controllers\W
 /* Doctor Route */
 Route::group(['middleware'=>['auth','doctor']],function(){
     Route::resource('appointment',AppointmentController::class);
-    Route::get('/appointment/showTime/{userID}/{date}',[App\Http\Controllers\AppointmentController::class, 'showTime'])->name('appointment.showTime');
-    Route::get('/appointment/time/showTime',[App\Http\Controllers\AppointmentController::class, 'showEditTime'])->name('appointment.timeEdit');
-    Route::post('/prescription/store', [App\Http\Controllers\PrescriptionController::class, 'store'])->name('prescription.store');
-    Route::get('prescription/create/{id}/{date}/{DocId}',[App\Http\Controllers\PrescriptionController::class, 'create'])->name('prescription.create');
-    Route::get('/prescription/show/{id}/{date}', [App\Http\Controllers\PrescriptionController::class, 'show'])->name('prescription.show');
-    Route::get('/patients/medical/history', [App\Http\Controllers\PrescriptionController::class, 'prescribedPatient'])->name('prescribed.patients');
-    Route::patch('appointment/edit/editTime/{id}', [App\Http\Controllers\AppointmentController::class, 'updateTime'])->name('appointment.updateTime');
+    Route::get('/dashboard/admin/patients/appointment/showTime/{userID}/{date}',[App\Http\Controllers\AppointmentController::class, 'showTime'])->name('appointment.showTime');
+    Route::get('/dashboard/admin/patients/appointment/time/showTime',[App\Http\Controllers\AppointmentController::class, 'showEditTime'])->name('appointment.timeEdit');
+    Route::post('/dashboard/admin/patients/prescription/store', [App\Http\Controllers\PrescriptionController::class, 'store'])->name('prescription.store');
+    Route::get('/dashboard/admin/patientsprescription/create/{id}/{date}/{DocId}',[App\Http\Controllers\PrescriptionController::class, 'create'])->name('prescription.create');
+    Route::get('/dashboard/admin/patients/prescription/show/{id}/{date}', [App\Http\Controllers\PrescriptionController::class, 'show'])->name('prescription.show');
+    Route::get('/dashboard/admin/patients/medical/history', [App\Http\Controllers\PrescriptionController::class, 'prescribedPatient'])->name('prescribed.patients');
+    Route::patch('/dashboard/admin/patientsappointment/edit/editTime/{id}', [App\Http\Controllers\AppointmentController::class, 'updateTime'])->name('appointment.updateTime');
     Route::get('/patients', [App\Http\Controllers\PatientlistController::class, 'index'])->name('patient');
-    Route::get('/patients/app/today', [App\Http\Controllers\PatientlistController::class, 'patientToday'])->name('patient.today');
-    Route::get('/patients/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
-    Route::get('/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
-    Route::get('/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
-    Route::get('/status/visited/{id}', [App\Http\Controllers\PatientlistController::class, 'visited'])->name('visited.status');
-    Route::get('/status/visited/not/{id}', [App\Http\Controllers\PatientlistController::class, 'notVisited'])->name('notVisited.status');
-    Route::get('patient-today',[App\Http\Controllers\PrescriptionController::class, 'index'])->name('patients.today');
+    Route::get('/dashboard/admin/patients/app/today', [App\Http\Controllers\PatientlistController::class, 'patientToday'])->name('patient.today');
+    Route::get('/dashboard/admin/appointment/all', [App\Http\Controllers\PatientlistController::class, 'allTimeAppointment'])->name('all.appointments');
+    Route::get('/dashboard/admin/patients/status/accept/{id}', [App\Http\Controllers\PatientlistController::class, 'acceptStatus'])->name('accept.status');
+    Route::get('/dashboard/admin/patients/status/decline/{id}', [App\Http\Controllers\PatientlistController::class, 'declineStatus'])->name('decline.status');
+    Route::get('/dashboard/admin/patients/status/visited/{id}', [App\Http\Controllers\PatientlistController::class, 'visited'])->name('visited.status');
+    Route::get('/dashboard/admin/patients/status/visited/not/{id}', [App\Http\Controllers\PatientlistController::class, 'notVisited'])->name('notVisited.status');
+    Route::get('/dashboard/admin/patients/patient-today',[App\Http\Controllers\PrescriptionController::class, 'index'])->name('patients.today');
     Route::resource('patient', PatientController::class);
-    Route::get('/patients/medical/history/{id}',[App\Http\Controllers\PrescriptionController::class, 'showHistory'])->name('medical.show');
-    Route::get('/patients/medical/history/show/{id}',[App\Http\Controllers\PatientController::class, 'showHistory'])->name('patient.showHistory');
-    Route::resource('walkin', WalkInAppController::class);
-    Route::get('patients/walk-in/create/{id}',[App\Http\Controllers\WalkInAppController::class, 'create'])->name('walkin.create');
-    Route::get('patients/medical/history/prescription/{id}/{date}', [App\Http\Controllers\PatientController::class, 'showPrescription'])->name('patient.prescription');
-    Route::get('patients/walk-in/prescription/create/{id}/{date}/{docID}', [App\Http\Controllers\WalkInAppController::class, 'createPrescription'])->name('patient.presCreate');
+    Route::get('/dashboard/admin/patients/medical/history/{id}',[App\Http\Controllers\PrescriptionController::class, 'showHistory'])->name('medical.show');
+    Route::get('/dashboard/admin/patients/medical/history/show/{id}',[App\Http\Controllers\PatientController::class, 'showHistory'])->name('patient.showHistory');
+    Route::get('/dashboard/admin/patientspatients/walk-in/create/{id}',[App\Http\Controllers\WalkInAppController::class, 'create'])->name('walkin.create');
+    Route::get('/dashboard/admin/patientspatients/medical/history/prescription/{id}/{date}', [App\Http\Controllers\PatientController::class, 'showPrescription'])->name('patient.prescription');
+    Route::get('/dashboard/admin/patientspatients/walk-in/prescription/create/{id}/{date}/{docID}', [App\Http\Controllers\WalkInAppController::class, 'createPrescription'])->name('patient.presCreate');
+    Route::get('/dashboard/admin/appointment/all/print/pdf', [App\Http\Controllers\PatientlistController::class, 'generatePDF'])->name('generatePDF');
+
 });

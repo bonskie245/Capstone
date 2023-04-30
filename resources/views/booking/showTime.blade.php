@@ -17,21 +17,36 @@
             </div>
         </div>
         <div class="col-md-9">
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger">{{$error}}</div>
-            @endforeach
-
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{Session::get('message')}}
-                </div>
-            @endif
-
-             @if(Session::has('errmessage'))
-                <div class="alert alert-danger">
-                    {{Session::get('errmessage')}}
-                </div>
-            @endif
+        @if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endforeach
 
             <!-- <div class="card">
                 <div class="card-body">{{$appID}}</div>
@@ -55,8 +70,7 @@
                         <input type="hidden" name="appID" value="{{$appID}}">
                         @empty
                         <p style="color: red;">&emsp;All slot are allocated</p>
-                        @endforelse
-                
+                        @endforelse    
                     </div>
                 </div>
             </div>

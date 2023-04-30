@@ -123,28 +123,34 @@
   						</div>
 		  			</div>
 		  			<div class="row">
-	                            <div class="col-md-6">
-	                            	<div class="form-group">
-		                            		<label>Photo</label>
-				                                <input type="file" class="form-control file-upload-info" name="user_image">
-				                                <span class="input-group-append">   
-	                            	</div>
-	                        	</div>
-	                        	<div class="col-md-6">
-	                        		<label>Role</label>
-	                        		<select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
-	                        			<option>
-	                        				@foreach(App\Models\Role::where('name','!=','patient')->get() as $role)
-	                        				<option value="{{$role->id}}"@if($users->role_id==$role->id)selected @endif>{{$role->name}} </option>
-	                        				@endforeach
-	                        			</option>
-	                        		</select>
-	                        			@error('role_id')
-                                   		 <span class="invalid-feedback" role="alert">
-                                       		 <strong>{{ $message }}</strong>
-                                    	</span>
-                                		@enderror 
-	                        	</div>
+						<div class="col-md-6">
+							
+							<div class="form-group">
+									<label>Photo</label>
+										<input type="file" class="form-control file-upload-info" name="user_image">
+										<span class="input-group-append">   
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label>Role</label>
+							<select name="role_id" class="form-control @error('role_id') is-invalid @enderror">
+								<option>
+									@foreach(App\Models\Role::where('name','!=','patient')->get() as $role)
+									<option value="{{$role->id}}"@if($users->role_id==$role->id)selected @endif>{{$role->name}} </option>
+									@endforeach
+								</option>
+							</select>
+								@error('role_id')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+								</span>
+								@enderror 
+						</div>
+						<div class=col>
+							<div class="form-group">
+								<textarea class="form-control" id="summernote" name="description" rows="20"  required> {{$description->description}}</textarea>
+							</div>
+						</div>
   					</div>
   					 		<button type="submit" class="btn btn-primary mr-2">Submit</button>
 	                        <a href="{{route('doctor.index')}}" class="btn btn-light">Cancel</a>

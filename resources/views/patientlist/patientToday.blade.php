@@ -123,11 +123,9 @@
                                                         <td>{{$booking->book_reason}}</td>
                                                     @endif
                                                 <td>{{$user->user_phoneNum}}</td>
-                                                @endforeach
-                                                    @foreach($booking->appointment as $book)
-                                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                                    @endforeach
+                                                @endforeach   
+                                                    <td>{{date('h:i A', strtotime($booking->time_start))}} - {{date('h:i A', strtotime($booking->time_end))}}</td>
+                                                    <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                                                         @if($booking->book_status==0)
                                                         <td><a href="{{route('accept.status',[$booking->id])}}"><button class="btn btn-primary">Accept</button></a></td>
@@ -194,10 +192,8 @@
                                                     @endif
                                                 <td>{{$user->user_phoneNum}}</td>
                                                 @endforeach
-                                                    @foreach($booking->appointment as $book)
-                                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                                    @endforeach
+                                                    <td>{{date('h:i A', strtotime($booking->time_start))}} - {{date('h:i A', strtotime($booking->time_end))}}</td>
+                                                    <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                                                         @if($booking->book_status==1)
                                                         <td><a href="{{route('visited.status',[$booking->id])}}"><button class="btn btn-success">Visited</button></a></td>
@@ -250,10 +246,8 @@
                                                     @endif
                                                 <td>{{$user->user_phoneNum}}</td>
                                                 @endforeach
-                                                    @foreach($booking->appointment as $book)
-                                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                                    @endforeach
+                                                <td>{{date('h:i A', strtotime($booking->time_start))}} - {{date('h:i A', strtotime($booking->time_end))}}</td>
+                                                <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                                                 @if($booking->book_status==1)
                                                     <td>
@@ -316,10 +310,8 @@
                                                     @endif
                                                 <td>{{$user->user_phoneNum}}</td>
                                                 @endforeach
-                                                    @foreach($booking->appointment as $book)
-                                                    <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                                                    <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                                                    @endforeach
+                                                    <td>{{date('h:i A', strtotime($booking->time_start))}} - {{date('h:i A', strtotime($booking->time_end))}}</td>
+                                                    <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                                                 <td></td>                                                       
                                                 @empty

@@ -28,7 +28,26 @@
                     </div>
             </div>
         </div>
-
+        @if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
 
                 <div class="row">
                     <div class="col-md-12">
@@ -43,21 +62,18 @@
                             </div>
 
                               <div class="card-body">
-                                 <table id="data_table" class="table">
+                                 <table id="data_tables" class="table" style="width: 100%">
                                    <thead>
                                     <tr>
                                         <th class="nosort">Patient Name</th>
                                         <th class="nosort">Gender</th>
                                         <th class="nosort">Address</th>
                                         <th class="nosort">PhoneNumber</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
-                                        <th class="nosort">&nbsp;</th>
+                                        <th class="nosort">Action</th>
                                      </tr>
                                  </thead>
                              <tbody>
-                                @if(count($users)>0)
+                                
                                 @foreach($users as $user)
                             <tr>
                                 <td>{{$user->user_lName}} {{$user->user_fName}}</td>
@@ -65,30 +81,19 @@
                                 <td>{{$user->user_gender}}</td>
                                 <td>{{$user->user_address}}</td>
                                 <td>{{$user->user_phoneNum}}</td>
-                                <td>
+                                <!-- <td>
                                     <div class="table-actions">
                                         <a href="{{route('walkIn.edit',[$user->id])}}"><i class="ik ik-edit-2" style="color:green"></i>edit</a>
-                                        <!-- <form class="forms-sample" action="{{route('walkIn.destroy',[$user->id])}}" method="POST">@csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                        </form> -->
                                          <a href="{{route('walkIn.show',[$user->id])}}"><i class="ik ik-trash-2" style="color:red"></i>delete</a>
                                     </div>
-                                </td>
+                                </td> -->
                                 <td>
                                         <button class="btn btn-primary" ><a href="{{route('walkIn.appointment',[$user->id])}}" style=" color: white;">Book appointment</a></button>
-
                                 </td>
-                                <td></td>
-                                <td></td>
                             </tr>
 
 
-                            @endforeach
-                            @else
-                                <td>No user to display</td>
-                            @endif
-                           
+                            @endforeach                           
                         </tbody>
                     </table>
                 </div>

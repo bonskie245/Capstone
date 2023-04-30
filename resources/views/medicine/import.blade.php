@@ -43,15 +43,18 @@
                         <h2>Add Medicine Thru/ Excel File</h2>
                     </div>
                     <div class="card-body">
-                    <form action="{{ route('file-import') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('file-import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
+                        <div class="form-group mb-4" style="max-width: 100%; margin: 0 auto;">
                         <input type="file" class="form-control file-upload-info"  name="file" required>
-                        </div>
-                        <button class="btn btn-primary">Import data</button>
-                    </form>
+                        </div>       
                     </div>
+                    <div class="card-footer text-right" >
+                        <button class="btn btn-primary">Import data</button>
+                    </div>
+                    </form>
                 </div>
   		</div>
+  </div>
   </div>
 @endsection 

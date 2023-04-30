@@ -56,8 +56,8 @@
                     <div class="container-fluid"> 
                         <div class="card" style="overflow-x:auto">
                             <div class="card-header"><h3>Patient Management</h3>
-                                    <a href="{{route('patient.create')}}" style="float:right; margin-left: 70%;" class="btn btn-primary">Add Patient</a>
-                                <!-- <a href="{{route('walkIn.index')}}" style="margin-left: 10px;" class="btn btn-primary">Book Patient</a> -->
+                                    <a href="{{route('patient.create')}}" style="float:right; margin-left: 60%;" class="btn btn-primary">Add Patient</a>
+                                <a href="{{route('walkIn.index')}}" style="margin-left: 1%;" class="btn btn-primary">Book Patient</a>
                             </div>
                               <div class="card-body">
                                  <table id="data_table" class="table table-hover" style="font-size: 14px; width:100%; margin: auto;"  >

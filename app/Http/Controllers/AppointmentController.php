@@ -96,10 +96,7 @@ class AppointmentController extends Controller
             
             // dd($dates);
            
-           
         
-        
-
         $doctor = Doctor::where('user_id',auth()->user()->id)->first();
         
         $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
@@ -121,7 +118,7 @@ class AppointmentController extends Controller
         
         while ($start_time <= $end_time) // loop between time
         {
-            $array_of_time[] = date ("H:i", $start_time);
+            $array_of_time[] = date("H:i", $start_time);
             $start_time += $add_mins; // to check endtie=me
         }
 

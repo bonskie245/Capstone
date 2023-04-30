@@ -65,9 +65,10 @@
                         </script> 
                     @endforeach
 
-            <form action="{{route('booking.appointment')}}" method="post">@csrf  
+            <form action="{{route('booking.updateTime', [$data->id])}}" method="post">@csrf
+            @method('PUT')
             <div class="card">
-                <div class="card-header"><strong><h3>Booking appointment</h3></strong></div>
+                <div class="card-header"><strong><h3>Reschedule appointment</h3></strong></div>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col">

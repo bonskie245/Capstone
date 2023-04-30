@@ -66,67 +66,53 @@
                                  
                             <div class="col">
                                 <button type="submit" class="btn btn-primary">Filter</button>
-                                <input type="button" class= "btn btn-success" value="Print"  id="btPrint" onclick="createPDF()" />
-                            </div>
+                                <button class="btn btn-success" onclick="exportTableToPDF()">Print table</button>
+                                <!-- <input type="button" class= "btn btn-success" value="Print"  id="btPrint" onclick="exportTableToPDF()" /> -->
+
+                            </div>        
+                    </form>
                             
-                        </div>   
-                    </form>            
+                    </div>             
                 </div>
-                <div class="card-body" id="tab">
-                   <table id="data_tables" class="table table-hover" style="width: 100%; margin:auto;">
+                <div class="card-body" >
+                   <table id="data_tables" class="table table-hover" style="width: 100%; margin:auto;" >
                       <thead>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Photo</th>
                           <th scope="col">Name</th>
-                          <th scope="col">Reason</th>
-                          <th scope="col">Phone Number</th>
-                          <th scope="col">Time</th>
+                          <th scope="col">Findings</th>
                           <th scope="col">Date</th>
                           <th scope="col">Doctor</th>
-
                         </tr>
                       </thead>
-                      <tbody>
-                        @forelse($bookings as $key =>$booking)
-                        <tr>
-                          <th scope="row">{{$key+1}}</th>
-                          @foreach($booking->user as $user)
-                          @if(!$user->user_image)
-                          <td><img src="{{asset('images/user.png')}}"
-                              width="80px "  height="80px" style="border-radius: 50%;"></td>
-                          @else
-                            <td><img src="{{asset('profiles')}}/{{$user->user_image}}"
-                              width="80px "  height="80px" style="border-radius: 50%;"></td>
-                          @endif
-                              <td>{{$user->user_lName}} ,  {{$user->user_fName}}</td>
-                          
-                          
-                              @if(!$booking->book_reason)
-                              <td>Did not indicate reason</td>
-                              @else
-                                <td>{{$booking->book_reason}}</td>
-                             @endif
-                          <td>{{$user->user_phoneNum}}</td>
-                          @endforeach
-                              @foreach($booking->appointment as $book)
-                              <td>{{date('h:i A', strtotime($book->time_start))}} - {{date('h:i A', strtotime($book->time_end))}}</td>
-                              <td>{{date('F j, Y', strtotime($book->app_date))}}</td>
-                             @endforeach
-                          <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
-                        </tr>
-                        @empty
-                        <td>No appointments Today</td>
-                        @endforelse
-                        
-                      </tbody>
+                        <tbody>
+                        @foreach($bookings as $key => $booking)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                             
+                                @if(!$booking->user->user_image)
+                                    <td><img src="{{asset('images/user.png')}}"
+                                    width="80px "  height="80px" style="border-radius: 50%;"></td>
+                                @else
+                                    <td><img src="{{asset('profiles')}}/{{$booking->user->user_image}}"
+                                    width="80px "  height="80px" style="border-radius: 50%;"></td>    
+                                    @endif                      
+                                <td>{{$booking->user->user_fName}} {{$booking->user->user_lName}}</td>
+                                <td>{{$booking->pres_findings}}</td>
+                                <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
+
+                                <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
-                    <!-- <div class="d-flex justify-content-center">
-                    {!! $bookings->onEachSide(5)->links() !!}
-                    </div> -->
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+<tbody>
+                        
 @endsection

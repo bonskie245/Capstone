@@ -69,11 +69,15 @@
                                   <a href="{{route('department.create')}}"><i class="fas fa-hospital"></i><span>Add Department</span></a>
                                 </div>
                                 <div class="nav-item">
+                                      <a href="{{route('symptoms.create')}}"><i class="ik ik-file"></i><span>Add Symptoms</span></a>
+                                    </div>
+                                <div class="nav-item">
                                       <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
                                     </div>
+                                    
                                 @endif
 
-                                @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                @if(auth()->check()&&auth()->user()->role->name ==='doctorss')
                                 <div class="nav-lavel">Create Appointment</div>
                                 <div class="nav-item">
                                     <a href="{{route('appointment.index')}}"><i class="ik ik-calendar"></i><span>Appointment Management</span></a>
@@ -101,10 +105,10 @@
                                 </div>
                                 @endif
 
-                                @if(auth()->check()&&auth()->user()->role->name ==='receptionist')
+                                @if(auth()->check()&&auth()->user()->role->name ==='receptionist' || auth()->check()&&auth()->user()->role->name ==='doctor')
                                 <div class="nav-lavel">All Appointment</div>
                                 <div class="nav-item has-sub">
-                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Patients Appointment</span></a>
+                                    <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Appointments</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
                                         <a href="{{route('patient.today')}}" class="menu-item">View Booking Table Data</a>
@@ -115,7 +119,7 @@
                                 </div>
                                     @endif
                                   
-                                    @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                    @if(auth()->check()&&auth()->user()->role->name ==='doctors')
                                     <div class="nav-item has-sub">
                                         <a href="javascript:void(0)"><i class="ik ik-user"></i><span>Patient Appointment Management</span></a>
                                         <div class="submenu-content">
@@ -126,10 +130,20 @@
                                             <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                         </div>
                                     </div>
+                                    @endif
+
+                                    @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                    <div class="nav-item">
+                                        <a href="{{route('patients.today')}}"><i class="ik ik-clipboard"></i><span>Patient Today</span></a>
+                                    </div>
+                                    <div class="nav-item">
+                                        <a href="{{route('prescribed.patients')}}"><i class="ik ik-book"></i><span>Patient Medical history</span></a>
+                                    </div>
                                     <div class="nav-item">
                                       <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
                                     </div>
                                     @endif
+                                   
 
                                     @if(auth()->check()&&auth()->user()->role->name ==='receptionist')
                                     <div class="nav-lavel">Patients</div>
