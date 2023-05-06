@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="{{asset('template/plugins/owl.carousel/dist/assets/owl.carousel.min.css')}}">
         <link rel="stylesheet" href="{{asset('template/plugins/owl.carousel/dist/assets/owl.theme.default.min.css')}}">
         <link rel="stylesheet" href="{{asset('template/dist/css/theme.min.css')}}">
-        <script src="{{asset('template/src/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+        <!-- <script src="{{asset('template/src/js/vendor/modernizr-2.8.3.min.js')}}"></script> -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
      
         <link rel="stylesheet" href="{{ mix('css/app.css') }}"/>

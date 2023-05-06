@@ -255,29 +255,8 @@
                 
            <!-- Time Picker -->
     <script>
-            $(document).ready(function(){
-                $('#time_start').timepicker({
-                    timeFormat : 'hh:mm a',
-                    interval : 5,
-                    maxTime : '5:00 PM',
-                    startTime : '08:00 AM',
-                    dynamic : false,
-                    dropdown : true,
-                    scrollbar : true
-                });
-                
-            $('#time_end').timepicker({
-                timeFormat : 'hh:mm a',
-                    interval : 5,
-                    maxTime : '5:00 PM',
-                    startTime : '08:00 AM',
-                    dynamic : false,
-                    dropdown : true,
-                    scrollbar : true
-            });
-            });
-            //  END Time Picker
 
+            
             $(document).ready(function(){
                 $("#medicine_name").select2({
                 placeholder: 'Select Medicine Name',

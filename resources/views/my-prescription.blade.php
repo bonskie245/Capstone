@@ -5,8 +5,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header"><h2>Medical history</h2></div>
-                    <div class="card-body">
-                            <table id="data_tables" class="table table-hover" style="width: 100%">
+                    <div class="card-body" style="overflow-x:auto;">
+                            <table id="data_tables" class="table table-hover" style="width: 100%; margin: auto 0;">
                                 <thead>
                                     <tr>
                                         <th scope="col">Date of Appointment</th>

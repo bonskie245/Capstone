@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
 </head>
 <body class="hold-transition register-page">
-<div class="register-box" style="width: 78% ">
+<div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="{{route('welcome')}}" class="h1"><b>Urgent Care Clinic </b>| Registration</a>
@@ -25,7 +25,7 @@
 
       <form method="POST" action="{{ route('register') }}">
         @csrf
-        <div class="row">
+       
         <div class="col">
         <div class="input-group mb-3">
           <input id="user_fName" type="text" class="form-control @error('user_fName') is-invalid @enderror" name="user_fName" required placeholder="First Name">
@@ -55,8 +55,8 @@
             </div>
           </div>
         </div>
-        </div></div>
-        <div class="row">
+        </div>
+        
           <div class ="col">
           <div class="input-group mb-3">
               <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
@@ -90,10 +90,9 @@
                 </div>
               </div>
             </div>
-            </div>
-      </div>     
+            </div>     
       
-      <div class="row">
+   
         <div class="col">
               <div class="input-group mb-3">
               <input id="user_address" type="text" class="form-control @error('user_address') is-invalid @enderror" name="user_address" required Placeholder="Address" >
@@ -112,7 +111,7 @@
         </div>
         <div class="col">
               <div class="input-group mb-3">
-              <input id="user_birthdate #dropper-default"  type="text" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate"  >
+              <input id="user_birthdate"  type="date" class="form-control @error('user_birthdate') is-invalid @enderror" name="user_birthdate" required Placeholder="Birthdate">
                       @error('user_birthdate')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -125,7 +124,8 @@
                 </div>
               </div>
         </div>
-        </div>
+
+        <div class ="col">
         <div class="input-group mb-3">
                     <select name="user_gender" class="form-control @error('user_gender') is-invalid @enderror">
                                    <option value="">Please select gender</option>
@@ -145,7 +145,9 @@
             </div>
           </div>
         </div>
+        </div>
 
+        <div class="col">
         <div class="input-group mb-3">
         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" Placeholder="Password">
                 @error('password')
@@ -166,6 +168,7 @@
               <span class="fas fa-lock"></span>
             </div>
           </div>
+        </div>
         </div>
         <!-- <div class="row">
           <div class="col-8">

@@ -138,19 +138,12 @@
             $(document).ready(function () {
                 $('#data_tables').DataTable({
                     pagingType: 'full_numbers',
-                    rowReorder: {
-                        selector: 'td:nth-child(2)'
-                    },
-                    responsive: true
                 });
             });
             $(document).ready(function(){
                 $('#data_confirmed').DataTable({
                     pagingType: 'full_numbers',
-                    rowReorder: {
-                        selector: 'td:nth-child(2)'
-                    },
-                    responsive: true
+                    responsive: true,
                 });
                
             })
@@ -158,20 +151,14 @@
             $(document).ready(function(){
                 $('#data_declined').DataTable({
                     pagingType: 'full_numbers',
-                    rowReorder: {
-                        selector: 'td:nth-child(2)'
-                    },
-                    responsive: true
+                    responsive: true,
                 });          
             });
 
             $(document).ready(function(){
                 $('#data_cancelled').DataTable({
                     pagingType: 'full_numbers',
-                    rowReorder: {
-                        selector: 'td:nth-child(2)'
-                    },
-                    responsive: true
+                    responsive: true,
                 });          
             });
             
@@ -262,45 +249,8 @@
                     });  
             </script>
     @endif
-    @if(isset($dates))
-    <script>    
-            //Others
-        function yesnoCheck(that)
-        {
-            if (that.value == "other") {
-                document.getElementById("ifYes").style.display = "block";
-            } else {
-                document.getElementById("ifYes").style.display = "none";
-            }
-        }
-        // end others     
-        </script>  
-        @endif          
-        <script>
-             $(function()
-            {
-                    $("#close").on('click', function() 
-                    {
-                        $('#myModal').modal('hide');
-                        window.location.reload();
-                    });
 
-                    $("#closeX").on('click', function() 
-                    {
-                        $('#myModal').modal('hide');
-                        window.location.reload();
-                    });
-            });
-        // <!-- Last Checkpoint March 29, 2023 For Update Time -->
-        $(function()
-        {
-            $("#yes").on('click', function()
-            {
-                $('#doctor').toggle();
-                $('#option').hide();
-            }); 
-        });
-
+                    <script>
         $(document).ready(function() {
             $("#book_reason").select2({
                 placeholder: 'Select',

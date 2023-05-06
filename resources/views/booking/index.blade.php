@@ -53,8 +53,8 @@
                     </ul>
                     <div class="tab-content" id="myTabContent">
                       <!--Pending -->
-                      <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab" >                
-                      <table id="data_tables" class="table table-bordered table-hover" style="width:100%">
+                      <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab" style="overflow-x:auto; margin: 0 auto;" >                
+                      <table id="data_tables" class="table table-bordered table-hover" style="width:100%; margin: 0 auto;">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -100,7 +100,7 @@
                           <td>
                             @if($booking->book_status==0)
                                 <a href="{{route('booking.showEditDoctor',[$booking->id])}}">
-                                  <i class="btn btn-success" style="color:white; width: 40%;">Reschedule</i>
+                                  <i class="btn btn-success" style="color:white;">Reschedule</i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#deleteModal{{$booking->id}}"> 
                                   <i class="btn btn-danger" style="color:white">Cancel Booking</i>
@@ -126,8 +126,8 @@
                       <!-- End of Pending -->
 
                       <!-- Confirmed -->
-                      <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
-                      <table id="data_confirmed" class="table table-bordered table-hover" style="width:100%; overflow-x:auto;">
+                      <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab" style="overflow-x:auto; ">
+                      <table id="data_confirmed" class="table table-bordered table-hover" style="width:100%;  margin: 0 auto;">
                       <thead>
                         <tr>
                           <th scope="col"  style="font-size: 16px;">#</th>
@@ -194,8 +194,8 @@
                       <!-- End of Confirmed -->
 
                       <!-- Start of Declined -->
-                      <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="declined-tab">
-                        <table id="data_declined" class="table table-bordered table-hover" style="width:100%; overflow-x:auto;">
+                      <div class="tab-pane fade" id="declined" role="tabpanel" aria-labelledby="declined-tab" style="overflow-x:auto;">
+                        <table id="data_declined" class="table table-bordered table-hover" style="width:100%;   margin: 0 auto; ">
                             <thead>
                               <tr>
                                 <th scope="col"  style="font-size: 16px;">#</th>
@@ -265,8 +265,8 @@
                       <!-- End of Declined -->
 
                       <!-- Start of Cancelled -->
-                      <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab" >
-                        <table id="data_cancelled" class="table table-bordered table-hover" style="width:100%; overflow-x:auto;">
+                      <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab" style="overflow-x:auto;" >
+                        <table id="data_cancelled" class="table table-bordered table-hover" style="width:100%;   margin: 0 auto;">
                             <thead>
                               <tr>
                                 <th scope="col"  style="font-size: 16px;">#</th>

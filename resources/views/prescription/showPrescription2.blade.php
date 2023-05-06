@@ -14,7 +14,9 @@
     <body>
     
         <a href="{{route('prescribed.patients')}}" class="btn btn-primary hidden-back">Back</a>
+        @if(auth()->user()->role->name == "doctor")
         <button id="btnPrint" class="hidden-print" >Print</button>
+        @endif
         <div class="container" style=" align-content: center;">
             <div class="ticket" style="width: 150mm; height: 215mm; margin-bottom: 0;">
                 <!-- <div class="card-body"> -->

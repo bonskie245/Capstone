@@ -56,35 +56,7 @@ class FrontendController extends Controller
         // $request->validate(['time'=>'required']);
         
         $data = $request->all();
-
-        if(in_array("Open wounds", $data['book_reason']))
-        {
-            $duration = 60 * 60;
-        }
-        else{
-            $count = count(array_filter($data['book_reason'])) * 5;
-            $duration = $count * 60;
-        }
         
-        
-        $data['book_reason']= implode(',',array_filter($request->book_reason));
-
-        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
-
-        $start_time  = strtotime ($starttime);
-        $end_time = $start_time + $duration;
-
-        
-            if($end_time > strtotime('17:00:00'))
-            {
-                return redirect()->back()->with('errmessage','The duration of your Appointment exceds 5:00 pm');
-            }
-        
-        // Final Time
-        $start = date("H:i", $start_time);      
-        $end = date("H:i", $end_time);      
-       
-
         $this->validate($request,[
             'time_start'=>'required',
             'book_reason' => 'required'
@@ -95,9 +67,44 @@ class FrontendController extends Controller
         ]);
         
         $date = $request->app_date;
-        $newDate = \Carbon\Carbon::createFromFormat('m-d-Y', $date)
-        ->format('Y-m-d');
+        $newDate = \Carbon\Carbon::createFromFormat('m-d-Y', $date)->format('Y-m-d');
         $doctorId = $request->doctor_id;
+
+        $countDate = \Carbon\Carbon::parse($newDate)->format('N');
+     
+        if($countDate == 7)
+        {
+            return redirect()->back()->with('errmessage','The Clinic is close on Sunday');
+        }
+
+        if(in_array("Open wounds", $data['book_reason']))
+        {
+            $duration = 60 * 60;
+        }
+        else{
+            $count = count(array_filter($data['book_reason'])) * 5;
+            $duration = $count * 60;
+        }
+        
+       
+        $data['book_reason']= implode(',',array_filter($request->book_reason));
+
+        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
+
+        $start_time  = strtotime ($starttime);
+        $end_time = $start_time + $duration;
+
+        
+        if($end_time > strtotime('17:00:00'))
+        {
+             return redirect()->back()->with('errmessage','The duration of your Appointment exceds 5:00 pm');
+        }
+        
+        // Final Time
+        $start = date("H:i", $start_time);      
+        $end = date("H:i", $end_time);      
+       
+
         
         $check = Booking::where('app_date', $newDate)
                         ->where('time_start', '<=', $start)
@@ -351,7 +358,17 @@ class FrontendController extends Controller
         $booking = Booking::find($id);
 
         $data = $request->all();
+        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
 
+        $start_time  = strtotime ($starttime);
+        $end_time = $start_time + $duration;
+        $countDate = \Carbon\Carbon::parse($newDate)->format('N');
+     
+        if($countDate == 7)
+        {
+            return redirect()->back()->with('errmessage','The Clinic is close on Sunday');
+        }
+        
         if(in_array("Open wounds", $data['book_reason']))
         {
             $duration = 60 * 60;
@@ -363,11 +380,7 @@ class FrontendController extends Controller
         
         $data['book_reason']= implode(',',array_filter($request->book_reason));
 
-        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
-
-        $start_time  = strtotime ($starttime);
-        $end_time = $start_time + $duration;
-
+       
         
             if($end_time > strtotime('17:00:00'))
             {
