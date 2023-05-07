@@ -67,7 +67,7 @@ Route::group(['middleware'=>['auth','patient']],function(){
     Route::get('/book/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'showDeleteBooking'])->name('booking.delete');
 
     Route::Delete('booking/show/Delete/Booking/{id}',[App\Http\Controllers\FrontendController::class, 'deleteBooking'])->name('booking.deleteBooking');
-
+    Route::post('edit/user-profile/change-password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('update-password');
     // Route::get('booking/show/Edit/BookTime/{doctorId}/{id}/{date}',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');
     
     Route::get('booking/show/Edit/BookTime',[App\Http\Controllers\FrontendController::class, 'showEditTime'])->name('booking.editTime');

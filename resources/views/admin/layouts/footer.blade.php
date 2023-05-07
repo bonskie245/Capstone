@@ -239,16 +239,22 @@
 
         <script>
                 $(document).ready(function(){
-                            $("#datepicker2").datetimepicker({
-                            format:"YYYY-MM-DD",
-                            })
+                        $("#datepickers2").datetimepicker({
+                        format: 'YYYY-MM-DD',
+                        minDate : moment(),
+                        daysOfWeekHighlighted: "0",
+                        daysOfWeekDisabled: [0]
+                        })
                 });
         </script>
         <script>
-                $(document).ready(function(){
-                            $("#datepicker3").datetimepicker({
-                            format:"YYYY-MM-DD",
-                            })
+                 $(document).ready(function(){
+                        $("#datepickers3").datetimepicker({
+                        format: 'YYYY-MM-DD',
+                        minDate : moment(),
+                        daysOfWeekHighlighted: "0",
+                        daysOfWeekDisabled: [0]
+                        })
                 });
         </script>
         <!-- END Date Picker -->

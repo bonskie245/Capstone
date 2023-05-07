@@ -140,6 +140,9 @@
                                         <a href="{{route('prescribed.patients')}}"><i class="ik ik-book"></i><span>Patient Medical history</span></a>
                                     </div>
                                     <div class="nav-item">
+                                            <a href="{{route('appointment.create')}}"><i class="ik ik-file"></i><span>Vacation / Leave Dates</span></a>
+                                        </div>
+                                    <div class="nav-item">
                                       <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
                                     </div>
                                     @endif

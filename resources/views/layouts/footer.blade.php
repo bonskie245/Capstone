@@ -161,19 +161,48 @@
                     responsive: true,
                 });          
             });
-            
+        
+       
+
             // Datepicker
             $(document).ready(function(){
+                // Start Certain Dates
+                    var holidays = [
+                    '1.1.2020',
+                    '2.1.2020',
+                    '20.2.2020',
+                    '19.1.2020',
+                    '1.8.2020',
+                    '15.8.2020',
+                    '1.11.2020',
+                    '8.12.2020',
+                    '25.12.2020',
+                    '26.12.2020'
+                ];
+                function noSundaysOrHolidays(date) {
+                    var day = date.getDay();
+                    if (day != 0) {
+                    var d = date.getDate();
+                    var m = date.getMonth();
+                    var y = date.getFullYear();
+                    for (i = 0; i < holidays.length; i++) {
+                        if($.inArray((d) + '.' + (m+1) + '.' + y, holidays) != -1) {
+                        return [false];
+                        }
+                    }
+                    return [true];
+                    } else {
+                    return [day != 0, ''];
+                    }
+                }
+                // 
                 $("#datepicker").datepicker({
                     dateFormat: 'yy-mm-dd',
                     showButtonPanel: true,
                     altField: "#alternate",
                     altFormat: "mm-dd-yy",
                     minDate: new Date(),
-                    beforeShowDay: function(date)
-                    {
-                        return [date.getDay() != 0, ''];
-                    }, 
+                    beforeShowDay: noSundaysOrHolidays,
                 });
              });
             //  End Datepicker

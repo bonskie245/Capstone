@@ -41,19 +41,19 @@
             <div class="card">
                 <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
                 <form action="{{route('all.appointments')}}" method="GET">
-                @if(Session::has('message'))
-                                <div class="alert alert-success">
-                                 {{Session::get('message')}}
-                                </div>
-                            @endif
-                            @if(Session::has('errmessage'))
-                                <div class="alert alert-danger">
-                                 {{Session::get('errmessage')}}
-                                </div>
-                @endif
+                    @csrf
+                    @if(Session::has('message'))
+                        <div class="alert alert-success">
+                        {{Session::get('message')}}
+                        </div>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <div class="alert alert-danger">
+                        {{Session::get('errmessage')}}
+                        </div>
+                    @endif
                 
               <div class="card-header">
-            
                         <div class="row">
                         &nbsp;  &nbsp;  Filter By date From: 
                             <div class="col-md-2">
@@ -62,17 +62,24 @@
                             <label for="date_to"> Date To: </label>
                             <div class="col-md-2">
                                 <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker3" data-toggle="datetimepicker" data-target="#datepicker3" name="date_to">
-                            </div>
-                                 
-                            <div class="col">
+                            </div>    
+                           
+                            <div class="col-md-1">
                                 <button type="submit" class="btn btn-primary">Filter</button>
-                                <button class="btn btn-success" onclick="exportTableToPDF()">Print table</button>
-                                <!-- <input type="button" class= "btn btn-success" value="Print"  id="btPrint" onclick="exportTableToPDF()" /> -->
-
-                            </div>        
-                    </form>
-                            
-                    </div>             
+                                </form>
+                                <!-- <a href="{{route('generatePDF')}}"><span class="btn btn-secondary">Print</span></a>     -->
+                            </div>    
+                            <div class="col-md-1">
+                            <form action="{{route('generatePDF')}}" method="GET">
+                                    @if(isset($from))
+                                        <input type="hidden" name="from" value="{{$from}}">
+                                        <input type="hidden" name="to" value="{{$to}}">
+                                    @endif
+                                <button type="submit" class="btn btn-secondary">Print</button>
+                            </from>
+                            </div>      
+                    </div>         
+                   
                 </div>
                 <div class="card-body" >
                    <table id="data_tables" class="table table-hover" style="width: 100%; margin:auto;" >
@@ -90,7 +97,6 @@
                         @foreach($bookings as $key => $booking)
                             <tr>
                                 <td>{{$key+1}}</td>
-                             
                                 @if(!$booking->user->user_image)
                                     <td><img src="{{asset('images/user.png')}}"
                                     width="80px "  height="80px" style="border-radius: 50%;"></td>
@@ -101,7 +107,6 @@
                                 <td>{{$booking->user->user_fName}} {{$booking->user->user_lName}}</td>
                                 <td>{{$booking->pres_findings}}</td>
                                 <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
-
                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                             </tr>
                         @endforeach

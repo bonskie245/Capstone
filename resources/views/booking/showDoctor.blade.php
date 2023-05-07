@@ -76,14 +76,14 @@
                         </div>
                     </div>
                 <div class="row">
-                        <div class="form-group col">
+                        <div class="form-group  col-md-12">
                             <label for="alternate"> <h3>Date:  </h3> </label>
                             <input type="hidden" name="doctor_id" id="doctor_id" value="{{$doctors->id}}">  
-                            <input type="text" id="alternate" name="app_date" size="20" class="no-outline">
+                            <input type="text" class="form-control" id="alternate" name="app_date" size="20" class="no-outline">
                         </div>
-                        <div class="form-group col">
+                        <div class="form-group col-md-12">
                             <label for="time_start"><h4>Select Time: </h4></label>  
-                            <input type="text" class="timepicker" id="time_start" name="time_start" size="15" autocomplete ="off" required>      
+                            <input type="text" class="form-control timepicker" id="time_start" name="time_start" placeholder="Select Time"size="15" autocomplete ="off" required>      
                         </div>
                 </div>
                 <div class="row">
@@ -117,7 +117,7 @@
      .flex-container{display: flex;justify-content: space-around;background:#fff;}
   div.ui-datepicker{
     width: 100% !important;
-    line-height: 1;
+    line-height: 2;
     text-align: center;
   }
 </style>

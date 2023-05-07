@@ -85,78 +85,20 @@ class AppointmentController extends Controller
 
         // Check if time start is greater than time end
 
-       
+        dd($request->all());
             // Get date Ranges
             $startDate = Carbon::createFromFormat('Y-m-d', $request->app_date)->format('Y-m-d');
             $endDate = Carbon::createFromFormat('Y-m-d', $request->app_date2)->format('Y-m-d');
 
             $daterange = CarbonPeriod::create($startDate, $endDate);
-            // $dates = [];
-            
-            
-            // dd($dates);
-           
+      
         
-        $doctor = Doctor::where('user_id',auth()->user()->id)->first();
-        
-        $starttime = Carbon::parse($request->time_start)->format('H:i');  // hours, minutes, seconds
-        $endtime   = Carbon::parse($request->time_end)->format('H:i');
-
-        
-        $duration = $request->app_interval;
-
-        $array_of_time = array ();
-        $start_time    = strtotime ($starttime); //change to strtotime
-        $end_time      = strtotime ($endtime); //change to strtotime
-
-        $add_mins  = $duration * 60;
-       
-        if($start_time > $end_time)
-        {
-            return redirect()->route('appointment.index')->with('errmessage','The start time must not be greater than the end time');
-        }
-        
-        while ($start_time <= $end_time) // loop between time
-        {
-            $array_of_time[] = date("H:i", $start_time);
-            $start_time += $add_mins; // to check endtie=me
-        }
-
-        
-        $new_array_of_time = array ();
-        
+      
     foreach ($daterange as $date) 
     {  
-        $day_num = $date->format("N");
-            if($day_num < 7) 
-            { 
-                    for($i = 0; $i < count($array_of_time) - 1; $i++)
-                    {
-                            $checkAppointment = Appointment::where('doctor_id', $doctor->id)
-                                                    ->where('app_date', $date->format('Y-m-d'))
-                                                    ->where('time_start', '<=' ,$array_of_time[$i])
-                                                    ->where('time_end', '>', $array_of_time[$i])
-                                                    ->exists();
-                            if($checkAppointment)
-                            {
-                                return redirect()->route('appointment.index')->with('errmessage','Appointment Date and time exist or overlaps');
-                                break;
-                            }
-                            else
-                            {           
-                                    $new_array_of_time[] = Appointment::create
-                                    ([
-                                        'doctor_id'=> $doctor->id,
-                                        'app_date'=> $date->format('Y-m-d'),
-                                        'time_start' => $array_of_time[$i],
-                                        'time_end' => $array_of_time[$i + 1],
-                                    ]);    
-                                    continue;
-                            }       
-                    }
-             } 
+        
     }
-        return redirect()->route('appointment.index')->with('message','Appointment Created for '. $request->app_date);
+        return redirect()->route('appointment.create')->with('message', 'Has been added');
     
     }   
     /**

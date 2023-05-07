@@ -6,12 +6,11 @@
     <div class="row align-items-end">
         <div class="col-lg-8">
            
-
             <div class="page-header-title">
                 <i class="ik ik-command bg-blue"></i>
                 <div class="d-inline">
                     <h5>Doctors</h5>
-                    <span>appoinment time</span>
+                    <span>Vacation / Leave Dates</span>
                     
                 </div>
             </div>
@@ -45,52 +44,33 @@
     
         
     <form autocomplete="off" action="{{route('appointment.store')}}" method="post">@csrf
- 
-    <div class="card">
+    <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 75%; ">
         <div class="card-header">
             Choose date
-
         </div>
         <div class="card-body">
-         <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker" data-toggle="datetimepicker" data-target="#datepicker" name="app_date">
+        <div class="row">
+            <div class="col ">
+                <label for="app_date">Choose Date From: </label>
+                <input type="text" class="form-control datetimepicker-input"  style="width: 200px;" autocomplete="off" id="datepickers3" data-toggle="datetimepicker" data-target="#datepickers3" name="app_date">  
+                <span id="dateError" class="text-danger"></span>
+                <br>
+            </div>
+            <div class="col">
+                <label for="app_date">Choose Date To: </label>
+                <input type="text" class="form-control datetimepicker-input" style="width: 200px;" autocomplete="off" id="datepickers2" data-toggle="datetimepicker" data-target="#datepickers2" name="app_date2">  
+                <span id="dateError" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <i class="bi-sunrise" style="font-size: 20px;"></i><span style="margin-left: 5px">Pick time</span>
-    </div>
-        <div class="card-body">
-            <label for="time_start">Select start time:</label>
-            <input type="text" autocomplete="false" class ="timepicker" id="time_start" name="time_start">
-            <label for="time_end">Select end time:</label>
-            <input type="text" autocomplete="false" class ="timepicker" id="time_end" name="time_end">
-            <label for="app_interval">Time interval:</label>
-                    <select id="app_interval" name="app_interval">
-                    <option value="10">10 Minutes</option>
-                    <option value="20">20 Minutes</option>
-                    <option value="30">30 Minutes</option>
-                    <option value="60">1 Hour</option>
-                    </select>
+        
         </div>
-        <!-- <div class ="card-body">
-        <table class="table table-clean" id="dynamicAddRemoves">
-                            <tr>
-                                <th>Select start time:</th>
-                                <th>Select end time:</th>
-                                <th>Action</th>
-                            </tr>
-                            <tr>
-                                <td><input type="time" id="appt" name="time_start"></td>
-                                <td><input type="time" id="appt" name="time_end"></td>
-                                <td><button type="button" name="add" id="add" class="btn btn-outline-primary">Add</button></td>
-                            </tr>
-        </table>
-        </div> -->
-        <div class="card-body">
+        <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
+    </div>
+    
     </form>
 
 </div>

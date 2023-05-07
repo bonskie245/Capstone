@@ -195,7 +195,7 @@ class PatientlistController extends Controller
 
             // $bookings =Booking::where('book_status', '6')->whereBetween('app_date',[$from,$to])->latest()->paginate(10);
             $bookings = Prescription::whereBetween('app_date',[$from,$to])->latest()->get();
-           return view('patientlist.allpatient',compact('bookings'));
+           return view('patientlist.allpatient',compact('bookings', 'from', 'to'));
     }
             $bookings = Prescription::all();
         // $bookings =Booking::where('book_status', '6')->latest()->get();
@@ -205,23 +205,16 @@ class PatientlistController extends Controller
 
     public function generatePDF(Request $request)
     {
-        // dd($request->all());
-            // $data = ['title' => 'Laravel 7 Generate PDF From View Example Tutorial'];
-        
-        $bookings = Booking::find($request->book_id); 
-       
-        foreach($bookings as $booking){
-           dd($user = User::where('id', $booking->user_id)->get());
-            
-            $data =[
-                'name' => $user['user_fName'].' '. $user['user_lName'],
-                'date' => $booking['app_date']
-            ];
+        if(isset($request->from)){
+            $bookings = Prescription::whereBetween('app_date',[$request->from,$request->to])->latest()->get();
+            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings'))->setOptions(['defaultFont' => 'sans-serif']);
         }
-       
-            $pdf = PDF::loadView('patientlist.generatePDF', $data);
-  
-        return $pdf->download('Nicesnippets.pdf');    
+        else{
+            $bookings = Prescription::all();
+            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings'))->setOptions(['defaultFont' => 'sans-serif']);
+        }
+        
+        return $pdf->download('AppointmentHistory.pdf');    
     }
 
     public function patientToday(Request $request)
