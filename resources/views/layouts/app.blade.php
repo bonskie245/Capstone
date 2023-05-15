@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="{{asset('welcome/css/slick.css')}}">
 	<link rel="stylesheet" href="{{asset('welcome/css/nice-select.css')}}">
 	<link rel="stylesheet" href="{{asset('welcome/css/style.css')}}">
-
+<!-- Latest compiled and minified CSS -->
      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"defer></script>
        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -47,7 +47,7 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                    <li><a href="{{url('dashboard/users')}}" class="smoothScroll">Home</a></li>
+                                    <li><a href="{{url('/')}}" class="smoothScroll">Home</a></li>
                                    @if(auth()->check()&& auth()->user()->role->name === 'patient')
                                     <li><a class="nav-link" href="{{ route('my.booking') }}" >{{ __('My Booking') }}</a></li>
                                    @endif
@@ -57,10 +57,10 @@
                                    <!-- authentication -->
                                    @guest
                                    <li><a href="{{url('about-us')}}" class="smoothScroll">About Us</a></li>
-                                   <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                                        @if (Route::has('register'))
+                                   <!-- <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li> -->
+                                        <!-- @if (Route::has('register'))
                                         <li><a href="{{ route('register') }}" class="smoothScroll">Register</a></li>
-                                        @endif
+                                        @endif -->
                                    @else
                                         <li><a href="#">{{ Auth::user()->user_lName }} </a>
                                             <ul class="submenu">

@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="container">
-              <div class="card" style="width: 75%">
+              <div class="card" style="width: 100%">
               <div class="card-header" style="text-align: center;"><h1>Valencia City, Bukidnon <br> Philippines</h1></div>
                 <div class="card-body" style="color: black;">
                 @if(isset($about))
@@ -65,8 +65,8 @@
 <div class="flex-container">
 <div class="row" style="margin: auto;">
 @foreach($doctors as $doctor)
-<div class="col-6">
-    <div class="card" style="height: 100%; width 50%">
+<div class="col-md-6">
+    <div class="card" style="height: 100%; width: 75%">
     @if(!$doctor->user->user_image)
     <center>
         <img src="{{asset("/images/mdavatar.png")}}"  style="width: 30%; border-radius: 100%; margin-top: 20px; margin-bottom: 20px;">

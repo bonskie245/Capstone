@@ -53,7 +53,17 @@
                                 @endif -->
                             <!-- Checkpoint APRIL 13, 2023 -->
                                 @if(auth()->check()&&auth()->user()->role->name ==='admin')
-                                <div class="nav-item has-sub">
+                                
+                                    <div class="nav-item has-sub">
+                                        <a href="javascript:void(0)"><i class="ik ik-users"></i><span>Patient Management</span></a>
+                                        <div class="submenu-content">
+                                            <a href="{{route('patient.index')}}" class="menu-item"></i><span> Patient Management</span></a>
+                                            <a href="{{route('prescribed.patients')}}" class="menu-item">Patient Medical history</a>
+                                            <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
+                                            <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
+                                        </div>
+                                    </div>
+                                    <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="fa fa-heartbeat"></i><span>Medicine</span></a>
                                     <div class="submenu-content">
                                         <a href="{{route('medicine.index')}}" class="menu-item">View Medicine Data</a>
@@ -72,7 +82,7 @@
                                       <a href="{{route('symptoms.create')}}"><i class="ik ik-file"></i><span>Add Symptoms</span></a>
                                     </div>
                                 <div class="nav-item">
-                                      <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
+                                      <a href="{{route('all.appointments')}}"><i class="ik ik-bar-chart"></i><span>Charge Report</span></a>
                                     </div>
                                     
                                 @endif
@@ -98,7 +108,7 @@
                                     <div class="submenu-content">
                                         <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
                                         <a href="{{route('patient.today')}}" class="menu-item">View Booking Tables</a>
-                                        <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a>
+                                        <!-- <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a> -->
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
@@ -110,9 +120,17 @@
                                 <div class="nav-item has-sub">
                                     <a href="javascript:void(0)"><i class="ik ik-calendar"></i><span>Appointments</span></a>
                                     <div class="submenu-content">
-                                        <a href="{{route('patient')}}" class="menu-item">View Booking Calendar</a>
+                                       
+                                        @if(auth()->check()&&auth()->user()->role->name ==='doctor')
+                                        <p class="hidden"> {{$doctor = App\Models\Doctor::where('user_id', auth()->user()->id)->first()
+                                        }}</p>
+                                        <a href="{{route('patient')}}" class="menu-item">View Booking Calendar ({{App\Models\Booking::where('doctor_id', $doctor->id)->where('app_date', '>=',date('Y-m-d'))->where('book_status', 0)->count()}})</a>
+                                        @endif
+                                        @if(auth()->check()&&auth()->user()->role->name ==='receptionist')
+                                        <a href="{{route('patient')}}" class="menu-item">View Booking Calendar ({{App\Models\Booking::where('app_date', '>=',date('Y-m-d'))->where('book_status', 0)->count()}})</a>
+                                        @endif
                                         <a href="{{route('patient.today')}}" class="menu-item">View Booking Table Data</a>
-                                        <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a>
+                                        <!-- <a href="{{route('all.appointments')}}" class="menu-item">Appointment History</a> -->
                                         <!-- <a href="pages/widget-data.html" class="menu-item">Data</a>
                                         <a href="pages/widget-chart.html" class="menu-item">Chart Widget</a> -->
                                     </div>
@@ -140,10 +158,10 @@
                                         <a href="{{route('prescribed.patients')}}"><i class="ik ik-book"></i><span>Patient Medical history</span></a>
                                     </div>
                                     <div class="nav-item">
-                                            <a href="{{route('appointment.create')}}"><i class="ik ik-file"></i><span>Vacation / Leave Dates</span></a>
+                                            <a href="{{route('appointment.index')}}"><i class="ik ik-file"></i><span>Vacation / Leave Dates</span></a>
                                         </div>
                                     <div class="nav-item">
-                                      <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
+                                      <a href="{{route('all.appointments')}}"><i class="ik ik-bar-chart"></i><span>Charge Report</span></a>
                                     </div>
                                     @endif
                                    
@@ -160,7 +178,7 @@
                                         </div>
                                     </div>
                                         <div class="nav-item">
-                                            <a href="{{route('charge.index')}}"><i class="ik ik-file"></i><span>Charge Report</span></a>
+                                            <a href="{{route('all.appointments')}}"><i class="ik ik-bar-chart"></i><span>Charge Report</span></a>
                                         </div>
                                       
                                    

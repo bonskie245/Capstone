@@ -77,7 +77,95 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="state">
+                                <h6>Pending bookings</h6>
+                                @if(isset($doctor_id))
+                                <h2>{{App\Models\Booking::where('doctor_id', $doctor_id->id)->where('app_date', '>=',date('Y-m-d'))->where('book_status', 0)->count()}}</h2>
+                                @else
+                                <h2>{{App\Models\Booking::where('app_date', '>=',date('Y-m-d'))->where('book_status', 0)->count()}}</h2>
+                                @endif
+
+                            </div>
+                            <div class="icon">
+                                <i class="ik ik-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="state">
+                                <h6>Confirmed Bookings</h6>
+                                @if(isset($doctor_id))
+                                <h2>{{App\Models\Booking::where('doctor_id', $doctor_id->id)->where('app_date', '>=',date('Y-m-d'))->where('book_status', 1)->count()}}</h2>
+                                @else
+                                <h2>{{App\Models\Booking::where('app_date', '>=',date('Y-m-d'))->where('book_status', 1)->count()}}</h2>
+                                @endif
+                            </div>
+                            <div class="icon">
+                                <i class="ik ik-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="state">
+                                <h6>Declined Bookings</h6>
+                                @if(isset($doctor_id))
+                                <h2>{{App\Models\Booking::where('doctor_id', $doctor_id->id)->where('app_date', '>=',date('Y-m-d'))->where('book_status', 4)->count()}}</h2>
+                                @else
+                                <h2>{{App\Models\Booking::where('app_date', '>=',date('Y-m-d'))->where('book_status', 4)->count()}}</h2>
+                                @endif
+                            </div>
+                            <div class="icon">
+                                <i class="ik ik-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <div class="widget">
+                    <div class="widget-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="state">
+                                <h6>Cancelled Bookings</h6>
+                                @if(isset($doctor_id))
+                                <h2>{{App\Models\Booking::where('doctor_id', $doctor_id->id)->where('app_date', '>=',date('Y-m-d'))->where('book_status', 5)->count()}}</h2>
+                                @else
+                                <h2>{{App\Models\Booking::where('app_date', '>=',date('Y-m-d'))->where('book_status', 5)->count()}}</h2>
+                                @endif
+                            </div>
+                            <div class="icon">
+                                <i class="ik ik-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-6 col-xl-6" >
                 <div class="card" >
                     <div class="card-header">

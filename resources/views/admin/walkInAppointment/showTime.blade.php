@@ -62,21 +62,36 @@
             </div>
         </div>
         <div class="col">
-            @foreach($errors->all() as $error)
-                <div class="alert alert-danger">{{$error}}</div>
-            @endforeach
-
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    {{Session::get('message')}}
-                </div>
-            @endif
-
-             @if(Session::has('errmessage'))
-                <div class="alert alert-danger">
-                    {{Session::get('errmessage')}}
-                </div>
-            @endif
+        @if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endforeach
 
             <form action="{{route('walkIn.store')}}" method="post">@csrf  
             <div class="card">
@@ -88,23 +103,24 @@
                                 <div id="datepicker"></div>                  
                         </div>
                     </div>
-                <div class="row">
-                        <div class="form-group col">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
                             <label for="alternate"> <h3>Date:  </h3> </label>
                             <input type="hidden" name="doctor_id" id="doctor_id" value="{{$doctor->id}}">  
-                            <input type="text" id="alternate" name="app_date" size="20" class="no-outline">
+                            <input type="text" class="form-control" id="alternate" name="app_date" size="20" class="no-outline">
                         </div>
-                        <div class="form-group col">
-                            <label for="time_start"><h3>Select Time: </h3></label>  
-                            <input type="text" class="timepicker" id="time_start" name="time_start"  autocomplete ="off" required>      
-                            <input type="hidden" name="user_id" value="{{$users->id}}">      
+                        <div class="form-group col-md-12">
+                            <label for="time_start"><h4>Select Time: </h4></label>  
+                            <input type="text" class="form-control timepicker" id="time_start" name="time_start" placeholder="Select Time"size="15" autocomplete ="off" required> 
+                            <input type="hidden" name="user_id" value="{{$users->id}}">              
                         </div>
                 </div>
+                
                 <div class="row">
                     <div class="form-group col-md-12">
                         <h4>How are you feeling right now? (Select as many as possible)</h4>
                         <select id="book_reason" name="book_reason[]" style="width:100%" multiple="multiple"  required>
-                            @foreach(App\Models\Symptoms::all() as $symptom)
+                        @foreach(App\Models\Symptoms::orderBy('name', 'ASC')->get() as $symptom)
                                 <option value="{{$symptom->name}}">{{$symptom->name}}</option>
                             @endforeach
                         </select>

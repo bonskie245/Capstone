@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Booking;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -18,9 +19,13 @@ class DashboardController extends Controller
     }
     public function index()
     {
+        $doctor_id;
         if (Auth::user()->role->name=="patient") {
             return view('home');
         }
+        if (Auth::user()->role->name=="doctor") {
+            $doctor_id = Doctor::where('user_id', auth()->user()->id)->first();
+       
             $data = User::select('id', 'created_at')->where('role_id', '4')->get()->groupBy(function($data)
             {
                 return Carbon::parse($data->created_at)->format('M Y');
@@ -45,19 +50,35 @@ class DashboardController extends Controller
                 $bookMonths[]=$month;
                 $bookingCount[]=count($values);
             }
+        return view ('dashboard', compact('data','months','monthCount','booking','bookMonths','bookingCount','doctor_id'));
+        }
+        else{
+            $data = User::select('id', 'created_at')->where('role_id', '4')->get()->groupBy(function($data)
+            {
+                return Carbon::parse($data->created_at)->format('M Y');
+            });
 
+            $months = [];
+            $monthCount = [];
+            foreach($data as $month => $values){
+                $months[]=$month;
+                $monthCount[]=count($values);
+            }
 
-
-            // $users = User::select(DB::raw("COUNT(*) as count"))
-            //         ->whereYear('created_at', date('Y'))
-            //         ->groupBy(DB::raw("MONTH(created_at)"))
-            //         ->pluck('count');
-            // $months = User::select(DB::raw("Month(created_at) as month"))
-            //         ->whereYear('created_at', date('Y'))
-            //         ->groupBy(DB::raw("MONTH(created_at)"))
-            //         ->pluck('month');
+            $booking = Booking::select('id', 'app_date')->get()->groupBy(function($booking){
+                return Carbon::parse($booking->app_date)->format('M Y');
+            });
             
+            
+            $bookMonths =[];
+            $bookingCount = [];
+
+            foreach($booking as $month => $values){
+                $bookMonths[]=$month;
+                $bookingCount[]=count($values);
+            }
         return view ('dashboard', compact('data','months','monthCount','booking','bookMonths','bookingCount'));
+        }
     }
     public function aboutUS()
     {

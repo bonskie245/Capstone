@@ -161,39 +161,26 @@
                     responsive: true,
                 });          
             });
+        </script>
         
-       
-
+        @if(isset($vacation))
+        <script>
             // Datepicker
+            
+
+           
             $(document).ready(function(){
-                // Start Certain Dates
-                    var holidays = [
-                    '1.1.2020',
-                    '2.1.2020',
-                    '20.2.2020',
-                    '19.1.2020',
-                    '1.8.2020',
-                    '15.8.2020',
-                    '1.11.2020',
-                    '8.12.2020',
-                    '25.12.2020',
-                    '26.12.2020'
-                ];
+                var holidays = @json($vacation);
+                    console.log(holidays);
                 function noSundaysOrHolidays(date) {
                     var day = date.getDay();
-                    if (day != 0) {
-                    var d = date.getDate();
-                    var m = date.getMonth();
-                    var y = date.getFullYear();
-                    for (i = 0; i < holidays.length; i++) {
-                        if($.inArray((d) + '.' + (m+1) + '.' + y, holidays) != -1) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    if($.inArray(string, holidays) != -1)
+                    {
                         return [false];
-                        }
                     }
-                    return [true];
-                    } else {
                     return [day != 0, ''];
-                    }
+                    
                 }
                 // 
                 $("#datepicker").datepicker({
@@ -203,6 +190,7 @@
                     altFormat: "mm-dd-yy",
                     minDate: new Date(),
                     beforeShowDay: noSundaysOrHolidays,
+                    
                 });
              });
             //  End Datepicker
@@ -224,7 +212,7 @@
                          }); 
             // End Time picker
         </script>
-
+        @endif
         <!-- End of Datatables -->
         <!-- Checkpoint April 27, 2023 -->
     @if(isset($events))

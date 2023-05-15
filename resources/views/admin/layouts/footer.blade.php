@@ -328,6 +328,20 @@
         @endif          
 
         <script>
+        $(document).ready(function(){
+                            $('#time_start').timepicker({
+                                template: 'modal',
+                                timeFormat : 'hh:mm a',
+                                interval : 5,
+                                minTime: '8',
+                                startTime : '08:00',
+                                maxTime : '5:00pm',    
+                                dropdown : true,
+                                scrollbar : true,
+                                dynamic: false,
+                            });
+
+                         }); 
              $(function()
             {
                     $("#close").on('click', function() 

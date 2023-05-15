@@ -11,7 +11,6 @@
 
                               <div class="contact-info">
                                    <p><i class="fa fa-phone"></i> +63 919 523 5111 </p>
-                                   <p><i class="fa fa-envelope-o"></i> <a href="#">info@company.com</a></p>
                               </div>
                          </div>
                     </div>

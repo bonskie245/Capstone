@@ -11,7 +11,8 @@ use App\Mail\AppointmentMail;
 use App\Models\Prescription;
 use App\Models\Doctor;
 use App\Models\PrescriptionMedicines;
-use App\Models\About;
+use App\Models\about;
+use App\Models\VacationLeave;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -206,6 +207,15 @@ class FrontendController extends Controller
         $events = array();
         $bookings = Booking::get();
         
+        $dates = VacationLeave::where('doctor_id', $doctors->id)->get(['vacation_date']);
+
+        $vacation= [];
+        foreach($dates as $date)
+        {
+            $vacation[] = $date->vacation_date;
+        }
+
+        
 
         $eventColor = null; 
 
@@ -252,7 +262,7 @@ class FrontendController extends Controller
         }
        
         //   $doctors = Appointment::where('app_date',date('Y-m-d'))->groupBy('doctor_id')->get();
-        return view('booking.showDoctor',compact('doctors'), ['events' => $events]);
+        return view('booking.showDoctor',compact('doctors','vacation'), ['events' => $events]);
     }
     public function showEditDoctor($id)
     {

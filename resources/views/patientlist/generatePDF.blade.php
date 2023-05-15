@@ -2,9 +2,10 @@
 <! DOCTYPE html>
           <html>
           <head>
-            <title>Laravel 8 Generate PDF From View Example Tutorial - NiceSnippets</title>
+            <title></title>
             <link rel="stylesheet" href="{{asset('template/plugins/bootstrap/dist/css/bootstrap.min.css')}}">
-          <link rel="stylesheet" href="{{asset('template/plugins/fontawesome-free/css/all.min.css')}}">
+            <link rel="stylesheet" href="{{asset('template/plugins/fontawesome-free/css/all.min.css')}}">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
           </head>
           <body>
             <style>table {
@@ -27,9 +28,10 @@ th {
               <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">First</th>
+                  <th scope="col">Patient Name</th>
                   <th scope="col">Date</th>
                   <th scope="col">Findings</th>
+                  <th scope="col">Charge</th>
                   <th scope="col">Doctor</th>
                 </tr>
               </thead>
@@ -39,6 +41,7 @@ th {
                 <td>{{$booking->user->user_fName}} {{$booking->user->user_lName}}</td>
                 <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                 <td>{{$booking->pres_findings}}</td>
+                <td><span style="font-family: DejaVu Sans; sans-serif;">&#8369;</span> {{number_format($booking->charge, 2)}}</td>
                 <td>Dr. {{$booking->doctor->user->user_fName}} {{$booking->doctor->user->user_lName}}</td>
               </tr>
               @empty
@@ -46,6 +49,10 @@ th {
                 <td>No data</td>
               </tr>
               @endforelse
+              <tr>
+                <td>Total Charge: </td>
+                <td><span style="font-family: DejaVu Sans; sans-serif;">&#8369;</span> {{number_format($total, 2)}}</td>
+              </tr>
             </tbody>
           </table>
           </body>

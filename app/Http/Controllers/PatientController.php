@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Prescription;
+use Auth;
 use File;
 use App\Models\PrescriptionMedicines;
 
@@ -21,6 +22,9 @@ class PatientController extends Controller
         //role 2 = doctor
         //rople 3 = receptionist
         //role 4 = patient
+        if (Auth::user()->role->name=="patient") {
+            return view('home');
+        }
         $users  = User::where('role_id','!=',2)
         ->where('role_id','!=',3)
         ->where('role_id','!=',1)

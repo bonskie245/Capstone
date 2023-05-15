@@ -115,7 +115,7 @@ class WalkInPatientController extends Controller
         ]);
 
 
-        return redirect()->route('patient')->with('message','Your appointment is Booked Succesfully');
+        return redirect()->route('patient.index')->with('message','Your appointment is Booked Succesfully');
     }
 
      /**

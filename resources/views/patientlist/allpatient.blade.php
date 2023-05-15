@@ -16,10 +16,10 @@
             
 
                 <div class="page-header-title">
-                    <i class="ik ik-command bg-blue"></i>
+                    <i class="ik ik-bar-chart bg-blue"></i>
                     <div class="d-inline">
-                        <h5>Appointment</h5>
-                        <span>Appointment History</span>
+                        <h5>Charge Report</h5>
+                        <span>Charge Report</span>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
+                <div class="card-header" style="font-size: 20px;"><strong>Appointments</div></strong>
                 <form action="{{route('all.appointments')}}" method="GET">
                     @csrf
                     @if(Session::has('message'))
@@ -57,11 +57,11 @@
                         <div class="row">
                         &nbsp;  &nbsp;  Filter By date From: 
                             <div class="col-md-2">
-                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker2" data-toggle="datetimepicker" data-target="#datepicker2" name="date_from">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepickers2" data-toggle="datetimepicker" data-target="#datepickers2" name="date_from">
                             </div>
                             <label for="date_to"> Date To: </label>
                             <div class="col-md-2">
-                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepicker3" data-toggle="datetimepicker" data-target="#datepicker3" name="date_to">
+                                <input type="text" class="form-control datetimepicker-input" autocomplete="off" id="datepickers3" data-toggle="datetimepicker" data-target="#datepickers3" name="date_to">
                             </div>    
                            
                             <div class="col-md-1">
@@ -89,7 +89,8 @@
                           <th scope="col">Photo</th>
                           <th scope="col">Name</th>
                           <th scope="col">Findings</th>
-                          <th scope="col">Date</th>
+                          <th scope="col">Charge</th>
+                          <th scope="col">Date</th>             
                           <th scope="col">Doctor</th>
                         </tr>
                       </thead>
@@ -106,6 +107,7 @@
                                     @endif                      
                                 <td>{{$booking->user->user_fName}} {{$booking->user->user_lName}}</td>
                                 <td>{{$booking->pres_findings}}</td>
+                                <td>₱  {{number_format($booking->charge,2) }}</td>
                                 <td>{{date('F j, Y', strtotime($booking->app_date))}}</td>
                                 <td>Dr.{{$booking->doctor->user->user_lName}}, {{$booking->doctor->user->user_fName}}</td>
                             </tr>

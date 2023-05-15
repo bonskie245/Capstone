@@ -62,6 +62,9 @@ class PrescriptionController extends Controller
     
     public function show($presID, $date)
     {
+        if (Auth::user()->role->name=="patient") {
+            return view('home');
+        }
         $prescription1 = Prescription::where('id', $presID)->first();
         $prescriptions = PrescriptionMedicines::where('prescription_id', $prescription1->id)->get();
        return view('prescription.showPrescription2',compact('prescriptions', 'prescription1'));
@@ -76,6 +79,9 @@ class PrescriptionController extends Controller
 
     public function prescribedPatient()
     {
+        if (Auth::user()->role->name=="patient") {
+            return view('home');
+        }
         // $patients = Prescription::groupBy('user_id')->get();
         $patients = User::where('role_id', '4')->orderBy('user_lName', 'asc')->get();
         return view('prescription.all', compact('patients'));
@@ -83,6 +89,9 @@ class PrescriptionController extends Controller
 
     public function showHistory($id)
     {
+        if (Auth::user()->role->name=="patient") {
+            return view('home');
+        }
         $user = User::where('id', $id)->first();
         $prescriptions = Prescription::where('user_id', $id)->orderBy('app_date', 'desc')->get();
         

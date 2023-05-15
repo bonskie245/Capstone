@@ -30,17 +30,39 @@
 </div>
 
 <div class="container">
-         @if(Session::has('message'))
-            <div class="alert bg-success alert-success text-white" role="alert">
-                {{Session::get('message')}}
-            </div>
-        @endif
-        @foreach($errors->all() as $error)
-            <div class="alert alert-danger">
-                {{$error}}
-                
-            </div>           
-        @endforeach
+@if(Session::has('message'))
+                          <script>
+                            Swal.fire({
+                              title: 'Success',
+                              text: '{{Session::get('message')}}',
+                              icon: 'success',
+                              confirmButtonText: 'Okay  '
+                            })
+                          </script>
+                    @endif
+                    @if(Session::has('errmessage'))
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{Session::get('errmessage')}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endif
+                    @foreach($errors->all() as $error)
+                        <!-- <div class="alert alert-danger">
+                            {{$error}}                        
+                        </div>   -->
+                        <script>
+                            Swal.fire({
+                              title: 'Error',
+                              text: '{{$error}}',
+                              icon: 'error',
+                              confirmButtonText: 'Okay  '
+                            })
+                        </script> 
+                    @endforeach
     
         
     <form autocomplete="off" action="{{route('appointment.store')}}" method="post">@csrf

@@ -12,6 +12,8 @@ use App\Models\Prescription;
 use App\Mail\AppointmentMail;
 use Carbon\Carbon;
 use PDF;
+use Auth;
+
 class PatientlistController extends Controller
 {
     
@@ -188,6 +190,11 @@ class PatientlistController extends Controller
     
     public function allTimeAppointment(Request $request)
     {
+        if (Auth::user()->role->name=="patient")
+        {
+            return ('home');
+        } 
+
         date_default_timezone_set('Asia/Manila');
         if($request->date_from){
             $from = $request->date_from;
@@ -207,11 +214,13 @@ class PatientlistController extends Controller
     {
         if(isset($request->from)){
             $bookings = Prescription::whereBetween('app_date',[$request->from,$request->to])->latest()->get();
-            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings'))->setOptions(['defaultFont' => 'sans-serif']);
+            $total = $bookings->sum('charge');
+            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings','total'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4', 'portrait');;
         }
         else{
             $bookings = Prescription::all();
-            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings'))->setOptions(['defaultFont' => 'sans-serif']);
+            $total = $bookings->sum('charge');
+            $pdf = PDF::loadView('patientlist.generatePDF', compact('bookings','total'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('A4', 'portrait');;
         }
         
         return $pdf->download('AppointmentHistory.pdf');    
@@ -220,25 +229,41 @@ class PatientlistController extends Controller
     public function patientToday(Request $request)
     {
         date_default_timezone_set('Asia/Manila');
-            if($request->app_date){
-                $bookings =Booking::latest()->where('app_date',$request->app_date)->get();
-            return view('patientlist.patientToday',compact('bookings'));
-        }          
-            // $appointments = Appointment::where('app_date',date('Y-m-d'))->where('app_status','1')->get();
-            // foreach($appointments as $appointment){
-            //     dd($bookings = Booking::where('app_id',$appointment->id)->get());
-            // }
+             
+        if (Auth::user()->role->name=="doctor") 
+        {
+            $doctor_id = Doctor::where('user_id', auth()->user()->id)->first();
+
+            $bookingPending =Booking::where('app_date', '>=', date('Y-m-d'))
+            ->where('book_status', '0')
+            ->where('doctor_id', $doctor_id->id)
+            ->orderBy('app_date', 'ASC')
+            ->get();
+            $bookingConfirmed =Booking::where('app_date', '>=',date('Y-m-d'))
+            ->where('doctor_id', $doctor_id->id)
+            ->whereBetween('book_status', [1,3])->orderBy('app_date', 'ASC')->get();
+            $bookingDeclined =Booking::where('app_date', '>=', date('Y-m-d'))
+            ->where('doctor_id', $doctor_id->id)
+            ->where('book_status', '4')->orderBy('app_date', 'ASC')
+            ->get();
+            $bookingCancelled =Booking::where('app_date', '>=', date('Y-m-d'))
+            ->where('doctor_id', $doctor_id->id)
+            ->where('book_status', '5')->orderBy('app_date', 'ASC')->get();
+            // $bookingPending =Booking::where('app_date', date('Y-m-d'))->where('book_status', '0')->paginate(5);
+                
+                return view('patientlist.patientToday',compact('bookingPending','bookingConfirmed','bookingDeclined','bookingCancelled'));
+        }
             $bookingPending =Booking::where('app_date', '>=', date('Y-m-d'))
             ->where('book_status', '0')
             ->orderBy('app_date', 'ASC')
-            ->paginate(5);
+            ->get();
             $bookingConfirmed =Booking::where('app_date', '>=',date('Y-m-d'))
-            ->whereBetween('book_status', [1,3])->orderBy('app_date', 'ASC')->paginate(5);
+            ->whereBetween('book_status', [1,3])->orderBy('app_date', 'ASC')->get();
             $bookingDeclined =Booking::where('app_date', '>=', date('Y-m-d'))
             ->where('book_status', '4')->orderBy('app_date', 'ASC')
-            ->paginate(5);
+            ->get();
             $bookingCancelled =Booking::where('app_date', '>=', date('Y-m-d'))
-            ->where('book_status', '5')->orderBy('app_date', 'ASC')->paginate(5);
+            ->where('book_status', '5')->orderBy('app_date', 'ASC')->get();
             // $bookingPending =Booking::where('app_date', date('Y-m-d'))->where('book_status', '0')->paginate(5);
                 
              return view('patientlist.patientToday',compact('bookingPending','bookingConfirmed','bookingDeclined','bookingCancelled'));
