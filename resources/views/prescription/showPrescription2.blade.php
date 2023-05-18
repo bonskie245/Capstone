@@ -13,7 +13,7 @@
     </head>
     <body>
     
-        <a href="{{route('prescribed.patients')}}" class="btn btn-primary hidden-back">Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-primary hidden-back">Back</a>
         @if(auth()->user()->role->name == "doctor")
         <button id="btnPrint" class="hidden-print" >Print</button>
         @endif

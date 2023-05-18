@@ -20,8 +20,15 @@ class PrescriptionController extends Controller
         date_default_timezone_set('Asia/Manila');
         $doctorID = Doctor::where('user_id', auth()->user()->id)->first();
         $bookings = Booking::where('app_date','>=', date('Y-m-d'))->where('book_status', 2)->where('doctor_id', $doctorID->id)->get();
-
+        
+        if(Prescription::where('app_date','>=', date('Y-m-d'))->where('doctor_id', $doctorID->id)->exists())
+        {
+            $prescriptions = Prescription::where('app_date','>=', date('Y-m-d'))->where('doctor_id', $doctorID->id)->get();
+            return view('prescription.index', compact('bookings', 'doctorID', 'prescriptions',));
+        }
+        else{
         return view('prescription.index', compact('bookings', 'doctorID'));
+        }
     }
 
     public function create($id, $date,$doctorID)

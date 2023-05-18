@@ -62,12 +62,19 @@
                             })
                         </script> 
                     @endforeach
-    <div class="row justify-content-center">
-        <div class="col-md-12 col-xl-14">
-            <div class="card">
-                <div class="card-header" style="font-size: 20px;"><strong>Appointments({{$bookings->count()}})</div></strong>
-                <div class="card-body">
-                   <table id="data_tables" class="table table-hover" style="width:100%">
+    <div class="card">
+        <div class="card-header">
+            <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Patient Today ({{$bookings->count()}})</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Prescribed Patients Today @if(isset($prescriptions)) ({{$prescriptions->count()}}) @else (0) @endif</button>
+            </div>
+            </nav>
+            </div>
+            <div class="card-body">
+            <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table id="data_tables" class="table table-hover" style="width:100%">
                    <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -109,7 +116,6 @@
 
                                 <button type="button" class = "btn btn-primary"><a href="{{route('prescription.create',[$booking->id,$booking->app_date,$booking->doctor_id])}}" style="color:white">Write Prescription</a></button>                             
                                 <!-- <a href="{{route('prescription.show',[$booking->user_id,$booking->app_date])}}" class="btn btn-secondary">View Prescription</a> -->
-
                           </td>
                         </tr>
                         @empty
@@ -117,9 +123,58 @@
                         @endforelse
                       </tbody>
                     </table>
-                </div>
             </div>
-        </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                @if(isset($prescriptions))
+                    <table id="data_tables" class="table table-hover" style="width: 100%; margin: auto 0;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date of Appointment</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Doctor Name</th>
+                                        <th scope="col">Findings</th>
+                                        <th scope="col">View Prescription</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($prescriptions as $prescription)
+                                    <tr>
+                                        <td scope="row">{{date('F j, Y', strtotime($prescription->app_date))}}</td>
+                                        @if(!$prescription->doctor->user->user_image)
+                                        <td><img src="{{asset('images/user.png')}}" class="table-user-thumb" style="width: 50px; height: 50px; border-radius: 50%;" alt=""></td>
+                                        @else
+                                        <td scope="row"><img src="{{asset('images')}}/{{$prescription->doctor->user->user_image}}" style="width: 50px; height: 50px; border-radius: 50%;" alt=""></td>
+                                        @endif
+                                        <td scope="row">Dr. {{$prescription->doctor->user->user_fName}} {{$prescription->doctor->user->user_lName}}</td>
+                                        <td scope="row">{{$prescription->pres_findings}}</td>
+                                        <td scope="row"><a href="{{route('prescription.show',[$prescription->id,$prescription->app_date])}}"><button class="btn btn-primary" style="font-size: 12px;">View Prescription</button></a></td>
+                                    </tr>
+                                    @endforeach      
+                                </tbody>
+                            </table>
+                @else
+                <table id="data_table" class="table table-hover" style="width:100%">
+                <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Photo</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Reason</th>
+                          <th scope="col">Phone Number</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Time</th>
+                          <th scope="col">Doctor</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <td>No Data</td>
+                      </tbody>
+                    </table>
+                @endif
+            </div>
+            </div>   
+        </div>                     
     </div>
 </div>
 @endsection
